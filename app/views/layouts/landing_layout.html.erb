@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>StockApp</title>
+    <title>stocker</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="icon" type="image/x-icon" href="/stocker.png" />
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
@@ -12,10 +13,9 @@
   </head>
 
   <body class="bg--landing">
-    <nav class="border h-[10%] w-full">
-      Navbar
-    </nav>
-    <main class="border w-full h-[90%]">
+    <%= render 'pages/navbar' %>
+    
+    <main class="w-full h-[90%]">
       <%= yield %>
     </main>
   </body>

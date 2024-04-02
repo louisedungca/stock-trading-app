@@ -10,9 +10,15 @@
     </p>
   </h1>
 
-  <span>Smart. Simple. Seamless.</span>
+  <span class="w-1/4 text-center">
+    Smart. Simple. Seamless.
+  </span>
 
-  <button class="border-white border-2 rounded-3xl px-6 py-2 tracking-wider mt-4">
-    <small>Start today</small>
-  </button>
+  <div class="overflow-hidden w-1/4">
+    <%= render 'logo_banner' %>
+  </div>
+
+  <%= link_to new_user_registration_path, class: "button--main mt-4" do %>
+    <small>Get Started</small>
+  <% end %>
 </section>
