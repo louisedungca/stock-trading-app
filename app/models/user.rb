@@ -3,6 +3,9 @@
 # Table name: users
 #
 #  id                     :bigint           not null, primary key
+#  confirmation_sent_at   :datetime
+#  confirmation_token     :string
+#  confirmed_at           :datetime
 #  email                  :string           default(""), not null
 #  encrypted_password     :string           default(""), not null
 #  remember_created_at    :datetime
@@ -10,12 +13,14 @@
 #  reset_password_token   :string
 #  role                   :enum             default("trader"), not null
 #  uid                    :string
+#  unconfirmed_email      :string
 #  username               :string           default(""), not null
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
 #
 # Indexes
 #
+#  index_users_on_confirmation_token    (confirmation_token) UNIQUE
 #  index_users_on_email                 (email) UNIQUE
 #  index_users_on_reset_password_token  (reset_password_token) UNIQUE
 #  index_users_on_uid                   (uid) UNIQUE
@@ -25,7 +30,8 @@ class User < ApplicationRecord
   attr_writer :login
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
-  devise :database_authenticatable, :registerable, :recoverable, :rememberable, :validatable, :uid, authentication_keys: [:login]
+  devise :database_authenticatable, :registerable, :recoverable, :rememberable,
+          :validatable, :uid, :confirmable, authentication_keys: [:login]
 
   has_one :status
 
