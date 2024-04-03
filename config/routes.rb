@@ -1,12 +1,23 @@
-# == Route Map
-#
-
 Rails.application.routes.draw do
-  get 'statuses/edit'
-  get 'statuses/update'
   root "pages#landing"
 
-  devise_for :users
+  devise_for :users,
+    path: '',
+    path_names: {
+      sign_in: 'login',
+      sign_out: 'logout',
+    },
+      skip: [:registrations]
+
+  # routes for user registrations controller
+  devise_scope :user do
+    get '/register', to: 'users/registrations#new', as: :new_user_registration
+    get 'users/cancel', to: 'users/registrations#cancel', as: :cancel_user_registration
+    get 'users/edit', to: 'users/registrations#edit', as: :edit_user_registration
+    post 'users', to: 'users/registrations#create', as: :user_registration
+    patch 'users', to: 'users/registrations#update', as: :update_user_registration
+    delete 'users', to: 'users/registrations#destroy', as: :destroy_user_registration
+  end
 
   namespace :admin do
     get 'dashboard', to: 'dashboard#index'
