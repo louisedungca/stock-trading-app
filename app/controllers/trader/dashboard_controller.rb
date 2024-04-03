@@ -13,9 +13,6 @@ class Trader::DashboardController < ApplicationController
     else
       redirect_to trader_dashboard_path
     end
-
-
   end
-
 
 end

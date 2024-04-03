@@ -26,17 +26,19 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable, :recoverable, :rememberable, :validatable, :uid
 
+  has_one :status
+
   enum :role, {
     admin: "admin",
     trader: "trader"
   }, default: "trader"
 
-  has_one :status
-
   validates :email, presence: true, uniqueness: true
   validates :username, presence: true, uniqueness: true
   validates :password, presence: true
   before_create :initialize_status_for_trader
+
+  scope :approved_traders, -> { includes(:status).where(role: :trader, statuses: { status_type: "approved" }) }
 
   private
 

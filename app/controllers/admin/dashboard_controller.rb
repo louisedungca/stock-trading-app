@@ -1,9 +1,7 @@
 class Admin::DashboardController < ApplicationController
-  def index
-    # for checking of role only, remove later
-    if current_user && current_user.admin?
-      puts "CURRENT_USER.ADMIN? #{current_user.admin?}"
-    end
 
+  def index
+    @traders = User.approved_traders
+    @pending_approvals = Status.where(status_type: "pending")
   end
 end
