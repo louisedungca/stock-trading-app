@@ -1,13 +1,56 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/*
+@layer base {
+  html, body {
+    font-family: "Raleway", sans-serif;
 
-@layer components {
-  .btn-primary {
-    @apply py-2 px-4 bg-blue-200;
+    @apply tracking-wider;
   }
 }
 
-*/
+@layer components {
+  .border {
+    @apply border-2 border-dotted border-red-500;
+  }
+
+  .bg--landing {
+    background-color:hsla(0,0%,0%,1);
+    background-image:
+    radial-gradient(at 51% 57%, hsla(255,75%,56%,0.42) 0px, transparent 50%),
+    radial-gradient(at 51% 0%, hsla(165,85%,48%,0.6) 0px, transparent 50%);
+
+    @apply w-full h-dvh text-emerald-50;
+  }
+
+  .bg--login {
+    background-color:hsla(0,0%,0%,1);
+    background-image:
+    radial-gradient(at 8% 100%, hsla(255,75%,56%,0.55) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, hsla(165,85%,48%,0.6) 0px, transparent 50%);
+
+    @apply w-full h-dvh text-emerald-50;
+  }
+
+  .bg--signup {
+    background-color:hsla(0,0%,0%,1);
+    background-image:
+    radial-gradient(at 71% 95%, hsla(255,75%,56%,0.55) 0px, transparent 50%),
+    radial-gradient(at 0% 98%, hsla(165,85%,48%,0.49) 0px, transparent 50%);
+
+    @apply w-full h-dvh text-emerald-50;
+  }
+
+  .button--main {
+    @apply grid place-items-center border-white border-2 rounded-3xl px-6 py-2 tracking-wider min-w-32 font-bold uppercase focus:ring-2 focus:ring-accent focus:border-secondary;
+  }
+
+  .button--gray {
+    @apply grid place-items-center border-gray-600 border-2 rounded-3xl px-6 py-2 tracking-wider min-w-32 font-bold uppercase focus:ring-2 focus:ring-accent focus:border-secondary;
+  }
+}
+
+

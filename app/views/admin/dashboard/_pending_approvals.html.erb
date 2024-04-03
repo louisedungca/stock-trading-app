@@ -1,0 +1,13 @@
+<div>
+  <% @pending_approvals.each do |pending_trader| %>
+    <div class="border p-4">
+      <%= pending_trader.user.username %> <br>
+      (<%= pending_trader.created_at %>)
+
+      <%= form_with model: pending_trader, url: status_path(pending_trader), method: :patch, remote: true do |form| %>
+        <%= form.hidden_field :status_type, value: "approved" %>
+        <%= form.button "Approve", class: "button--gray", type: "submit" %>
+      <% end %>
+    </div>
+  <% end %>
+</div>

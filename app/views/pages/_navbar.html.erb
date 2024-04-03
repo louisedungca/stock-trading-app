@@ -1,0 +1,14 @@
+<nav class="h-[10%] w-full p-4 flex items-center justify-between">
+  <div class="h-full flex items-center gap-2">
+    <%= image_tag("stocker.png", alt: "stocker_logo", class: "bg-emerald-50 rounded-full h-full w-fit ring-2 ring-inset ring-accent") %>
+    <h1 class="tracking-wider font-bold italic text-xl">
+      stocker
+    </h1>
+  </div>
+
+  <div class="h-full flex items-center gap-2"></div>
+
+  <%= link_to new_user_session_path, class: "button--gray grid place-items-center" do %>
+    <small>Login</small>
+  <% end %>
+</nav>

@@ -12,6 +12,20 @@ module.exports = {
       fontFamily: {
         sans: ['Inter var', ...defaultTheme.fontFamily.sans],
       },
+      colors: {
+        "primary": "#683CE4",
+        "secondary": "#23C4F8",
+        "accent": "#10E5B2",
+      },
+      animation: {
+        "ticker": "ticker-animation 30s linear infinite",
+      },
+      keyframes: {
+        "ticker-animation": {
+        "0%": { transform: "translateX(90%)" },
+          "100%": { transform: "translateX(-100%)" },
+        },
+      },
     },
   },
   plugins: [
