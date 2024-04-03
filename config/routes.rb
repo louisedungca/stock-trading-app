@@ -31,5 +31,6 @@ Rails.application.routes.draw do
 
   # routes for static pages
   get 'landing', to: 'pages#landing', as: :landing_page
-  get 'pending-approval', to: 'pages#pending_approval', as: :pending_approval_page
+  get 'pending-verification', to: 'pages#pending_verification', as: :pending_verification_page
+  get 'market', to: 'pages#market', as: :market_page
 end

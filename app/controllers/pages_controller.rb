@@ -5,6 +5,9 @@ class PagesController < ApplicationController
   def landing
   end
 
-  def pending_approval
+  def pending_verification
+  end
+
+  def market
   end
 end

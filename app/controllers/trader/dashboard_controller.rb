@@ -9,7 +9,7 @@ class Trader::DashboardController < ApplicationController
   def check_status
     if current_user.trader? && current_user.status&.status_type == "pending"
       sign_out(current_user)
-      redirect_to pending_approval_page_path
+      redirect_to pending_verification_page_path
     end
   end
 
