@@ -7,7 +7,7 @@ Rails.application.routes.draw do
       sign_in: 'login',
       sign_out: 'logout',
     },
-      skip: [:registrations]
+    skip: [:registrations]
 
   # routes for user registrations controller
   devise_scope :user do
