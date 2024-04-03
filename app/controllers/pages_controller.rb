@@ -1,5 +1,10 @@
 class PagesController < ApplicationController
+  skip_before_action :authenticate_user!
+  layout "landing_layout"
+
   def landing
-    render layout: "landing_layout"
+  end
+
+  def pending_approval
   end
 end
