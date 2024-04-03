@@ -9,6 +9,7 @@
 #  reset_password_sent_at :datetime
 #  reset_password_token   :string
 #  role                   :enum             default("trader"), not null
+#  uid                    :string
 #  username               :string           default(""), not null
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
@@ -17,19 +18,20 @@
 #
 #  index_users_on_email                 (email) UNIQUE
 #  index_users_on_reset_password_token  (reset_password_token) UNIQUE
+#  index_users_on_uid                   (uid) UNIQUE
 #  index_users_on_username              (username) UNIQUE
 #
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
-  devise :database_authenticatable, :registerable, :recoverable, :rememberable, :validatable
+  devise :database_authenticatable, :registerable, :recoverable, :rememberable, :validatable, :uid
 
   enum :role, {
     admin: "admin",
     trader: "trader"
   }, default: "trader"
 
-  has_one :status, -> { where("users.role = ?", "trader") }
+  has_one :status
 
   validates :email, presence: true, uniqueness: true
   validates :username, presence: true, uniqueness: true
