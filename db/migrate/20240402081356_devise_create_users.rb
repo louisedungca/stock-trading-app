@@ -36,7 +36,6 @@ class DeviseCreateUsers < ActiveRecord::Migration[7.1]
 
       t.string :username, null: false, default: ""
       t.enum :role, enum_type: "role", null: false, default: "trader"
-      # t.boolean :approved, null: false, default: false
       t.timestamps null: false
     end
 

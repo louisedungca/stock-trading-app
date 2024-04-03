@@ -18,4 +18,9 @@
 #
 class Status < ApplicationRecord
   belongs_to :user
+
+  enum :status_type, {
+    pending: "pending",
+    approved: "approved"
+  }, default: "pending"
 end
