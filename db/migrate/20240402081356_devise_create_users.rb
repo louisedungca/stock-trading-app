@@ -3,7 +3,6 @@
 class DeviseCreateUsers < ActiveRecord::Migration[7.1]
   def change
     create_enum :role, ["admin", "trader"]
-    create_enum :status, ["pending", "approved"]
 
     create_table :users do |t|
       ## Database authenticatable
@@ -37,7 +36,7 @@ class DeviseCreateUsers < ActiveRecord::Migration[7.1]
 
       t.string :username, null: false, default: ""
       t.enum :role, enum_type: "role", null: false, default: "trader"
-      t.enum :status, enum_type: "status", null: false, default: "pending"
+      # t.boolean :approved, null: false, default: false
       t.timestamps null: false
     end
 

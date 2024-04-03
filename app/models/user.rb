@@ -9,7 +9,6 @@
 #  reset_password_sent_at :datetime
 #  reset_password_token   :string
 #  role                   :enum             default("trader"), not null
-#  status                 :enum             default("pending"), not null
 #  username               :string           default(""), not null
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
@@ -25,16 +24,24 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable, :recoverable, :rememberable, :validatable
 
-  enum :status, {
-    pending: "pending",
-    approved: "approved"
-  }, default: "pending"
-
   enum :role, {
     admin: "admin",
     trader: "trader"
   }, default: "trader"
 
+  has_one :status, -> { where("users.role = ?", "trader") }
+
   validates :email, presence: true, uniqueness: true
-  
+  validates :username, presence: true, uniqueness: true
+  validates :password, presence: true
+  before_create :initialize_status_for_trader
+
+  private
+
+  def initialize_status_for_trader
+    if trader?
+      build_status(status_type: "pending")
+    end
+  end
+
 end
