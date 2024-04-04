@@ -1,1 +1,19 @@
-<h1>Markets Overview</h1>
+<h1 class="h-[10%] font-bold text-xl flex items-center gap-3">
+  Markets Overview
+  <p class="text-base text-gray-500">
+    Trading Data
+  </p>
+</h1>
+<div class="w-full h-[90%] flex flex-col lg:flex-row items-center gap-2">
+  <div class="w-full lg:w-3/4 h-full flex flex-col items-center gap-2">
+    <%= render 'pages/widgets/market_data_overview' %>
+  </div>
+  <div class="w-full lg:w-1/4 h-full lg:px-2 lg:border-l-2 lg:border-gray-600 flex flex-col">
+    <div class="h-1/2 w-full">
+      <%= render 'pages/widgets/top_news' %>
+    </div>
+    <div class="h-1/2 w-full">
+      <%= render 'pages/widgets/stock_market' %>
+    </div>
+  </div>
+</div>
