@@ -11,5 +11,5 @@ LetterOpener.configure do |config|
   # It might be useful when you use WSL (Windows Subsystem for Linux) and default
   # scheme doesn't work for you.
   # Default value is blank
-  config.file_uri_scheme = 'file://///wsl$/Ubuntu-18.04'
+  # config.file_uri_scheme = 'file://///wsl$/Ubuntu-18.04'
 end
