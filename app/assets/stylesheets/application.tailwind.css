@@ -39,10 +39,10 @@
     @apply w-full h-dvh text-emerald-50;
   }
 
-  .bg--signup {
+  .bg--main {
     background-color:hsla(0,0%,0%,1);
     background-image:
-    radial-gradient(at 71% 95%, hsla(255,75%,56%,0.55) 0px, transparent 50%),
+    radial-gradient(at 100% 98%, hsla(255,75%,56%,0.55) 0px, transparent 50%),
     radial-gradient(at 0% 98%, hsla(165,85%,48%,0.49) 0px, transparent 50%);
 
     @apply w-full h-dvh text-emerald-50;
