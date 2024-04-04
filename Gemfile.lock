@@ -101,6 +101,9 @@ GEM
       railties (>= 4.1.0)
       responders
       warden (~> 1.2.3)
+    devise_invitable (2.0.9)
+      actionmailer (>= 5.0)
+      devise (>= 4.6)
     devise_uid (0.1.1)
       devise (>= 3.0.0)
       railties (>= 3.0)
@@ -308,6 +311,7 @@ DEPENDENCIES
   bootsnap
   debug
   devise (~> 4.9)
+  devise_invitable (~> 2.0.0)
   devise_uid (~> 0.1.1)
   dotenv
   iex-ruby-client (~> 2.1)
