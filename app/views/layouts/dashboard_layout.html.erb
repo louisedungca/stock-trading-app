@@ -10,17 +10,14 @@
     <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.turbo.min.js" defer></script>
   </head>
-
   <body class="relative bg--main flex">
     <%= render 'shared/sidebar' %>
-
-    <main class="relative px-4 py-2 sm:ml-64 mt-16 h-[calc(100%-4.5rem)] w-full sm:w-[calc(100%-16rem)]">
-      <section class="relative w-full h-full fex flex-col items-center gap-2 overflow">
+    <main class="flex px-4 py-2 sm:ml-64 mt-16 h-[calc(100%-4.5rem)] w-full sm:w-[calc(100%-16rem)]">
+      <section class="w-full h-full flex flex-col overflow">
         <%= yield %>
-      </section>      
+      </section>
     </main>
   </body>
 </html>
