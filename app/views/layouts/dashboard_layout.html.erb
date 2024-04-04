@@ -16,8 +16,11 @@
 
   <body class="bg--main flex">
     <%= render 'shared/sidebar' %>
-    <main >
-      <%= yield %>
+
+    <main class="px-4 py-2 sm:ml-64 mt-16 h-[calc(100%-4.5rem)] w-full sm:w-[calc(100%-16rem)]">
+      <section class="w-full h-full fex flex-col items-center gap-2 overflow">
+        <%= yield %>
+      </section>      
     </main>
   </body>
 </html>

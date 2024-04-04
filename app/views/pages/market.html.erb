@@ -1,1 +1,15 @@
-<h1>Markets Overview</h1>
+<h1 class="h-[10%] font-bold text-xl flex items-center gap-3">
+  Markets Overview
+  <p class="text-base text-gray-500">
+    Trading Data
+  </p>
+</h1>
+
+<div class="w-full h-[90%] p-2 flex items-center gap-2">
+    <%= render 'pages/widgets/market_data_overview' %>
+
+    <div class="w-1/3 h-full px-2 border-l-2 border-gray-600">
+      <%= render 'pages/widgets/top_news' %>
+    </div>
+</div>
+
