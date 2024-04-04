@@ -5,16 +5,16 @@
   </p>
 </h1>
 
-<div class="w-full h-[90%] p-2 flex items-center gap-2">    
-  <div class="w-3/4 h-full flex flex-col items-center gap-2">
+<div class="w-full h-[90%] p-2 flex flex-col lg:flex-row items-center gap-2">    
+  <div class="w-full lg:w-3/4 h-full flex flex-col items-center gap-2">
     <%= render 'pages/widgets/market_data_overview' %>
   </div>
 
-  <div class="w-1/4 h-full px-2 border-l-2 border-gray-600 flex flex-col items-center">
-    <div class="h-[65%]">
+  <div class="w-full lg:w-1/4 h-full lg:px-2 lg:border-l-2 lg:border-gray-600 flex flex-col items-center">
+    <div class="lg:h-[65%] h-full w-full">
       <%= render 'pages/widgets/stock_market' %>
     </div>
-    <div class="h-[35%]">
+    <div class="lg:h-[35%] h-full w-full">
       <%= render 'pages/widgets/top_news' %>
     </div>
     

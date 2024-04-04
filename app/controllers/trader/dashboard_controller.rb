@@ -1,5 +1,6 @@
 class Trader::DashboardController < ApplicationController
   before_action :check_status
+  layout "dashboard_layout"
 
   def index
   end
