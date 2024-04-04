@@ -1,12 +1,11 @@
+# frozen_string_literal: true
+
 class Users::InvitationsController < Devise::InvitationsController
-  before_action :check_admin
+  before_action :authenticate_admin!
 
   private
 
-  def check_admin
-    unless current_user.role = "admin"
-      flash[:alert] = "Only admins can send invitations."
-      redirect_to trader_dashboard_path
-    end
+  def authenticate_admin!
+    redirect_to trader_dashboard_path, alert: "You are not authorized to perform this action." unless current_user.admin?
   end
 end
