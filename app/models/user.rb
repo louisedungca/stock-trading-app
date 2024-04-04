@@ -30,7 +30,7 @@ class User < ApplicationRecord
   attr_accessor :login
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
-  devise :database_authenticatable, :registerable, :recoverable, :rememberable,
+  devise :invitable, :database_authenticatable, :registerable, :recoverable, :rememberable,
           :validatable, :uid, :confirmable, authentication_keys: [:login]
 
   has_one :status
