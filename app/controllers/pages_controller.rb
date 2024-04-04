@@ -1,6 +1,6 @@
 class PagesController < ApplicationController
-  skip_before_action :authenticate_user!
-  layout "landing_layout"
+  skip_before_action :authenticate_user!, except: [:market]
+  layout "landing_layout", except: [:market]
 
   def landing
   end
@@ -9,5 +9,6 @@ class PagesController < ApplicationController
   end
 
   def market
+    render layout: "dashboard_layout"
   end
 end
