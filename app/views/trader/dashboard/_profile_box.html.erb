@@ -1,6 +1,7 @@
 <div class="w-full h-full flex items-center gap-4 ps-4 py-4">
   <div class="h-full w-1/3 flex gap-3 border-r-2 border-gray-600">
-    <div class="w-20 aspect-1 border rounded-lg">Profile Icon</div>
+    <%= image_tag("fox_avatar.png", alt: "user photo", class:"w-20 aspect-1 rounded-lg ring-4 ring-accent/55 p-2") %>
+  
     <div class="font-bold flex flex-col gap-3">
       <h1 class="flex items-center gap-3">     
         <%= current_user.username.capitalize %>
