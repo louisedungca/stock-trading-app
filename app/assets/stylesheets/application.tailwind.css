@@ -8,7 +8,7 @@
   html, body {
     font-family: "Raleway", sans-serif;
 
-    @apply tracking-wider;
+    @apply tracking-wider max-w-screen-2xl;
   }
 }
 
