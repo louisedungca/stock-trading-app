@@ -2,14 +2,14 @@
   Hello, <%= time_of_day_greeting.downcase %>
 <% end %>
 
-<div class="w-full h-full p-2 flex flex-col gap-2"> 
+<div class="relative w-full h-full p-2 flex flex-col gap-2"> 
   <div class="w-full h-[20%]">
     <%= render 'profile_box' %>
   </div>
 
-  <% if @trader_status != "approved" %>
-    Pending approval access.
-
+  <% if @trader_status != "approved" %>    
+    <%= render 'pending_banner' %>
+    
   <!-- *** STATUS_TYPE: APPROVED *** -->
   <% else %>  
     <div class="w-full h-[30%]">
