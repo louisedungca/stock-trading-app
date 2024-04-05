@@ -30,15 +30,6 @@
     @apply w-full h-dvh text-emerald-50;
   }
 
-  .bg--login {
-    background-color:hsla(0,0%,0%,1);
-    background-image:
-    radial-gradient(at 8% 100%, hsla(255,75%,56%,0.55) 0px, transparent 50%),
-    radial-gradient(at 100% 100%, hsla(165,85%,48%,0.6) 0px, transparent 50%);
-
-    @apply w-full h-dvh text-emerald-50;
-  }
-
   .bg--main {
     background-color:hsla(0,0%,0%,1);
     background-image:
@@ -48,16 +39,57 @@
     @apply w-full h-dvh text-emerald-50;
   }
 
+  .bg--secondary {
+    background-color:hsla(0,0%,0%,1);
+    background-image:
+    radial-gradient(at 0% 0%, hsla(255,75%,56%,0.55) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, hsla(165,85%,48%,0.6) 0px, transparent 50%);
+
+    @apply w-full h-dvh text-emerald-50;
+  }
+
+  .bg--frosted {
+    @apply backdrop-blur-md bg-emerald-50/15 border-gray-500 border-2 rounded-lg drop-shadow-xl;
+  }
+
   .button--main {
     @apply grid place-items-center border-white border-2 rounded-3xl px-6 py-2 tracking-wider min-w-32 font-bold uppercase focus:ring-2 focus:ring-accent focus:border-secondary;
   }
 
   .button--secondary {
-    @apply py-2 px-3 ms-3 font-semibold focus:outline-none rounded-lg border focus:z-10 focus:ring-4  focus:ring-gray-700 bg-gray-800 text-gray-400 border-gray-600 hover:text-white hover:bg-gray-700 tracking-wider text-xs font-sans;
+    @apply py-2 px-3 ms-3 font-semibold focus:outline-none rounded-lg border focus:z-10 focus:ring-4 focus:ring-gray-700 bg-gray-800 text-gray-400 border-gray-600 hover:text-white hover:bg-gray-700 tracking-wider text-xs font-sans;
   }
 
   .button--gray {
     @apply grid place-items-center border-gray-600 border-2 rounded-3xl px-6 py-2 tracking-wider min-w-32 font-bold uppercase focus:ring-2 focus:ring-accent focus:border-secondary;
+  }
+
+  .form__wrapper {
+    @apply flex flex-col gap-4 p-4;
+  }
+
+  .field {
+    @apply flex flex-col gap-1 text-sm;
+  }
+
+  .field input {
+    @apply border-2 border-gray-400 rounded-xl bg-transparent focus:border-secondary focus:outline-none focus:ring-accent;
+  }
+
+  .field input[type="checkbox"] {
+    @apply border-2 border-gray-400 rounded-sm w-4 h-4;
+  }
+
+  .field label {
+    @apply font-sans;
+  }
+
+  .actions {
+    @apply button--main mt-6 cursor-pointer;
+  }
+
+  .shared_links {
+    @apply text-xs font-sans hover:underline hover:underline-offset-2 focus:font-semibold hover:font-semibold;
   }
 
   .overflow {
