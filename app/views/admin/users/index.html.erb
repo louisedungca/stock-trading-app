@@ -1,0 +1,16 @@
+<% content_for :header do %>
+  All Traders
+<% end %>
+
+<tbody>
+  <% @traders.each do |trader| %>
+    <tr>
+      <td><%= trader.email %></td>
+      <td><%= trader.username %></td>
+      <td>
+        <%= link_to 'Edit', edit_admin_user_path(trader) %>
+        <%= link_to 'Delete', admin_user_path(trader), method: :delete, data: { confirm: 'Are you sure?' } %>
+      </td>
+    </tr>
+  <% end %>
+  </tbody>

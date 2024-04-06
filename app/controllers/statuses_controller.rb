@@ -8,6 +8,8 @@ class StatusesController < ApplicationController
   def update
     if @status.update(status_type: "approved")
       redirect_to admin_dashboard_path, notice: "Status was successfully updated."
+
+      ## dito add yung for mailer? 
     else
       render :edit, status: :unprocessable_entity
     end

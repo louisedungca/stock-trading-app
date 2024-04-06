@@ -1,21 +1,15 @@
-<div>
-  <h1 class="font-bold text-4xl">Admin Dashboard</h1>
-</div>
-
-<%= link_to destroy_user_session_path, data: { turbo_method: :delete, turbo_confirm: "Log out of Stocker?" }, class: "button--gray w-fit" do %>
-  <p>
-    Logout
-  </p>
+<% content_for :header do %>
+  <%= time_of_day_greeting %>, Admin
 <% end %>
 
 <% if @pending_approvals.any? %>
-  <h1 class="font-bold text-3xl">Pending Approvals</h1>
+  
   <%= render partial: 'pending_approvals', locals: { pending_approvals: @pending_approvals } %>
 <% else %>
   <p>No pending approvals</p>
 <% end %>
 
 <% if @traders.any? %>
-  <h1 class="font-bold text-3xl">Approved Traders</h1>
+  <h1 class="font-bold font-sans tracking-widest">Approved Traders</h1>
   <%= render partial: 'approved_traders', locals: { traders: @traders } %>
 <% end %>
