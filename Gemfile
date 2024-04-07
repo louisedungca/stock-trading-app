@@ -72,3 +72,4 @@ gem 'pagy'
 gem 'ransack'
 gem 'rspec', '~> 3.13'
 gem "devise_uid", "~> 0.1.1"
+gem 'devise_invitable', '~> 2.0.0'
