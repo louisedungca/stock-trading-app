@@ -33,7 +33,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable, :recoverable, :rememberable,
           :validatable, :uid, :confirmable, authentication_keys: [:login]
 
-  has_one :status
+  has_one :status, dependent: :destroy
 
   enum :role, {
     admin: "admin",
