@@ -1,10 +1,25 @@
-<%= render 'shared/logout' %> 
+<% content_for :header do %>
+  Hello, <%= time_of_day_greeting.downcase %>
+<% end %>
 
-<h1 class="h-[10%] font-bold text-xl flex items-center gap-3">
-  Trader Dashboard
-</h1>
+<div class="relative w-full h-full p-2 flex flex-col gap-2"> 
+  <div class="w-full h-[20%]">
+    <%= render 'profile_box' %>
+  </div>
 
-<div class="w-full h-[90%] p-2 flex flex-col lg:flex-row items-center gap-2"> 
+  <% if @trader_status != "approved" %>    
+    <%= render 'pending_banner' %>
+    
+  <!-- *** STATUS_TYPE: APPROVED *** -->
+  <% else %>  
+    <div class="w-full h-[30%]">
+      <%= render 'balance_box' %>
+    </div>
+
+    <div class="w-full h-[50%]">
+      <%= render 'portfolio_box' %>
+    </div>    
+  <% end %>
   
 </div>
 

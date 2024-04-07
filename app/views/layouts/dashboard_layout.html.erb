@@ -14,9 +14,15 @@
   </head>
   <body class="relative bg--main flex">
     <%= render 'shared/sidebar' %>
-    <main class="flex px-4 py-2 sm:ml-64 mt-16 h-[calc(100%-4.5rem)] w-full sm:w-[calc(100%-16rem)]">
-      <section class="w-full h-full flex flex-col overflow">
+
+    <main class="flex flex-col px-4 py-2 sm:ml-64 mt-16 h-[calc(100%-4.5rem)] w-full sm:w-[calc(100%-16rem)]">
+      <h1 class="h-[8%] font-bold text-xl flex items-center gap-3 font-sans">
+        <%= yield :header %>
+      </h1>
+      
+      <section class="w-full h-[92%] flex flex-col overflow">
         <%= yield %>
+        <%= render 'shared/logout' %> 
       </section>
     </main>
   </body>

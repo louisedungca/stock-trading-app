@@ -21,6 +21,7 @@ class Status < ApplicationRecord
 
   enum :status_type, {
     pending: "pending",
-    approved: "approved"
+    approved: "approved",
+    confirmed_email: "confirmed_email",
   }, default: "pending"
 end
