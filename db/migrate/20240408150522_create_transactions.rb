@@ -8,7 +8,7 @@ class CreateTransactions < ActiveRecord::Migration[7.1]
       t.string :company_name
       t.decimal :price_per_share
       t.references :user, null: false, foreign_key: true
-
+      t.decimal :amount
       t.timestamps
     end
   end
