@@ -71,4 +71,4 @@ gem 'iex-ruby-client', '~> 2.1'
 gem 'pagy'
 gem 'rspec', '~> 3.13'
 gem "devise_uid", "~> 0.1.1"
-gem "ransack", "~> 4.1"
+gem 'devise_invitable', '~> 2.0.0'
