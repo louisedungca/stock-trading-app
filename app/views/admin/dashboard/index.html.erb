@@ -9,14 +9,13 @@
         Invite Trader
       </small>
     </div>
-    <div class="border h-1/2 w-full">
-      <small>
-        Recent Approvals
-      </small>
+
+    <div class="h-auto w-full py-2">
+      <%= render 'recent_approvals' %>
     </div>
   </div>
 
   <div class="w-full lg:w-1/2 h-full flex flex-col items-center gap-2">
-    <%= render partial: 'pending_approvals', locals: { pending_traders: @pending_traders } %>
+    <%= render 'pending_approvals' %>
   </div>
 </div>
