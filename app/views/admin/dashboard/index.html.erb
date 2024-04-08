@@ -3,7 +3,6 @@
 <% end %>
 
 <% if @pending_approvals.any? %>
-  
   <%= render partial: 'pending_approvals', locals: { pending_approvals: @pending_approvals } %>
 <% else %>
   <p>No pending approvals</p>

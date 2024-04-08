@@ -34,6 +34,7 @@ class User < ApplicationRecord
           :validatable, :uid, :confirmable, authentication_keys: [:login]
 
   has_one :status, dependent: :destroy
+  accepts_nested_attributes_for :status
 
   enum :role, {
     admin: "admin",
@@ -46,6 +47,8 @@ class User < ApplicationRecord
   before_create :initialize_status_for_trader
 
   scope :approved_traders, -> { includes(:status).where(role: :trader, statuses: { status_type: "approved" }) }
+  scope :pending_traders, -> { includes(:status).where(role: :trader, statuses: { status_type: "pending" }) }
+  scope :confirmed_email_traders, -> { includes(:status).where(role: :trader, statuses: { status_type: "confirmed_email" }) }
 
   def login
     @login || username || email
