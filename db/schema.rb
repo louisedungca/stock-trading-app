@@ -73,7 +73,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_08_151902) do
     t.string "invited_by_type"
     t.bigint "invited_by_id"
     t.integer "invitations_count", default: 0
-    t.decimal "balance", precision: 10, scale: 2
+    t.decimal "balance", precision: 10, scale: 2, default: "0.0"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["invitation_token"], name: "index_users_on_invitation_token", unique: true
