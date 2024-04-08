@@ -1,17 +1,15 @@
 class Admin::DashboardController < ApplicationController
-  before_action :set_pending_approvals, only: [:index, :pending_approvals]
   layout "dashboard_layout"
 
   def index
-    @traders = User.approved_traders
+    @pending_traders = User.pending_traders
+    @confirmed_email_traders = User.confirmed_email_traders
+    @approved_traders = User.approved_traders
+
+    @traders = @pending_traders + @confirmed_email_traders + @approved_traders
   end
 
   def pending_approvals
   end
 
-  private
-
-  def set_pending_approvals
-    @pending_approvals = Status.where(status_type: "pending")
-  end
 end

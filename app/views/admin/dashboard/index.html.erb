@@ -2,13 +2,13 @@
   <%= time_of_day_greeting %>, Admin
 <% end %>
 
-<% if @pending_approvals.any? %>
-  <%= render partial: 'pending_approvals', locals: { pending_approvals: @pending_approvals } %>
+<% if @pending_traders.any? %>
+  <%= render partial: 'pending_approvals', locals: { pending_traders: @pending_traders } %>
 <% else %>
   <p>No pending approvals</p>
 <% end %>
 
-<% if @traders.any? %>
+<% if @approved_traders.any? %>
   <h1 class="font-bold font-sans tracking-widest">Approved Traders</h1>
-  <%= render partial: 'approved_traders', locals: { traders: @traders } %>
+  <%= render partial: 'approved_traders', locals: { traders: @approved_traders } %>
 <% end %>

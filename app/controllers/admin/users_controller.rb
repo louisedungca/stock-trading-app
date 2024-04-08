@@ -1,4 +1,5 @@
   class Admin::UsersController < ApplicationController
+    before_action :set_trader, except: [:index]
     layout "dashboard_layout"
 
     def index
@@ -6,16 +7,13 @@
       @confirmed_email_traders = User.confirmed_email_traders
       @approved_traders = User.approved_traders
 
-      @traders = @pending_traders + @confirmed_email_traders + @approved_traders
+      @traders = User.sorted_traders
+      @pagy, @traders = pagy_array(@traders)
     end
 
-    def edit
-      @trader = User.includes(:status).find(params[:id])
-    end
+    def edit; end
 
     def update
-      @trader = User.includes(:status).find(params[:id])
-
       if params[:user][:status_approved] == "approved"
         @trader.status.update(status_type: "approved")
       end
@@ -29,18 +27,14 @@
     end
 
   def destroy
-    @trader = User.find(params[:id])
-
     @trader.destroy
     redirect_to admin_users_path, notice: "User permanently deleted."
   end
 
   private
 
-  def order_by_status_type
-    "CASE WHEN statuses.status_type = 'pending' THEN 1 " \
-    "WHEN statuses.status_type = 'confirmed_email' THEN 2 " \
-    "ELSE 3 END"
+  def set_trader
+    @trader = User.includes(:status).find(params[:id])
   end
 
   def trader_params

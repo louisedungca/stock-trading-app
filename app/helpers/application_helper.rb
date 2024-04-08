@@ -1,4 +1,6 @@
 module ApplicationHelper
+  include Pagy::Frontend
+
   def time_of_day_greeting
     current_hour = Time.now.hour
     case current_hour

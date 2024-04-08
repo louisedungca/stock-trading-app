@@ -46,9 +46,14 @@ class User < ApplicationRecord
   validates :password, presence: true
   before_create :initialize_status_for_trader
 
-  scope :approved_traders, -> { includes(:status).where(role: :trader, statuses: { status_type: "approved" }) }
-  scope :pending_traders, -> { includes(:status).where(role: :trader, statuses: { status_type: "pending" }) }
-  scope :confirmed_email_traders, -> { includes(:status).where(role: :trader, statuses: { status_type: "confirmed_email" }) }
+  scope :approved_traders, -> { includes(:status).where(role: :trader, statuses: { status_type: "approved" }).order(:created_at) }
+  scope :pending_traders, -> { includes(:status).where(role: :trader, statuses: { status_type: "pending" }).order(:created_at) }
+  scope :confirmed_email_traders, -> { includes(:status).where(role: :trader, statuses: { status_type: "confirmed_email" }).order(:created_at) }
+
+  # sort traders to pending first, then confirmed_email, and approved last
+  def self.sorted_traders
+    pending_traders + confirmed_email_traders + approved_traders
+  end
 
   def login
     @login || username || email

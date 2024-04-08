@@ -15,3 +15,11 @@ admin.update!(
   password_confirmation: "111111",
   role: "admin"
 )
+
+# 25.times do |index|
+#   User.create(
+#     username: "trader_#{index + 1}",
+#     email: "trader_#{index + 1}@email.com",
+#     password: "111111"
+#   )
+# end
