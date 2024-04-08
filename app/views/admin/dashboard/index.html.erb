@@ -2,13 +2,23 @@
   <%= time_of_day_greeting %>, Admin
 <% end %>
 
-<% if @pending_traders.any? %>
-  <%= render partial: 'pending_approvals', locals: { pending_traders: @pending_traders } %>
-<% else %>
-  <p>No pending approvals</p>
-<% end %>
+<div class="w-full h-[90%] flex flex-col lg:flex-row items-center gap-2"> 
+  <div class="w-full lg:w-3/4 h-full flex flex-col items-center gap-2">
+    <%= render partial: 'pending_approvals', locals: { pending_traders: @pending_traders } %>
+  </div>
 
-<% if @approved_traders.any? %>
-  <h1 class="font-bold font-sans tracking-widest">Approved Traders</h1>
-  <%= render partial: 'approved_traders', locals: { traders: @approved_traders } %>
-<% end %>
+  <div class="w-full lg:w-1/4 h-full lg:px-2 lg:border-l-2 lg:border-gray-600 flex flex-col">
+    <div class="border h-1/2 w-full">
+      <small>
+        Invite Trader
+      </small>
+    </div>
+    <div class="border h-1/2 w-full">
+      <% if @approved_traders.any? %>
+        <%#= render partial: 'approved_traders', locals: { traders: @approved_traders } %>
+      <% end %>
+    </div>
+  </div>
+
+
+</div>

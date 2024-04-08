@@ -1,15 +1,47 @@
-<div class="border-2 border-gray-600 w-full h-full rounded-2xl flex justify-between flex-col p-4">
-  <h1 class="font-bold font-sans tracking-widest">Pending Approvals</h1>
-  
-  <% pending_traders.each do |pending_trader| %>
-    <div class="border p-4">
-      <%= pending_trader.user.username %> <br>
-      (<%= pending_trader.created_at %>)
+<div class="w-full h-full rounded-2xl flex flex-col justify-between p-4"> 
+  <div class="relative shadow-md sm:rounded-lg text-sm py-3">
+    <table class="w-full text-sm text-left rtl:text-right text-gray-400">
+      <thead class="text-xsuppercase bg-gray-700/55 text-gray-400">
+        <tr>
+          <th scope="col" class="px-6 py-3 font-bold font-sans tracking-widest">
+            Pending Approvals
+          </th>
+          <th scope="col" class="px-6 py-3">
+            <span class="sr-only">Placeholder</span>
+        </th>
+        </tr>
+      </thead>
+      <tbody>
+        <% if @pending_traders.any? %>
+          <% @pending_traders.each do |trader| %>
+            <tr class="border-b bg-stone-900/35 border-gray-700 hover:bg-gray-600">
+              <th scope="row" class="px-6 py-3 font-medium whitespace-nowrap text-white">
+                  <%= trader.email %>
+              </th>
+              <td class="flex justify-center px-6 py-2.5">
+                <button data-modal-target="approve-modal-<%= trader.id %>" data-modal-toggle="approve-modal-<%= trader.id %>" class="block text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-4 py-2 text-center  bg-violet-600  hover:bg-violet-700  focus:ring-violet-800" type="button">
+                  Approve
+                </button>
+              </td>        
+            </tr>
 
-      <%= form_with model: pending_trader, url: status_path(pending_trader), method: :patch, remote: true do |form| %>
-        <%= form.hidden_field :status_type, value: "approved" %>
-        <%= form.button "Approve", class: "button--gray", type: "submit" %>
-      <% end %>
-    </div>
-  <% end %>
+            <%= render partial: 'change_status_modal', locals: { trader: trader } %>
+          <% end %>
+
+        <% else %>
+          <tr class="border-b bg-stone-900/35 border-gray-700 hover:bg-gray-600">
+            <th scope="row" class="px-6 py-3 text-xs font-light font-sans whitespace-nowrap text-white">
+                No pending approval
+            </th>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>  
+  </div>
+
+  <div class=" grid place-items-center py-2.5">
+    <%== pagy_nav(@pagy) if @pagy.pages > 1 %> 
+  </div>
+  
 </div>
+

@@ -1,15 +1,21 @@
 class Admin::DashboardController < ApplicationController
+  before_action :set_traders
   layout "dashboard_layout"
 
   def index
-    @pending_traders = User.pending_traders
-    @confirmed_email_traders = User.confirmed_email_traders
-    @approved_traders = User.approved_traders
-
-    @traders = @pending_traders + @confirmed_email_traders + @approved_traders
+    @traders = User.sorted_traders
+    @pagy, @pending_traders = pagy(@pending_traders, items: 8)
   end
 
   def pending_approvals
+  end
+
+  private
+
+  def set_traders
+    @pending_traders = User.pending_traders
+    @confirmed_email_traders = User.confirmed_email_traders
+    @approved_traders = User.approved_traders
   end
 
 end
