@@ -44,6 +44,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_08_151902) do
     t.string "company_name"
     t.decimal "price_per_share"
     t.bigint "user_id", null: false
+    t.decimal "amount"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_transactions_on_user_id"
