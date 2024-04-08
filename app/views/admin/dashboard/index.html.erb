@@ -2,23 +2,21 @@
   <%= time_of_day_greeting %>, Admin
 <% end %>
 
-<div class="w-full h-[90%] flex flex-col lg:flex-row items-center gap-2"> 
-  <div class="w-full lg:w-3/4 h-full flex flex-col items-center gap-2">
-    <%= render partial: 'pending_approvals', locals: { pending_traders: @pending_traders } %>
-  </div>
-
-  <div class="w-full lg:w-1/4 h-full lg:px-2 lg:border-l-2 lg:border-gray-600 flex flex-col">
+<div class="w-full h-full flex flex-col lg:flex-row items-center gap-2"> 
+  <div class="w-full lg:w-1/2 h-full lg:px-2 lg:border-r-2 lg:border-gray-600 flex flex-col">
     <div class="border h-1/2 w-full">
       <small>
         Invite Trader
       </small>
     </div>
     <div class="border h-1/2 w-full">
-      <% if @approved_traders.any? %>
-        <%#= render partial: 'approved_traders', locals: { traders: @approved_traders } %>
-      <% end %>
+      <small>
+        Recent Approvals
+      </small>
     </div>
   </div>
 
-
+  <div class="w-full lg:w-1/2 h-full flex flex-col items-center gap-2">
+    <%= render partial: 'pending_approvals', locals: { pending_traders: @pending_traders } %>
+  </div>
 </div>

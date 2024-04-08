@@ -4,7 +4,7 @@ class Admin::DashboardController < ApplicationController
 
   def index
     @traders = User.sorted_traders
-    @pagy, @pending_traders = pagy(@pending_traders, items: 8)
+    @pagy, @confirmed_email_traders = pagy(@confirmed_email_traders, items: 8)
   end
 
   def pending_approvals
