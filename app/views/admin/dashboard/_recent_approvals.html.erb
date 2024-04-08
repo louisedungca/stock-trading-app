@@ -13,7 +13,9 @@
           <% @approved_traders.order(updated_at: :desc).limit(5).each do |trader| %>
             <tr class="border-b bg-stone-900/35 border-gray-700 hover:bg-gray-600">
               <th scope="row" class="px-6 py-3 font-medium whitespace-nowrap text-white flex items-center gap-3">
-                <%= image_tag("fox_avatar.png", alt: "user photo", class: "w-8 h-8 rounded-full ring-4 ring-accent/55") %>
+                <% ring_color_class = trader.status.status_type == "approved" ? "ring-primary/55" : "ring-accent/55" %>
+                <%= image_tag("fox_avatar.png", alt: "user photo", class: "w-8 h-8 rounded-full ring-4 #{ring_color_class}") %>
+
                 <%= trader.username %>
                 <small class="text-white/65 italic">
                   <%= trader.email %>

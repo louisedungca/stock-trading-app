@@ -19,9 +19,10 @@
               <button type="button" class="flex text-sm bg-stone-950 rounded-full focus:ring-4 focus:ring-gray-600" aria-expanded="false" data-dropdown-toggle="dropdown-user">
                 <span class="sr-only">Open user menu</span>
                 <% if current_user.admin? %>
-                  <%= image_tag("cat_avatar.png", alt: "user photo", class: "w-8 h-8 rounded-full ring-4 ring-accent/55") %>
+                  <%= image_tag("cat_avatar.png", alt: "user photo", class: "w-8 h-8 rounded-full ring-4 ring-amber-700") %>
                 <% else %>
-                  <%= image_tag("fox_avatar.png", alt: "user photo", class: "w-8 h-8 rounded-full ring-4 ring-accent/55") %>
+                  <% ring_color_class = trader.status.status_type == "approved" ? "ring-primary/55" : "ring-accent/55" %>
+                  <%= image_tag("fox_avatar.png", alt: "user photo", class: "w-8 h-8 rounded-full ring-4 #{ring_color_class}") %>
                 <% end %>
               </button>
             </div>
