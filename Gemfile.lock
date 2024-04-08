@@ -318,7 +318,7 @@ DEPENDENCIES
   pg (~> 1.1)
   puma (>= 5.0)
   rails (~> 7.1.3, >= 7.1.3.2)
-  ransack
+  ransack (~> 4.1)
   rspec (~> 3.13)
   sprockets-rails
   stimulus-rails
