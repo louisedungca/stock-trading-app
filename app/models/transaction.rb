@@ -2,15 +2,16 @@
 #
 # Table name: transactions
 #
-#  id              :bigint           not null, primary key
-#  company_name    :string
-#  price_per_share :decimal(, )
-#  shares          :decimal(, )
-#  stock_symbol    :string
-#  type            :enum
-#  created_at      :datetime         not null
-#  updated_at      :datetime         not null
-#  user_id         :bigint           not null
+#  id               :bigint           not null, primary key
+#  amount           :decimal(, )
+#  company_name     :string
+#  price_per_share  :decimal(, )
+#  shares           :decimal(, )
+#  stock_symbol     :string
+#  transaction_type :enum
+#  created_at       :datetime         not null
+#  updated_at       :datetime         not null
+#  user_id          :bigint           not null
 #
 # Indexes
 #

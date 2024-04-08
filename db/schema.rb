@@ -18,7 +18,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_08_151902) do
   # Note that some types may not work with other database engines. Be careful if changing database.
   create_enum "role", ["admin", "trader"]
   create_enum "status_type", ["pending", "approved", "confirmed_email"]
-  create_enum "type", ["buy", "sell", "cash_in"]
+  create_enum "transaction_type", ["buy", "sell", "cash_in"]
 
   create_table "statuses", force: :cascade do |t|
     t.enum "status_type", default: "pending", null: false, enum_type: "status_type"
@@ -38,7 +38,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_08_151902) do
   end
 
   create_table "transactions", force: :cascade do |t|
-    t.enum "type", enum_type: "type"
+    t.enum "transaction_type", enum_type: "transaction_type"
     t.decimal "shares"
     t.string "stock_symbol"
     t.string "company_name"
