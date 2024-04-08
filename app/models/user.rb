@@ -86,6 +86,11 @@ class User < ApplicationRecord
     status.update(status_type: "confirmed_email") if status.present?
   end
 
+  def after_invitation_accepted
+    # update the user's status to confirmed_email
+    status.update(status_type: "confirmed_email") if status.present?
+  end
+
   private
 
   def initialize_status_for_trader
