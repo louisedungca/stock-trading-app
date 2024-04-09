@@ -2,18 +2,19 @@
 #
 
 Rails.application.routes.draw do
-  root "pages#landing"
+  root 'pages#landing'
 
   devise_for :users,
-    path: '',
-    path_names: {
-      sign_in: 'login',
-      sign_out: 'logout'
-    },
-    controllers: {
-      sessions: 'users/sessions',
-      invitations: 'users/invitations' },
-    skip: [:registrations]
+             path: '',
+             path_names: {
+               sign_in: 'login',
+               sign_out: 'logout'
+             },
+             controllers: {
+               sessions: 'users/sessions',
+               invitations: 'users/invitations'
+             },
+             skip: [:registrations]
 
   # routes for user registrations controller
   devise_scope :user do
@@ -29,7 +30,7 @@ Rails.application.routes.draw do
     get 'dashboard', to: 'dashboard#index'
     # get 'pending_approvals', to: 'dashboard#pending_approvals'
     # get 'all_traders', to: 'dashboard#index'
-    resources :users, except: [:new, :create] ## for editing user details
+    resources :users, except: %i[new create] ## for editing user details
     # resources :transactions
   end
 
@@ -37,9 +38,11 @@ Rails.application.routes.draw do
     get 'dashboard', to: 'dashboard#index'
     # resources :transactions
     # resources :stocks
+    get 'cash-in', to: 'cash_in#index'
+    patch 'cash-in', to: 'cash_in#update'
   end
 
-  resources :statuses, only: [:edit, :update]
+  resources :statuses, only: %i[edit update]
 
   # routes for static pages
   get 'landing', to: 'pages#landing', as: :landing_page
