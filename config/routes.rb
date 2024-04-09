@@ -10,7 +10,9 @@ Rails.application.routes.draw do
       sign_in: 'login',
       sign_out: 'logout'
     },
-    controllers: { invitations: 'users/invitations' },
+    controllers: {
+      sessions: 'users/sessions',
+      invitations: 'users/invitations' },
     skip: [:registrations]
 
   # routes for user registrations controller

@@ -1,23 +1,27 @@
   class Admin::UsersController < ApplicationController
+    before_action :authenticate_admin!
     before_action :set_trader, except: [:index]
     layout "dashboard_layout"
 
     def index
-      @pending_traders = User.pending_traders
-      @confirmed_email_traders = User.confirmed_email_traders
-      @approved_traders = User.approved_traders
+      case params[:filter]
+      when 'pending'
+        @traders = User.pending_traders
+      when 'confirmed_email'
+        @traders = User.confirmed_email_traders
+      when 'approved'
+        @traders = User.approved_traders
+      else
+        @traders = User.sorted_traders
+      end
 
-      @traders = User.sorted_traders
-      @pagy, @traders = pagy_array(@traders)
+      @pagy, @traders = pagy_array(@traders) || pagy(@traders)
     end
 
-    def edit; end
+    def edit
+    end
 
     def update
-      # if params[:user][:status_attributes][:status_type] == "approved"
-      #   @trader.status.update(status_type: "approved")
-      # end
-
       if @trader.update(trader_params)
         redirect_to admin_users_path, notice: "User details successfully updated."
       else
@@ -32,6 +36,10 @@
   end
 
   private
+
+  def authenticate_admin!
+    redirect_to root_path, alert: 'You are not authorized to perform this action.' unless current_user.admin?
+  end
 
   def set_trader
     @trader = User.includes(:status).find(params[:id])

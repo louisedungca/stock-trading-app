@@ -2,10 +2,10 @@ class StatusesController < ApplicationController
   before_action :authenticate_admin!
   before_action :set_status
 
-  def edit; end
+  def edit
+  end
 
   def update
-    @status = Status.find(params[:id])
     if @status.update(status_type: 'approved')
       UserMailer.with(user_id: @status.user_id).user_approved.deliver_now
       redirect_to admin_dashboard_path, notice: 'Status was successfully updated.'
