@@ -1,19 +1,19 @@
 <div class="tradingview-widget-container" style="height:100%;width:100%">
-  <div class="tradingview-widget-container__widget" style="height:calc(100% - 32px);width:100%"></div>
-  <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
-  {
-  "autosize": true,
-  "symbol": <%= @stock_symbol %>,
-  "interval": "D",
-  "timezone": "Etc/UTC",
-  "theme": "dark",
-  "style": "1",
-  "locale": "en",
-  "enable_publishing": false,
-  "hide_top_toolbar": true,
-  "details": true,
-  "calendar": false,
-  "support_host": "https://www.tradingview.com"
-}
-  </script>
+    <div class="tradingview-widget-container__widget" style="height:calc(100% - 32px);width:100%"></div>
+    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
+    {
+    "autosize": true,
+    "symbol": "NASDAQ:<%= @stock_symbol %>", 
+    "interval": "D",
+    "timezone": "Etc/UTC",
+    "theme": "dark",
+    "style": "1",
+    "locale": "en",
+    "enable_publishing": false,
+    "hide_top_toolbar": true,
+    "details": true,
+    "calendar": false,
+    "support_host": "https://www.tradingview.com"
+    }
+    </script>
 </div>
