@@ -1,0 +1,17 @@
+<section class="flex flex-col gap-2 bg--frosted p-4">
+  <h1>CASH IN</h1>
+
+  <p>Current Balance: $<%= @balance %></p>
+  <div>
+    <%= form_with(url: trader_cash_in_path, method: :patch) do |form| %>
+      <%= form.label :amount, "Amount to Cash In" %>
+      <div class="text-black">
+        <%= form.number_field :amount %>
+      </div>
+      <button class="button--main">
+        <%= form.submit "Cash In" %>
+      </button>
+      <% end %>
+  </div>
+
+</section>
