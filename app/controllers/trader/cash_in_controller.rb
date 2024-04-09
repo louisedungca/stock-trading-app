@@ -3,6 +3,7 @@ class Trader::CashInController < ApplicationController
 
   def index
     @balance = current_user.balance
+    @trader_status = current_user.status&.status_type
   end
 
   def update
