@@ -36,6 +36,7 @@ Rails.application.routes.draw do
 
   namespace :trader, path: 't' do
     get 'dashboard', to: 'dashboard#index'
+    get 'market', to: 'dashboard#market', as: :market_page
     # resources :transactions
     # resources :stocks
     get 'cash-in', to: 'cash_in#index'
@@ -47,5 +48,5 @@ Rails.application.routes.draw do
   # routes for static pages
   get 'landing', to: 'pages#landing', as: :landing_page
   get 'pending-verification', to: 'pages#pending_verification', as: :pending_verification_page
-  get 'market', to: 'pages#market', as: :market_page
+
 end

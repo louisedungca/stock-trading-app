@@ -7,8 +7,4 @@ class PagesController < ApplicationController
 
   def pending_verification
   end
-
-  def market
-    render layout: "dashboard_layout"
-  end
 end
