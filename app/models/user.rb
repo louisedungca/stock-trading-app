@@ -58,7 +58,7 @@ class User < ApplicationRecord
 
   validates :email, presence: true, uniqueness: true
   validates :username, presence: true, uniqueness: true
-  validates :password, presence: true
+  validates :password, presence: true, on: :create
   before_create :initialize_status_for_trader
   after_invitation_accepted :update_status_of_invited_user
 

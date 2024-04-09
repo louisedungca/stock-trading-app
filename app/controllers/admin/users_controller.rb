@@ -14,9 +14,9 @@
     def edit; end
 
     def update
-      if params[:user][:status_attributes][:status_type] == "approved"
-        @trader.status.update(status_type: "approved")
-      end
+      # if params[:user][:status_attributes][:status_type] == "approved"
+      #   @trader.status.update(status_type: "approved")
+      # end
 
       if @trader.update(trader_params)
         redirect_to admin_users_path, notice: "User details successfully updated."
@@ -38,6 +38,6 @@
   end
 
   def trader_params
-    params.require(:user).permit(:username, :email, :password, status_attributes: [:status_type])
+    params.require(:user).permit(:username, :email, status_attributes: [:status_type, :id])
   end
 end

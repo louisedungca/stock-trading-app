@@ -27,19 +27,13 @@
             <%= f.label :email, class: "modal__label" %> 
             <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "modal__textfield" %>
           </div>
-
-          <div>
-            <%= f.label :password, class: "modal__label" %> 
-            <%= f.password_field :password, autocomplete: "new-password", class: "modal__textfield" %>
-          </div> 
-
+      
           <%= f.fields_for :status do |builder| %>
-            <div class="field flex-row items-center gap-2 px-px">
-              <%= builder.hidden_field :status_type, value: 'approved' %>
+            <div class="field flex-row items-center gap-2 px-px <%= trader.status.status_type == 'approved' ? 'hidden' : 'inline-flex' %>">
               <%= builder.check_box :status_type, { checked: false, id: "status_type_#{trader.id}" }, 'approved', nil %>
               <%= builder.label "status_type_#{trader.id}", "Approve", class: "text-white font-medium" %>   
             </div>
-          <% end %>         
+          <% end %>
 
           <div class="modal__button">
             <%= f.button "Save Changes" %>
