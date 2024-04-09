@@ -1,5 +1,5 @@
   class Admin::UsersController < ApplicationController
-    before_action :set_trader
+    before_action :set_trader, except: [:index]
     layout "dashboard_layout"
 
     def index
