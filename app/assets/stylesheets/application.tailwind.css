@@ -72,7 +72,7 @@
     @apply flex flex-col gap-1 text-sm;
   }
 
-  .field input {
+  .field input, .field__input {
     @apply border-2 border-gray-400 rounded-xl bg-transparent focus:border-secondary focus:outline-none focus:ring-accent;
   }
 
