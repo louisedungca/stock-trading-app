@@ -23,6 +23,7 @@
         <p>Stock Details:</p>
         <p>Company Name: <%= @data.company_name %></p>
         <p>Latest Price: <%= @data.latest_price %></p>
+        <%= render 'pages/widgets/fixed_chart', locals: { stock_symbol: @stock_symbol } %>
     <% end %>
     </div>
 </div>

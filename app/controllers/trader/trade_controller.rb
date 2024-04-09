@@ -6,10 +6,10 @@ class Trader::TradeController < ApplicationController
     return unless params[:symbol].present?
 
     begin
-      stock_symbol = params[:symbol]
-      @data = IEX::Api::Client.new.quote(stock_symbol.to_s)
+      @stock_symbol = params[:symbol].to_s.upcase
+      @data = IEX::Api::Client.new.quote(@stock_symbol)
     rescue IEX::Errors::SymbolNotFoundError => e
-      flash[:alert] = "Stock symbol not found: #{stock_symbol}"
+      flash[:alert] = "Stock symbol not found: #{params[:symbol]}"
     end
   end
 end
