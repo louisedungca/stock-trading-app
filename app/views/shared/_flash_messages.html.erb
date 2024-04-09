@@ -1,0 +1,13 @@
+<div class="w-4/5 sm:w-1/5 h-auto absolute bottom-[1.5rem] right-[0.5rem] z-30 ">
+  <% flash.each do |type, message| %>
+    <% if type == "notice" %>
+      <div class="text-green-500 mt-2 py-2 px-4 rounded-lg text-xs tracking-wider font-semibold border-2 border-green-500 border-dashed bg-green-200">
+        <%= message %>
+      </div>            
+    <% else %>
+      <div class="text-red-500 mt-2 py-2 px-4 rounded-lg text-xs tracking-wider font-semibold border-2 border-red-500 border-dashed bg-red-200">
+        <%= message %>
+      </div>
+    <% end %>          
+  <% end %>
+</div>

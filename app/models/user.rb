@@ -46,7 +46,8 @@ class User < ApplicationRecord
   devise :invitable, :database_authenticatable, :registerable, :recoverable, :rememberable,
          :validatable, :uid, :confirmable, authentication_keys: [:login]
 
-  has_one :status
+  has_one :status, dependent: :destroy
+  accepts_nested_attributes_for :status
   has_many :transactions
   has_many :stocks
 
@@ -57,10 +58,18 @@ class User < ApplicationRecord
 
   validates :email, presence: true, uniqueness: true
   validates :username, presence: true, uniqueness: true
-  validates :password, presence: true
+  validates :password, presence: true, on: :create
   before_create :initialize_status_for_trader
+  after_invitation_accepted :update_status_of_invited_user
 
-  scope :approved_traders, -> { includes(:status).where(role: :trader, statuses: { status_type: 'approved' }) }
+  scope :approved_traders, -> { includes(:status).where(role: :trader, statuses: { status_type: "approved" }) }
+  scope :pending_traders, -> { includes(:status).where(role: :trader, statuses: { status_type: "pending" }).order(:created_at) }
+  scope :confirmed_email_traders, -> { includes(:status).where(role: :trader, statuses: { status_type: "confirmed_email" }).order(:updated_at) }
+
+  # sort traders to pending first, then confirmed_email, and approved last
+  def self.sorted_traders
+    pending_traders + confirmed_email_traders + approved_traders
+  end
 
   def login
     @login || username || email
@@ -90,4 +99,9 @@ class User < ApplicationRecord
 
     build_status(status_type: 'pending')
   end
+
+  def update_status_of_invited_user
+    status.update(status_type: "confirmed_email")
+  end
+
 end

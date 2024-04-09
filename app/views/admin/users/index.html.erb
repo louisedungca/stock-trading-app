@@ -1,0 +1,65 @@
+<% content_for :header do %>
+  All Traders
+<% end %>
+
+<div class="relative shadow-md sm:rounded-lg text-sm">
+  <table class="w-full text-sm text-left rtl:text-right text-gray-400">
+    <thead class="text-xsuppercase bg-gray-700/55 text-gray-400">
+      <tr>
+        <th scope="col" class="px-6 py-3">
+            Email
+        </th>
+        <th scope="col" class="px-6 py-3">
+            Username
+        </th>
+        <th scope="col" class="px-6 py-3">
+            Status
+        </th>
+        <th scope="col" class="px-6 py-3">
+            <span class="sr-only">Actions</span>
+        </th>
+      </tr>
+    </thead>
+
+    <tbody>
+    <% @traders.each do |trader| %>
+      <tr class="border-b bg-stone-900/35 border-gray-700 hover:bg-gray-600">
+        <th scope="row" class="px-6 py-3 font-medium whitespace-nowrap text-white">
+            <%= trader.email %>
+        </th>
+        <td class="px-6 py-2.5">
+            <%= trader.username %>
+        </td>
+        <td class="px-6 py-2.5">
+            <%= trader.status.status_type %>
+        </td>
+        <td class="w-fit h-fit">
+          <div class="flex items-center gap-2 justify-center">
+            <!-- Modal toggle -->
+            <button data-modal-target="edit-modal-<%= trader.id %>" data-modal-toggle="edit-modal-<%= trader.id %>" class="block text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm pr-3 pl-4 py-2 text-center  bg-teal-600  hover:bg-teal-700  focus:ring-teal-800" type="button">
+              <svg class="w-5 h-5 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m14.304 4.844 2.852 2.852M7 7H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-4.5m2.409-9.91a2.017 2.017 0 0 1 0 2.853l-6.844 6.844L8 14l.713-3.565 6.844-6.844a2.015 2.015 0 0 1 2.852 0Z"/>
+              </svg>
+            </button>
+
+            <!-- Delete User Button -->
+            <button data-modal-target="delete-modal-<%= trader.id %>" data-modal-toggle="delete-modal-<%= trader.id %>" class="block text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-4 py-2 text-center  bg-violet-600  hover:bg-violet-700  focus:ring-violet-800" type="button">
+              <svg class="w-5 h-5  text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z"/>
+              </svg>
+            </button>
+          </div>
+        </td>
+      </tr>
+
+      <%= render partial: 'edit_form_modal', locals: { trader: trader } %>
+      <%= render partial: 'delete_user_modal', locals: { trader: trader } %>
+    <% end %>
+    </tbody>
+  </table>  
+</div>
+
+<!-- *** Render a view helper in your views (skipping nav links for empty pages)*** -->
+<div class=" grid place-items-center py-2.5">
+  <%== pagy_nav(@pagy) if @pagy.pages > 1 %> 
+</div>

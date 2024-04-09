@@ -18,7 +18,12 @@
             <div>
               <button type="button" class="flex text-sm bg-stone-950 rounded-full focus:ring-4 focus:ring-gray-600" aria-expanded="false" data-dropdown-toggle="dropdown-user">
                 <span class="sr-only">Open user menu</span>
-                <%= image_tag("fox_avatar.png", alt: "user photo", class: "w-8 h-8 rounded-full ring-4 ring-accent/55") %>
+                <% if current_user.admin? %>
+                  <%= image_tag("cat_avatar.png", alt: "user photo", class: "w-8 h-8 rounded-full ring-4 ring-amber-700") %>
+                <% else %>
+                  <% ring_color_class = current_user.status.status_type == "approved" ? "ring-primary/55" : "ring-accent/55" %>
+                  <%= image_tag("fox_avatar.png", alt: "user photo", class: "w-8 h-8 rounded-full ring-4 #{ring_color_class}") %>
+                <% end %>
               </button>
             </div>
             <div class="z-50 hidden my-4 text-base list-none divide-y rounded shadow bg-gray-700 divide-gray-600" id="dropdown-user">

@@ -4,14 +4,14 @@
       <thead class="text-xsuppercase bg-gray-700/55 text-gray-400">
         <tr>
           <th scope="col" class="px-6 py-3 font-bold font-sans tracking-widest">
-            Pending Approvals
+            Recent Approvals
           </th>
         </tr>
       </thead>
       <tbody>
-        <% if @confirmed_email_traders.any? %>
-          <% @confirmed_email_traders.each do |trader| %>
-            <tr class="border-b bg-stone-900/35 border-gray-700 hover:bg-gray-600 flex items-center justify-between gap-3">
+        <% if @approved_traders.any? %>
+          <% @approved_traders.order(updated_at: :desc).limit(5).each do |trader| %>
+            <tr class="border-b bg-stone-900/35 border-gray-700 hover:bg-gray-600">
               <th scope="row" class="px-6 py-3 font-medium whitespace-nowrap text-white flex items-center gap-3">
                 <% ring_color_class = trader.status.status_type == "approved" ? "ring-primary/55" : "ring-accent/55" %>
                 <%= image_tag("fox_avatar.png", alt: "user photo", class: "w-8 h-8 rounded-full ring-4 #{ring_color_class}") %>
@@ -21,30 +21,18 @@
                   <%= trader.email %>
                 </small>
               </th>  
-              <td class="flex justify-end px-6 py-2.5">
-                <button data-modal-target="approve-modal-<%= trader.id %>" data-modal-toggle="approve-modal-<%= trader.id %>" class="block text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-4 py-2 text-center  bg-violet-600  hover:bg-violet-700  focus:ring-violet-800" type="button">
-                  Approve
-                </button>
-              </td>        
             </tr>
-
-            <%= render partial: 'change_status_modal', locals: { trader: trader } %>
           <% end %>
 
         <% else %>
           <tr class="border-b bg-stone-900/35 border-gray-700 hover:bg-gray-600">
             <th scope="row" class="px-6 py-3 text-xs font-light font-sans whitespace-nowrap text-white">
-                No pending approval
+                No recent approval
             </th>
           </tr>
         <% end %>
       </tbody>
     </table>  
-  </div>
-
-  <div class=" grid place-items-center py-2.5">
-    <%== pagy_nav(@pagy) if @pagy.pages > 1 %> 
-  </div>
-  
+  </div>  
 </div>
 

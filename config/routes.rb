@@ -25,10 +25,16 @@ Rails.application.routes.draw do
 
   namespace :admin do
     get 'dashboard', to: 'dashboard#index'
+    # get 'pending_approvals', to: 'dashboard#pending_approvals'
+    # get 'all_traders', to: 'dashboard#index'
+    resources :users, except: [:new, :create] ## for editing user details
+    # resources :transactions
   end
 
   namespace :trader, path: 't' do
     get 'dashboard', to: 'dashboard#index'
+    # resources :transactions
+    # resources :stocks
   end
 
   resources :statuses, only: [:edit, :update]
