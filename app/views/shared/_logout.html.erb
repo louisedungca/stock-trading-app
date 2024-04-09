@@ -14,15 +14,15 @@
           </svg>
           <span class="text-xl">Logout</span>
         </div>
-        <h3 class="mb-5 text-sm font-normal text-gray-400">Are you sure you want to sign out from Stocker?</h3>
+        <h3 class="mb-5 text-sm font-normal text-gray-400 font-sans">Are you sure you want to sign out from Stocker?</h3>
         
         <%= link_to destroy_user_session_path, data: { turbo_method: :delete } do %>
-          <button data-modal-hide="popup-modal" type="button" class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">
+          <button data-modal-hide="popup-modal" type="button" class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center font-sans">
               Yes, I'm sure
           </button>
         <% end %>
 
-        <button data-modal-hide="popup-modal" type="button" class="py-2.5 px-5 ms-3 text-sm font-medium focus:outline-none rounded-lg border focus:z-10 focus:ring-4  focus:ring-gray-700  bg-gray-800 text-gray-400 border-gray-600 hover:text-white hover:bg-gray-700">
+        <button data-modal-hide="popup-modal" type="button" class="py-2.5 px-5 ms-3 text-sm font-medium focus:outline-none rounded-lg border focus:z-10 focus:ring-4  focus:ring-gray-700  bg-gray-800 text-gray-400 border-gray-600 hover:text-white hover:bg-gray-700 font-sans">
           No, cancel
         </button>
       </div>
