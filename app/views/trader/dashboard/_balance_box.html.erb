@@ -3,7 +3,7 @@
   <div class="h-full flex flex-col justify-between gap-1">
     <h2 class="font-bold font-sans tracking-widest">Estimated Balance</h2>
     <h1 class="text-3xl flex items-end gap-2">
-      0.00
+      <%= current_user.balance %>
       <small class="text-sm p-1 font-sans">USD</small>
     </h1>
 
@@ -25,10 +25,9 @@
       <button class="button--secondary">
         Withdraw
       </button>
+  
+    <%= link_to "Cash-in", trader_cash_in_path, class:"button--secondary" %> 
 
-      <button class="button--secondary">
-        Cash-in
-      </button>
     </div>
 
     <div class="border h-full">
