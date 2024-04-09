@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_04_05_002621) do
+ActiveRecord::Schema[7.1].define(version: 2024_04_08_151902) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -18,6 +18,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_05_002621) do
   # Note that some types may not work with other database engines. Be careful if changing database.
   create_enum "role", ["admin", "trader"]
   create_enum "status_type", ["pending", "approved", "confirmed_email"]
+  create_enum "transaction_type", ["buy", "sell", "cash_in"]
 
   create_table "statuses", force: :cascade do |t|
     t.enum "status_type", default: "pending", null: false, enum_type: "status_type"
@@ -25,6 +26,28 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_05_002621) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_statuses_on_user_id"
+  end
+
+  create_table "stocks", force: :cascade do |t|
+    t.string "stock_symbol"
+    t.decimal "shares"
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_stocks_on_user_id"
+  end
+
+  create_table "transactions", force: :cascade do |t|
+    t.enum "transaction_type", enum_type: "transaction_type"
+    t.decimal "shares"
+    t.string "stock_symbol"
+    t.string "company_name"
+    t.decimal "price_per_share"
+    t.bigint "user_id", null: false
+    t.decimal "amount"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_transactions_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -50,6 +73,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_05_002621) do
     t.string "invited_by_type"
     t.bigint "invited_by_id"
     t.integer "invitations_count", default: 0
+    t.decimal "balance", precision: 10, scale: 2, default: "0.0"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["invitation_token"], name: "index_users_on_invitation_token", unique: true
@@ -61,4 +85,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_05_002621) do
   end
 
   add_foreign_key "statuses", "users"
+  add_foreign_key "stocks", "users"
+  add_foreign_key "transactions", "users"
 end

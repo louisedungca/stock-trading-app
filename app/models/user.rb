@@ -3,6 +3,7 @@
 # Table name: users
 #
 #  id                     :bigint           not null, primary key
+#  balance                :decimal(10, 2)   default(0.0)
 #  confirmation_sent_at   :datetime
 #  confirmation_token     :string
 #  confirmed_at           :datetime
@@ -39,18 +40,21 @@
 #
 class User < ApplicationRecord
   attr_accessor :login
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :invitable, :database_authenticatable, :registerable, :recoverable, :rememberable,
-          :validatable, :uid, :confirmable, authentication_keys: [:login]
+         :validatable, :uid, :confirmable, authentication_keys: [:login]
 
   has_one :status, dependent: :destroy
   accepts_nested_attributes_for :status
+  has_many :transactions
+  has_many :stocks
 
   enum :role, {
-    admin: "admin",
-    trader: "trader"
-  }, default: "trader"
+    admin: 'admin',
+    trader: 'trader'
+  }, default: 'trader'
 
   validates :email, presence: true, uniqueness: true
   validates :username, presence: true, uniqueness: true
@@ -74,8 +78,9 @@ class User < ApplicationRecord
   def self.find_for_database_authentication(warden_conditions)
     conditions = warden_conditions.dup
 
-    if(login = conditions.delete(:login))
-      where(conditions.to_h).where(["lower(username) = :value OR lower(email) = :value", { value: login.downcase }]).first
+    if (login = conditions.delete(:login))
+      where(conditions.to_h).where(['lower(username) = :value OR lower(email) = :value',
+                                    { value: login.downcase }]).first
     elsif conditions.has_key?(:username) || conditions.has_key?(:email)
       where(conditions.to_h).first
     end
@@ -84,15 +89,15 @@ class User < ApplicationRecord
   def after_confirmation
     super
     # update the user's status to confirmed_email
-    status.update(status_type: "confirmed_email") if status.present?
+    status.update(status_type: 'confirmed_email') if status.present?
   end
 
   private
 
   def initialize_status_for_trader
-    if trader?
-      build_status(status_type: "pending")
-    end
+    return unless trader?
+
+    build_status(status_type: 'pending')
   end
 
   def update_status_of_invited_user
