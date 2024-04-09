@@ -25,7 +25,7 @@ class Trader::TradeController < ApplicationController
     if current_user.balance >= total_cost
       # Update user's balance
       current_user.update(balance: current_user.balance - total_cost)
-
+      flash[:notice] = 'Stock purchased successfully'
       # Record the transaction
       Transaction.create!(
         user: current_user,
@@ -35,7 +35,6 @@ class Trader::TradeController < ApplicationController
         price_per_share:
       )
 
-      flash[:success] = 'Stock purchased successfully'
     else
       flash[:alert] = 'Insufficient balance'
     end
