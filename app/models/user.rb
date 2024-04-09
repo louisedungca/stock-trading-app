@@ -56,6 +56,7 @@ class User < ApplicationRecord
   validates :username, presence: true, uniqueness: true
   validates :password, presence: true
   before_create :initialize_status_for_trader
+  after_invitation_accepted :update_status_of_invited_user
 
   scope :approved_traders, -> { includes(:status).where(role: :trader, statuses: { status_type: "approved" }) }
   scope :pending_traders, -> { includes(:status).where(role: :trader, statuses: { status_type: "pending" }).order(:created_at) }
@@ -86,17 +87,16 @@ class User < ApplicationRecord
     status.update(status_type: "confirmed_email") if status.present?
   end
 
-  def after_invitation_accepted
-    # update the user's status to confirmed_email
-    status.update(status_type: "confirmed_email") if status.present?
-  end
-
   private
 
   def initialize_status_for_trader
     if trader?
       build_status(status_type: "pending")
     end
+  end
+
+  def update_status_of_invited_user
+    status.update(status_type: "confirmed_email")
   end
 
 end

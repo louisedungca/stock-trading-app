@@ -25,6 +25,10 @@ class Users::InvitationsController < Devise::InvitationsController
     render :new
   end
 
+  def after_accept_path_for(resource)
+    trader_dashboard_path
+  end
+
   def invite_params # GPT
     params.require(:user).permit(:email, :role).tap do |whitelisted|
       whitelisted[:username] = params[:user][:email].split('@').first if params[:user][:email].present?

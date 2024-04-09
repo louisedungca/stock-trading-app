@@ -7,9 +7,6 @@ class Admin::DashboardController < ApplicationController
     @pagy, @confirmed_email_traders = pagy(@confirmed_email_traders, items: 8)
   end
 
-  def pending_approvals
-  end
-
   private
 
   def set_traders
