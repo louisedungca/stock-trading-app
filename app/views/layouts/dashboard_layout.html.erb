@@ -14,7 +14,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.turbo.min.js" defer></script>
   </head>
   <body class="relative bg--main flex">
-    <%= render 'shared/flash_messages' %>
+    <%= render partial: "shared/toast_error", locals: {  message_error: flash[:alert] } %>
+    <%= render partial: "shared/toast_success", locals: { message_success: flash[:notice] } %>
     <%= render 'shared/sidebar' %>
 
     <main class="flex flex-col px-4 py-2 sm:ml-64 mt-16 h-[calc(100%-4.5rem)] w-full sm:w-[calc(100%-16rem)]">
