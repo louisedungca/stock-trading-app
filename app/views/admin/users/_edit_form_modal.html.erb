@@ -4,7 +4,7 @@
     <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
       <!-- Modal header -->
       <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
-        <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+        <h3 class="font-sans text-xl font-semibold text-gray-900 dark:text-white">
             Edit User Details
         </h3>
         <button type="button" class="end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="edit-modal-<%= trader.id %>">
@@ -16,7 +16,7 @@
       </div>
         
       <!-- Modal body -->
-      <div class="p-4 md:p-5">
+      <div class="p-4 md:p-5 flex flex-col gap-3">
         <%= form_for(trader, url: admin_user_path(trader), html: { method: :patch }) do |f| %>
           <div>
             <%= f.label :username, class: "modal__label" %> 
@@ -29,14 +29,17 @@
           </div>
 
           <div>
-            <%#= f.hidden_field :status_type, value: "approved" %>
-            <%#= f.check_box :status_type, "Approve" %>
-          </div>     
-
-          <div>
             <%= f.label :password, class: "modal__label" %> 
-            <%= f.text_field :password, autocomplete: "new-password", class: "modal__textfield" %>
+            <%= f.password_field :password, autocomplete: "new-password", class: "modal__textfield" %>
           </div> 
+
+          <%= f.fields_for :status do |builder| %>
+            <div class="field flex-row items-center gap-2 px-px">
+              <%= builder.hidden_field :status_type, value: 'approved' %>
+              <%= builder.check_box :status_type, { checked: false, id: "status_type_#{trader.id}" }, 'approved', nil %>
+              <%= builder.label "status_type_#{trader.id}", "Approve", class: "text-white font-medium" %>   
+            </div>
+          <% end %>         
 
           <div class="modal__button">
             <%= f.button "Save Changes" %>
