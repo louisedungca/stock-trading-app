@@ -24,6 +24,23 @@
         <p>Company Name: <%= @data.company_name %></p>
         <p>Latest Price: <%= @data.latest_price %></p>
         <%= render 'pages/widgets/fixed_chart', locals: { stock_symbol: @stock_symbol } %>
+    
+    <div class="form__wrapper ">
+      <h1>BUY STOCKS</h1>
+      <div class="flex">
+        <%= form_with(url: trader_trade_path, method: :post) do |form| %>
+          <div class="field">
+            <%= form.hidden_field :symbol, value: @stock_symbol %>
+            <%= form.label :shares %>
+            <%= form.number_field :shares %>
+          </div>
+            <%= form.submit 'Buy', class:"button--main" %>
+        <% end %>
+      </div>
+    </div>
+    
+    
+    
     <% end %>
     </div>
 </div>
