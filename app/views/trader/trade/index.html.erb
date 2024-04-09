@@ -1,0 +1,29 @@
+<% content_for :header do %>
+  Trade Stocks
+  <p class="text-base text-gray-500">
+    Trade Responsibly
+  </p>
+<% end %>
+
+<div>
+    <div class="form__wrapper">
+        <%= form_tag(trader_trade_path, method: :get) do %>
+        <div class="flex gap-2">
+        <div class="field text-black">
+            <%= text_field_tag :symbol, params[:symbol], placeholder: "Enter Stock Symbol" %>
+        </div>
+        <%= submit_tag "Search", class:"button--main" %>
+        </div>
+        <% end %>
+    </div>
+
+    <div>
+    
+    <% if @data %>
+        <p>Stock Details:</p>
+        <p>Company Name: <%= @data.company_name %></p>
+        <p>Latest Price: <%= @data.latest_price %></p>
+    <% end %>
+    </div>
+</div>
+
