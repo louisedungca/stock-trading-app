@@ -40,6 +40,7 @@ Rails.application.routes.draw do
     # resources :stocks
     get 'cash-in', to: 'cash_in#index'
     patch 'cash-in', to: 'cash_in#update'
+    get 'trade', to: 'trade#index'
   end
 
   resources :statuses, only: %i[edit update]
