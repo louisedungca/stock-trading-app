@@ -48,7 +48,7 @@
           <!-- ** BUY FORM ** -->
           <div class="p-2">
             <h1 class="p-3.5 text-base font-sans font-bold tracking-widest uppercase">Buy Stocks</h1>
-            <%= form_with(url: trader_trade_path, method: :post) do |form| %>
+            <%= form_with(url: trader_trade_buy_path, method: :post) do |form| %>
               <div class="form__wrapper flex-row gap-2 items-center">
                 <div class="field gap-2 flex-row items-center w-full">
                   <%= form.hidden_field :symbol, value: @stock_symbol %>
@@ -63,7 +63,7 @@
           <!-- ** SELL FORM ** -->
           <div class="p-2">
             <h1 class="p-3.5 text-base font-sans font-bold tracking-widest uppercase">Sell Stocks</h1>
-            <%= form_with(url: trader_trade_path, method: :post) do |form| %>
+            <%= form_with(url: trader_trade_sell_path, method: :post) do |form| %>
               <div class="form__wrapper flex-row gap-2 items-center">
                 <div class="field gap-2 flex-row items-center w-full">
                   <%= form.hidden_field :symbol, value: @stock_symbol %>

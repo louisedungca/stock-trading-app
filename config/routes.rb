@@ -42,7 +42,8 @@ Rails.application.routes.draw do
     get 'cash-in', to: 'cash_in#index'
     patch 'cash-in', to: 'cash_in#update'
     get 'trade', to: 'trades#index'
-    post 'trade', to: 'trades#buy'
+    post 'trade/buy', to: 'trades#buy'
+    post 'trade/sell', to: 'trades#sell'
   end
 
   resources :statuses, only: %i[edit update]
@@ -50,5 +51,4 @@ Rails.application.routes.draw do
   # routes for static pages
   get 'landing', to: 'pages#landing', as: :landing_page
   get 'pending-verification', to: 'pages#pending_verification', as: :pending_verification_page
-
 end
