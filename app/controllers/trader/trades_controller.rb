@@ -1,4 +1,4 @@
-class Trader::TradeController < ApplicationController
+class Trader::TradesController < ApplicationController
   layout 'dashboard_layout'
 
   def index
