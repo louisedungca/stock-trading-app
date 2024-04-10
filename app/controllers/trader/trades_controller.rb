@@ -98,6 +98,7 @@ class Trader::TradesController < ApplicationController
         user: current_user,
         shares:,
         stock_symbol: data.symbol,
+        company_name: data.company_name,
         logo_url: logo.url
       )
     end
