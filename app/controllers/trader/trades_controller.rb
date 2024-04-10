@@ -18,40 +18,48 @@ class Trader::TradesController < ApplicationController
   def buy
     @stock_symbol = params[:symbol].to_s.upcase
     shares_to_buy = params[:shares].to_f
-    @data = IEX::Api::Client.new.quote(@stock_symbol)
-    price_per_share = @data.latest_price
-    total_cost = price_per_share * shares_to_buy
 
-    if current_user.balance >= total_cost
-      # Update user's balance
-      current_user.update(balance: current_user.balance - total_cost)
-
-      # Record the transaction
-      Transaction.create!(
-        user: current_user,
-        transaction_type: 'buy',
-        stock_symbol: @data.symbol,
-        company_name: @data.company_name,
-        shares: shares_to_buy,
-        price_per_share:
-      )
-
-      # Update stock inventory
-      update_stock_inventory(@data, shares_to_buy)
-
-      flash[:notice] = "#{@data.symbol} stock purchased successfully"
+    if shares_to_buy <= 0
+      flash[:alert] = 'Number of shares must be greater than 0'
     else
-      flash[:alert] = 'Insufficient balance'
+      @data = IEX::Api::Client.new.quote(@stock_symbol)
+      price_per_share = @data.latest_price
+      total_cost = price_per_share * shares_to_buy
+
+      if current_user.balance >= total_cost
+        # Update user's balance
+        current_user.update(balance: current_user.balance - total_cost)
+
+        # Record the transaction
+        Transaction.create!(
+          user: current_user,
+          transaction_type: 'buy',
+          stock_symbol: @data.symbol,
+          company_name: @data.company_name,
+          shares: shares_to_buy,
+          price_per_share:
+        )
+
+        # Update stock inventory
+        update_stock_inventory(@data, shares_to_buy)
+
+        flash[:notice] = "#{@data.symbol} stock purchased successfully"
+      else
+        flash[:alert] = 'Insufficient balance'
+      end
     end
+
     redirect_back(fallback_location: trader_trade_path)
   end
 
   def sell
     @stock_symbol = params[:symbol].to_s.upcase
-    shares_to_sell = params[:shares].to_f
     stock = current_user.stocks.find_by(stock_symbol: @stock_symbol)
+    shares_to_sell = params[:shares].to_f
 
-    if stock.present? && stock.shares >= shares_to_sell
+    if shares_to_sell <= 0
+      flash[:alert] = 'Number of shares must be greater than 0'
+    elsif stock.present? && stock.shares >= shares_to_sell
       @data = IEX::Api::Client.new.quote(@stock_symbol)
       price_per_share = @data.latest_price
       total_sale = price_per_share * shares_to_sell
