@@ -1,0 +1,66 @@
+<% content_for :header do %>
+  <div class="flex justify-between items-center w-full py-2">
+    Transactions
+
+    <div class="text-xs w-1/4">
+      <%= form_tag trader_transactions_path, method: :get, class: "flex justify-end max-w-sm" do %>
+        <div class="relative">
+          <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+            <svg class="w-4 h-4 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+              <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M18.796 4H5.204a1 1 0 0 0-.753 1.659l5.302 6.058a1 1 0 0 1 .247.659v4.874a.5.5 0 0 0 .2.4l3 2.25a.5.5 0 0 0 .8-.4v-7.124a1 1 0 0 1 .247-.659l5.302-6.059c.566-.646.106-1.658-.753-1.658Z"/>
+            </svg>
+          </div>
+          <%= select_tag :filter, options_for_select({ "All Transactions": nil, "Buy": 'buy', "Sell": 'sell', "Cash-In": 'cash_in' }, params[:filter]), class: "bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 py-1.5 px-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" %>
+        </div>
+
+        <%= submit_tag "Filter", class: "py-1.5 px-3 ms-2 text-xstext-white bg-secondary rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-secondary dark:focus:ring-blue-800 cursor-pointer" %>    
+      <% end %>
+    </div>
+  </div>
+<% end %>
+
+<div class="relative shadow-md sm:rounded-lg text-sm">
+  <table class="w-full text-sm text-left rtl:text-right text-gray-400">
+    <thead class="text-xsuppercase bg-gray-700/55 text-gray-400">
+      <tr>
+        <th scope="col" class="px-6 py-3">
+            Transaction Type
+        </th>
+        <th scope="col" class="px-6 py-3">
+            Stock Symbol
+        </th>
+        <th scope="col" class="px-6 py-3">
+            Company Name
+        </th>
+        <th scope="col" class="px-6 py-3">
+            Shares
+        </th>
+        <th scope="col" class="px-6 py-3">
+            Per Share / Amount
+        </th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @transactions.each do |transaction| %>
+        <tr class="border-b bg-stone-900/35 border-gray-700 hover:bg-gray-600">
+          <th scope="row" class="px-6 py-3 font-medium whitespace-nowrap text-white">
+              <%= transaction.transaction_type.upcase %>
+          </th>
+          <td class="px-6 py-2.5">
+              <%= transaction.stock_symbol %>
+          </td>
+          <td class="px-6 py-2.5">
+              <%= transaction.company_name %>
+          </td>
+          <td class="px-6 py-2.5">
+              <%= transaction.shares %>
+          </td>
+          <td class="px-6 py-2.5">
+              <%= transaction.price_per_share || transaction.amount %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>  
+</div>
