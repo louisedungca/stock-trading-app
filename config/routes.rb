@@ -44,6 +44,7 @@ Rails.application.routes.draw do
     get 'trade', to: 'trades#index'
     post 'trade/buy', to: 'trades#buy'
     post 'trade/sell', to: 'trades#sell'
+    get 'transactions', to: 'transactions#index'
   end
 
   resources :statuses, only: %i[edit update]
