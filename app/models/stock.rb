@@ -3,6 +3,7 @@
 # Table name: stocks
 #
 #  id           :bigint           not null, primary key
+#  logo_url     :string
 #  shares       :decimal(, )
 #  stock_symbol :string
 #  created_at   :datetime         not null
