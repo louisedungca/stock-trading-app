@@ -1,19 +1,19 @@
 class Admin::UsersController < ApplicationController
   before_action :authenticate_admin!
   before_action :set_trader, except: [:index]
-  layout 'dashboard_layout'
+  layout 'admin_layout'
 
   def index
     @traders = case params[:filter]
-               when 'pending'
-                 User.pending_traders
-               when 'confirmed_email'
-                 User.confirmed_email_traders
-               when 'approved'
-                 User.approved_traders
-               else
-                 User.sorted_traders
-               end
+              when 'pending'
+                User.pending_traders
+              when 'confirmed_email'
+                User.confirmed_email_traders
+              when 'approved'
+                User.approved_traders
+              else
+                User.sorted_traders
+              end
 
     @pagy, @traders = pagy_array(@traders) || pagy(@traders)
   end
