@@ -42,7 +42,7 @@ class Trader::TradesController < ApplicationController
     else
       flash[:alert] = 'Insufficient balance'
     end
-    render :index
+    redirect_back(fallback_location: trader_trade_path)
   end
 
   def sell
@@ -73,7 +73,7 @@ class Trader::TradesController < ApplicationController
     else
       flash[:alert] = 'Insufficient shares'
     end
-    render :index
+    redirect_back(fallback_location: trader_trade_path)
   end
 
   private
