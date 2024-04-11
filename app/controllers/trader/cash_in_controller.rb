@@ -1,4 +1,5 @@
 class Trader::CashInController < ApplicationController
+  include CurrencyHelper
   layout 'dashboard_layout'
 
   def index
@@ -23,8 +24,8 @@ class Trader::CashInController < ApplicationController
         transaction_type: 'cash_in',
         amount:
       )
-      flash[:notice] = "Successfully cashed in #{amount}."
-      redirect_to trader_dashboard_path # assuming you have a dashboard route
+      flash[:notice] = "Successfully cashed in #{format_currency(amount, unit: "$")}."
+      redirect_to trader_dashboard_path
     else
       flash[:alert] = 'Failed to cash in. Please try again.'
       redirect_to trader_cash_in_path
