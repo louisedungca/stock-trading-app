@@ -13,10 +13,11 @@ admin.update!(
   username: "admin00",
   password: "111111",
   password_confirmation: "111111",
-  role: "admin"
+  role: "admin",
+  confirmed_at: Time.current
 )
 
-# 25.times do |index|
+# 10.times do |index|
 #   User.create(
 #     username: "trader_#{index + 1}",
 #     email: "trader_#{index + 1}@email.com",
