@@ -1,6 +1,6 @@
 class Admin::DashboardController < ApplicationController
   before_action :set_traders
-  layout 'dashboard_layout'
+  layout 'admin_layout'
 
   def index
     @traders = User.sorted_traders

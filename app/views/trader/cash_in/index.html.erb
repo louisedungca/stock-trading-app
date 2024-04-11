@@ -5,7 +5,9 @@
 <section class="flex flex-col bg--frosted w-1/2">
   <!-- <h1 class="border-b-2 border-gray-500 p-3.5 text-base font-sans font-bold tracking-widest uppercase">CASH IN</h1>
 -->
-  <p class="p-3.5">Current Balance: <span class="font-semibold">$<%= @balance %></span></p>
+  <p class="p-3.5">
+    Current Balance: <span class="font-semibold"><%= format_currency(@balance, unit: "$") %></span>
+  </p>
 
   <div class="form__wrapper">
     <%= form_with(url: trader_cash_in_path, method: :patch) do |form| %>
@@ -13,9 +15,9 @@
         <%= form.label :amount, "Amount to Cash In" %>
         <%= form.text_field :amount %>
       </div>
-      <button class="button--main actions">
-        <%= form.submit "Cash In" %>
-      </button>
+      <div class="actions" >
+        <%= form.button "Cash-in" %>
+      </div>
       <% end %>
   </div>
 

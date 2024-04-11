@@ -67,7 +67,7 @@
               <%= transaction.shares %>
           </td>
           <td class="px-6 py-2.5">
-              <%= transaction.price_per_share || transaction.amount %>
+            <%= format_currency(transaction.price_per_share || transaction.amount) %>  
           </td>
           <td class="px-6 py-2.5">
               <%= transaction.created_at.localtime.strftime('%a, %d %b %Y %H:%M:%S') %>
