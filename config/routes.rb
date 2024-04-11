@@ -32,6 +32,7 @@ Rails.application.routes.draw do
     # get 'all_traders', to: 'dashboard#index'
     resources :users, except: %i[new create] ## for editing user details
     # resources :transactions
+    get 'transactions', to: 'transactions#index'
   end
 
   namespace :trader, path: 't' do
