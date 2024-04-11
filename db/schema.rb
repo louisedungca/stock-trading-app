@@ -32,6 +32,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_08_151902) do
     t.string "stock_symbol"
     t.decimal "shares"
     t.string "logo_url"
+    t.string "company_name"
     t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
