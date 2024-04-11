@@ -39,7 +39,7 @@
 
           <small class="flex gap-2 items-center font-bold text-violet-200">
             <span class="font-sans text-xs font-light ">Latest Price:</span>         
-            <%= number_to_currency(@data.latest_price, unit: "$", precision: 2) %>  
+            <%= format_currency(@data.latest_price, unit: "$") %>  
           </small>
         </div>
 
