@@ -32,6 +32,7 @@ Rails.application.routes.draw do
     # get 'all_traders', to: 'dashboard#index'
     resources :users, except: %i[new create] ## for editing user details
     # resources :transactions
+    get 'transactions', to: 'transactions#index'
   end
 
   namespace :trader, path: 't' do
@@ -42,7 +43,10 @@ Rails.application.routes.draw do
     get 'cash-in', to: 'cash_in#index'
     patch 'cash-in', to: 'cash_in#update'
     get 'trade', to: 'trades#index'
-    post 'trade', to: 'trades#buy'
+    post 'trade/buy', to: 'trades#buy'
+    post 'trade/sell', to: 'trades#sell'
+    get 'transactions', to: 'transactions#index'
+    get 'portfolio', to: 'portfolios#index'
   end
 
   resources :statuses, only: %i[edit update]
@@ -50,5 +54,4 @@ Rails.application.routes.draw do
   # routes for static pages
   get 'landing', to: 'pages#landing', as: :landing_page
   get 'pending-verification', to: 'pages#pending_verification', as: :pending_verification_page
-
 end

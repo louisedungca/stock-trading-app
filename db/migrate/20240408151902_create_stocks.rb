@@ -3,6 +3,8 @@ class CreateStocks < ActiveRecord::Migration[7.1]
     create_table :stocks do |t|
       t.string :stock_symbol
       t.decimal :shares
+      t.string :logo_url
+      t.string :company_name
       t.references :user, null: false, foreign_key: true
 
       t.timestamps
