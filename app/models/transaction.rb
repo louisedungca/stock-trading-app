@@ -23,4 +23,17 @@
 #
 class Transaction < ApplicationRecord
   belongs_to :user
+
+  scope :filter_by_type, lambda { |filter|
+    case filter
+    when 'buy'
+      where(transaction_type: 'buy')
+    when 'sell'
+      where(transaction_type: 'sell')
+    when 'cash_in'
+      where(transaction_type: 'cash_in')
+    else
+      all
+    end
+  }
 end
