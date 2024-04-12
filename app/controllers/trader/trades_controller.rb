@@ -30,6 +30,9 @@ class Trader::TradesController < ApplicationController
         # Update user's balance
         current_user.update(balance: current_user.balance - total_cost)
 
+        # Update stock inventory
+        update_stock_inventory(@data, shares_to_buy)
+
         # Record the transaction
         Transaction.create!(
           user: current_user,
@@ -39,9 +42,6 @@ class Trader::TradesController < ApplicationController
           shares: shares_to_buy,
           price_per_share:
         )
-
-        # Update stock inventory
-        update_stock_inventory(@data, shares_to_buy)
 
         flash[:notice] = "#{@data.symbol} stock purchased successfully"
       else
@@ -67,7 +67,7 @@ class Trader::TradesController < ApplicationController
       # Update user's balance
       current_user.update(balance: current_user.balance + total_sale)
 
-      # Update user's stock inventory
+      # Update stock inventory
       stock.update(shares: stock.shares - shares_to_sell)
 
       # Record the transaction
