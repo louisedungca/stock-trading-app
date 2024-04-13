@@ -9,14 +9,16 @@ Welcome to the Stock Trading App Simulation! This application allows users to si
 - **Search Functionality:** Users can search for stocks by ticker symbol or company name to quickly find the stocks they're interested in.
 
 ## Technologies / Gems
-- Tailwind CSS
-- Postgres DB
-- Annotate
-- Letter Opener
-- Pagy
-- Rspec
-- Devise, Devise-Invitable, Devise-UID
-- IEX Ruby Client
+- **Tailwind CSS:** Frontend framework for responsive design and styling.
+- **PostgreSQL:** Database management system for storing user information and transaction history.
+- **Devise:** Flexible authentication solution for Rails.
+  - **Devise Invitable:** Adds support for sending invitations by email.
+  - **Devise UID:** Unique identifier support for Devise.
+- **IEX Ruby Client:** Integration for accessing real-time stock data.
+- **Rspec:** Testing framework for Rails applications.
+- **Annotate:** Automatically adds schema information to models.
+- **Letter Opener:** Preview email in the browser instead of sending it.
+- **Pagy:** Pagination for Rails applications.
 
 ## User Stories:
 ### Admin 
@@ -37,3 +39,9 @@ Welcome to the Stock Trading App Simulation! This application allows users to si
 - [x] User Story #6: As a Trader, I want to have a My Portfolio page to see all my stocks
 - [x] User Story #7: As a Trader, I want to have a Transaction page to see and monitor all the transactions made by buying and selling stocks
 - [x] User Story #8: As a Trader, I want to sell my stocks to gain money.
+
+## Contributing
+Contributions are welcome! Please fork this repository and submit a pull request with your changes. Make sure to follow the existing code style and write tests for any new functionality.
+
+## License
+This project is licensed under the [MIT License](LICENSE).
