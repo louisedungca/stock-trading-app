@@ -13,6 +13,7 @@
     <%= javascript_importmap_tags %>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.turbo.min.js" defer></script>
   </head>
+  
   <body class="relative w-full h-dvh text-emerald-50 bg-gradient-to-b from-stone-950 via-emerald-950 to-violet-950 flex">
     <%= render partial: "shared/toast_error", locals: {  message_error: flash[:alert] } %>
     <%= render partial: "shared/toast_success", locals: { message_success: flash[:notice] } %>
@@ -24,6 +25,7 @@
       </h1>
       
       <section class="w-full min-h-[90%] flex flex-col justify-between overflow">
+        <%#= turbo_frame_tag "modal" %>
         <%= yield %>
         <%= render 'shared/logout' %> 
       </section>

@@ -1,0 +1,26 @@
+<%= form_with model: trader, url: admin_user_path(trader), method: :patch, data: { turbo: false } do |f| %>
+  <div class="form__wrapper">
+    <div>
+      <%= f.label :username, class: "modal__label" %> 
+      <%= f.text_field :username, autofocus: true, autocomplete: "username", class: "modal__textfield", id: "user_username_#{trader.id}" %>
+    </div>
+
+    <div>
+      <%= f.label :email, class: "modal__label" %> 
+      <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "modal__textfield", id: "user_email_#{trader.id}" %>
+    </div>
+    
+    <%= f.fields_for :status do |builder| %>
+      <div class="field flex-row items-center gap-2 px-px <%= trader.status.status_type == 'approved' ? 'hidden' : 'inline-flex' %>">
+        <%= builder.check_box :status_type, { checked: false, id: "status_type_#{trader.id}_#{builder.object.id}" }, 'approved', nil %>
+        <%= builder.label "status_type_#{trader.id}_#{builder.object.id}", "Approve", class: "text-white font-medium" %>   
+      </div>
+
+      <%= builder.hidden_field :id, id: "user_status_attributes_id_#{trader.id}" %>
+    <% end %>
+
+    <div class="modal__button">
+      <%= f.button "Save Changes" %>
+    </div>
+  </div>
+<% end %>
