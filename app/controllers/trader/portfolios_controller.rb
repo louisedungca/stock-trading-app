@@ -10,5 +10,11 @@ class Trader::PortfoliosController < TradersController
               end
 
     @pagy, @stocks = pagy_array(@stocks) || pagy(@stocks)
+
+    # Fetch quote for each stock
+    @stock_quotes = {}
+    @stocks.each do |stock|
+      @stock_quotes[stock.stock_symbol] = IEX::Api::Client.new.quote(stock.stock_symbol)
+    end
   end
 end

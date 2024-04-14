@@ -1,5 +1,5 @@
 class TradersController < ApplicationController
-  before_action :check_status, :set_trader_status
+  before_action :check_status, :set_trader_status, :set_stock_symbol
 
   private
 
@@ -12,5 +12,9 @@ class TradersController < ApplicationController
 
   def set_trader_status
     @trader_status = current_user.status&.status_type
+  end
+
+  def set_stock_symbol
+    @stock_symbol = params[:symbol].to_s.upcase
   end
 end

@@ -24,16 +24,19 @@
     <thead class="text-xsuppercase bg-gray-700/55 text-gray-400">
       <tr>
         <th scope="col" class="px-6 py-3">
-            Stock
+          Stock
         </th>
         <th scope="col" class="px-6 py-3">
-            Stock Symbol
+          Stock Symbol
         </th>
         <th scope="col" class="px-6 py-3">
-            Company Name
+          Company Name
         </th>
         <th scope="col" class="px-6 py-3">
-            Shares
+          Shares
+        </th>
+        <th scope="col" class="px-6 py-3">
+          Total Value
         </th>
       </tr>
     </thead>
@@ -45,16 +48,20 @@
               <img src="<%= stock.logo_url %>" alt="<%= stock.stock_symbol %>" class="h-6">
           </th>
           <td class="px-6 py-2.5">
-              <%= stock.stock_symbol %>
+            <%= stock.stock_symbol %>
           </td>
           <td class="px-6 py-2.5">
-              <%= stock.company_name %>
+            <%= stock.company_name %>
           </td>
           <td class="px-6 py-2.5">
-              <%= stock.shares %>
+            <%= stock.shares %>
+          </td>
+          <td class="px-6 py-2.5">
+            <%= format_currency(@stock_quotes[stock.stock_symbol].latest_price * stock.shares) %>
           </td>
         </tr>
       <% end %>
     </tbody>
+
   </table>  
 </div>
