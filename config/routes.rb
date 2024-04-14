@@ -2,19 +2,27 @@
 #
 
 Rails.application.routes.draw do
+  authenticated :user, ->(user) { user.admin? } do
+    root 'admin/dashboard#index', as: :admin_root
+  end
+
+  authenticated :user, ->(user) { user.trader? } do
+    root 'trader/dashboard#index', as: :trader_root
+  end
+
   root 'pages#landing'
 
   devise_for :users,
-             path: '',
-             path_names: {
-               sign_in: 'login',
-               sign_out: 'logout'
-             },
-             controllers: {
-               sessions: 'users/sessions',
-               invitations: 'users/invitations'
-             },
-             skip: [:registrations]
+    path: '',
+    path_names: {
+      sign_in: 'login',
+      sign_out: 'logout'
+    },
+    controllers: {
+      sessions: 'users/sessions',
+      invitations: 'users/invitations'
+    },
+    skip: [:registrations]
 
   # routes for user registrations controller
   devise_scope :user do
@@ -27,29 +35,24 @@ Rails.application.routes.draw do
   end
 
   namespace :admin do
+    resources :users, except: [:new, :create]
+    resources :transactions, only: [:index]
     get 'dashboard', to: 'dashboard#index'
-    # get 'pending_approvals', to: 'dashboard#pending_approvals'
-    # get 'all_traders', to: 'dashboard#index'
-    resources :users, except: %i[new create] ## for editing user details
-    # resources :transactions
-    get 'transactions', to: 'transactions#index'
   end
 
   namespace :trader, path: 't' do
+    resources :transactions, only: [:index]
     get 'dashboard', to: 'dashboard#index'
     get 'market', to: 'dashboard#market', as: :market_page
-    # resources :transactions
-    # resources :stocks
     get 'cash-in', to: 'cash_in#index'
     patch 'cash-in', to: 'cash_in#update'
     get 'trade', to: 'trades#index'
     post 'trade/buy', to: 'trades#buy'
     post 'trade/sell', to: 'trades#sell'
-    get 'transactions', to: 'transactions#index'
     get 'portfolio', to: 'portfolios#index'
   end
 
-  resources :statuses, only: %i[edit update]
+  resources :statuses, only: [:edit, :update]
 
   # routes for static pages
   get 'landing', to: 'pages#landing', as: :landing_page

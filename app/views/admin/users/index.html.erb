@@ -52,25 +52,23 @@
           </td>
           <td class="w-fit h-fit">
             <div class="flex items-center gap-2 justify-center">
-              <!-- Modal toggle -->
-              <button data-modal-target="edit-modal-<%= trader.id %>" data-modal-toggle="edit-modal-<%= trader.id %>" class="block text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm pr-3 pl-4 py-2 text-center  bg-teal-600  hover:bg-teal-700  focus:ring-teal-800" type="button">
-                <svg class="w-5 h-5 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m14.304 4.844 2.852 2.852M7 7H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-4.5m2.409-9.91a2.017 2.017 0 0 1 0 2.853l-6.844 6.844L8 14l.713-3.565 6.844-6.844a2.015 2.015 0 0 1 2.852 0Z"/>
-                </svg>
-              </button>
+              <%= turbo_frame_tag "edit_modal" do %>
+                <%= link_to edit_admin_user_path(trader), class: "block text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm pr-3 pl-4 py-2 text-center bg-teal-600 hover:bg-teal-700 focus:ring-teal-800" do %>
+                  <svg class="w-5 h-5 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m14.304 4.844 2.852 2.852M7 7H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-4.5m2.409-9.91a2.017 2.017 0 0 1 0 2.853l-6.844 6.844L8 14l.713-3.565 6.844-6.844a2.015 2.015 0 0 1 2.852 0Z"/>
+                  </svg>
+                <% end %>
+              <% end %>
 
-              <!-- Delete User Button -->
-              <button data-modal-target="delete-modal-<%= trader.id %>" data-modal-toggle="delete-modal-<%= trader.id %>" class="block text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-4 py-2 text-center  bg-violet-600  hover:bg-violet-700  focus:ring-violet-800" type="button">
-                <svg class="w-5 h-5  text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z"/>
-                </svg>
-              </button>
+                <%= link_to admin_user_path(trader), data: { turbo_method: :delete, turbo_confirm: "You are about to permanently delete #{trader.email}" }, class: "block text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-4 py-2 text-center bg-violet-600  hover:bg-violet-700 focus:ring-violet-800" do %>
+                  <svg class="w-5 h-5  text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z"/>
+                  </svg>
+                <% end %>
             </div>
           </td>
         </tr>
 
-        <%= render partial: 'edit_form_modal', locals: { trader: trader } %>
-        <%= render partial: 'delete_user_modal', locals: { trader: trader } %>
       <% end %>
     </tbody>
   </table>  
@@ -80,3 +78,6 @@
 <div class=" grid place-items-center py-2.5">
   <%== pagy_nav(@pagy) if @pagy.pages > 1 %> 
 </div>
+
+<!-- Delete confirmation modal -->
+<%= render 'delete_user_modal' %>
