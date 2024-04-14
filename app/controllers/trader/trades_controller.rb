@@ -1,8 +1,7 @@
-class Trader::TradesController < ApplicationController
+class Trader::TradesController < TradersController
   layout 'dashboard_layout'
 
   def index
-    @trader_status = current_user.status&.status_type
     return unless params[:symbol].present?
 
     @stock_symbol = params[:symbol].to_s.upcase
