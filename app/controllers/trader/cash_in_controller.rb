@@ -1,10 +1,9 @@
-class Trader::CashInController < ApplicationController
+class Trader::CashInController < TradersController
   include CurrencyHelper
   layout 'dashboard_layout'
 
   def index
     @balance = current_user.balance
-    @trader_status = current_user.status&.status_type
   end
 
   def update

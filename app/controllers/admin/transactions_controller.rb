@@ -5,9 +5,10 @@ class Admin::TransactionsController < ApplicationController
     @transactions = if params[:search].present?
                       Transaction.joins(:user)
                                  .where(users: { uid: params[:search] })
+                                 .order(updated_at: :desc)
                                  .filter_by_type(params[:filter])
                     else
-                      Transaction.filter_by_type(params[:filter])
+                      Transaction.order(updated_at: :desc).filter_by_type(params[:filter])
                     end
 
     @pagy, @transactions = pagy_array(@transactions) || pagy(@transactions)

@@ -136,7 +136,7 @@
   }
 
   .shared_links {
-    @apply text-xs font-sans hover:underline hover:underline-offset-2 focus:font-semibold hover:font-semibold;
+    @apply text-xs font-sans hover:underline hover:underline-offset-2 focus:font-semibold hover:font-semibold cursor-pointer;
   }
 
   .overflow {

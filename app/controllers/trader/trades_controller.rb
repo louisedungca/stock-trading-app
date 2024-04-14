@@ -1,11 +1,10 @@
-class Trader::TradesController < ApplicationController
+class Trader::TradesController < TradersController
   layout 'dashboard_layout'
 
   def index
-    @trader_status = current_user.status&.status_type
     return unless params[:symbol].present?
 
-    @stock_symbol = params[:symbol].to_s.upcase
+    # @stock_symbol = params[:symbol].to_s.upcase
 
     begin
       @data = IEX::Api::Client.new.quote(@stock_symbol)
@@ -16,7 +15,7 @@ class Trader::TradesController < ApplicationController
   end
 
   def buy
-    @stock_symbol = params[:symbol].to_s.upcase
+    # @stock_symbol = params[:symbol].to_s.upcase
     shares_to_buy = params[:shares].to_f
 
     if shares_to_buy <= 0
@@ -53,7 +52,7 @@ class Trader::TradesController < ApplicationController
   end
 
   def sell
-    @stock_symbol = params[:symbol].to_s.upcase
+    # @stock_symbol = params[:symbol].to_s.upcase
     stock = current_user.stocks.find_by(stock_symbol: @stock_symbol)
     shares_to_sell = params[:shares].to_f
 
