@@ -18,12 +18,15 @@ class Admin::UsersController < ApplicationController
     @pagy, @traders = pagy_array(@traders) || pagy(@traders)
   end
 
+  def show
+  end
+
   def edit
   end
 
   def update
     if @trader.update(trader_params)
-      flash[:notice] = "User details successfully updated."
+      flash[:notice] = "Admin has successfully updated the details of #{@trader.email}."
       redirect_to admin_users_path
     else
       flash[:alert] = @trader.errors.full_messages.join(". ")
@@ -33,7 +36,7 @@ class Admin::UsersController < ApplicationController
 
   def destroy
     @trader.destroy
-    redirect_to admin_users_path, notice: "User permanently deleted."
+    redirect_to admin_users_path, notice: "Admin permanently deleted #{@trader.email}."
   end
 
   private
