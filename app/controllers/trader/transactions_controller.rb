@@ -2,7 +2,6 @@ class Trader::TransactionsController < ApplicationController
   layout 'dashboard_layout'
 
   def index
-    @trader_status = current_user.status&.status_type
     @transactions = case params[:filter]
                     when 'buy'
                       current_user.transactions.where(transaction_type: 'buy').order(updated_at: :desc)
