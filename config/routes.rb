@@ -46,6 +46,8 @@ Rails.application.routes.draw do
     get 'market', to: 'dashboard#market', as: :market_page
     get 'cash-in', to: 'cash_in#index'
     patch 'cash-in', to: 'cash_in#update'
+    get 'withdraw', to: 'withdraw#index'
+    patch 'withdraw', to: 'withdraw#update'
     get 'trade', to: 'trades#index'
     post 'trade/buy', to: 'trades#buy'
     post 'trade/sell', to: 'trades#sell'
