@@ -1,6 +1,6 @@
 class Trader::CashInController < TradersController
   include CurrencyHelper
-  layout 'dashboard_layout'
+  layout "dashboard_layout"
 
   def index
     @balance = current_user.balance
@@ -10,7 +10,7 @@ class Trader::CashInController < TradersController
     amount = params[:amount].to_f
 
     if amount <= 0
-      flash[:alert] = 'Invalid amount. Please enter a value greater than 0.'
+      flash[:alert] = "Invalid amount. Please enter a value greater than 0."
       redirect_to trader_cash_in_path
       return
     end
@@ -20,13 +20,13 @@ class Trader::CashInController < TradersController
     if current_user.save
       Transaction.create!(
         user: current_user,
-        transaction_type: 'cash_in',
+        transaction_type: "cash_in",
         amount:
       )
       flash[:notice] = "Successfully cashed in #{format_currency(amount, unit: "$")}."
       redirect_to trader_dashboard_path
     else
-      flash[:alert] = 'Failed to cash in. Please try again.'
+      flash[:alert] = "Failed to cash in. Please try again."
       redirect_to trader_cash_in_path
     end
   end
