@@ -4,8 +4,6 @@ class Trader::TradesController < TradersController
   def index
     return unless params[:symbol].present?
 
-    # @stock_symbol = params[:symbol].to_s.upcase
-
     begin
       @data = IEX::Api::Client.new.quote(@stock_symbol)
     rescue IEX::Errors::SymbolNotFoundError => e
@@ -15,7 +13,6 @@ class Trader::TradesController < TradersController
   end
 
   def buy
-    # @stock_symbol = params[:symbol].to_s.upcase
     shares_to_buy = params[:shares].to_f
 
     if shares_to_buy <= 0
@@ -52,7 +49,6 @@ class Trader::TradesController < TradersController
   end
 
   def sell
-    # @stock_symbol = params[:symbol].to_s.upcase
     stock = current_user.stocks.find_by(stock_symbol: @stock_symbol)
     shares_to_sell = params[:shares].to_f
 
