@@ -97,7 +97,7 @@
             </td>
             -->
             <td class="px-6 py-2.5 shared_links">
-              BUY/SELL
+              <%= link_to "BUY/SELL", trader_trade_path(symbol: stock.stock_symbol) %>
             </td>
           </tr>
         <% end %>
