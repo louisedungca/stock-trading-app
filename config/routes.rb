@@ -57,4 +57,6 @@ Rails.application.routes.draw do
   # routes for static pages
   get 'landing', to: 'pages#landing', as: :landing_page
   get 'pending-verification', to: 'pages#pending_verification', as: :pending_verification_page
+
+  match "*path", to: "application#no_path_found", via: :all
 end

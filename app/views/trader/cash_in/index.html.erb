@@ -1,24 +1,43 @@
-<% content_for :header do %>
-  Cash in
-<% end %>
+<%= turbo_frame_tag "cash_in_modal" do %>
+  <div aria-labelledby="modal-title" aria-modal="true" class="fixed inset-0 z-30 overflow bg-black/80" role="dialog">
+    <div class="h-screen w-full relative flex items-center justify-center">
+      <div class="relative rounded-lg shadow bg-gray-700 w-1/3 px-4 py-2">
+        <!-- Modal header -->
+        <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+          <h3 class="font-sans text-xl font-semibold text-gray-900 dark:text-white">
+            Cash-In
+          </h3>
 
-<section class="flex flex-col bg--frosted w-1/2">
-  <!-- <h1 class="border-b-2 border-gray-500 p-3.5 text-base font-sans font-bold tracking-widest uppercase">CASH IN</h1>
--->
-  <p class="p-3.5">
-    Current Balance: <span class="font-semibold"><%= format_currency(@balance, unit: "$") %></span>
-  </p>
+          <%= link_to "#", data: { controller: "modals", action: "modals#close" }, class: "end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" do %>
+            <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+            </svg>
+          <% end %>
+        </div>
+          
+        <!-- Modal body -->
+        <div class="p-4 md:p-5 flex flex-col items-center">
+          <div class="flex flex-col items-center gap-2 p-2">
+            <small class="uppercase font-semibold font-sans text-xs text-gray-500">Current Balance</small>
+            <h1 class="text-3xl flex text-gray-300">
+              <small class="p-1 font-sans text-xs">$</small>
+              <%= format_currency(@balance) %>              
+            </h1>
+          </div>
 
-  <div class="form__wrapper">
-    <%= form_with(url: trader_cash_in_path, method: :patch) do |form| %>
-      <div class="field">
-        <%= form.label :amount, "Amount to Cash In" %>
-        <%= form.text_field :amount %>
-      </div>
-      <div class="actions" >
-        <%= form.button "Cash-in" %>
-      </div>
-      <% end %>
+          <%= form_with url: trader_cash_in_path, method: :patch, data: { turbo: false } do |form| %>
+            <div class="form__wrapper w-full">
+              <div class="flex justify-center items-center gap-2">
+                <%= form.label :amount, "Cash-in Amount", class: "uppercase font-semibold font-sans text-xs text-gray-300" %>
+                <%= form.number_field :amount, min: 0, step: 0.1, class: "modal__textfield" %>
+              </div>
+              <div class="modal__button">
+                <%= form.button "Cash-in" %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div> 
+    </div>
   </div>
-
-</section>
+<% end %>

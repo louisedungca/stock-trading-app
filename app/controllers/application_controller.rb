@@ -4,6 +4,11 @@ class ApplicationController < ActionController::Base
 
   include Pagy::Backend
 
+  def no_path_found
+    flash[:alert] = "Hmm. Page not found."
+    redirect_to root_path
+  end
+
   protected
 
   def configure_permitted_parameters
