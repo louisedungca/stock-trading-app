@@ -19,77 +19,90 @@
   </div>
 <% end %>
 
-<div class="relative shadow-md sm:rounded-lg text-sm">
-  <table class="w-full text-sm text-left rtl:text-right text-gray-400">
-    <thead class="text-sm font-sans font-extralight uppercase bg-gray-700/55 text-gray-400">
-      <tr>
-        <th scope="col" class="px-6 py-3">
-          <span class="sr-only">Stock Logo</span>
-        </th>
-        <th scope="col" class="px-6 py-3">
-          Symbol
-        </th>
-        <th scope="col" class="px-6 py-3">
-          Company Name
-        </th>
-        <th scope="col" class="px-6 py-3">
-          PRICE
-        </th>
-        <th scope="col" class="px-6 py-3">
-          CHG
-        </th>
-        <th scope="col" class="px-6 py-3">
-          CHG %
-        </th>
-        <th scope="col" class="px-6 py-3">
-          SHARES
-        </th>
-        <!--
-        <th scope="col" class="px-6 py-3">
-          SHARES * PRICE
-        </th>
-        -->
-        <th scope="col" class="px-6 py-3">
-          <span class="sr-only">Actions</span>
-        </th>
-      </tr>
-    </thead>
+<div class="h-full flex flex-col gap-2 items-center">
+  <!-- ** Total Portfolio Value ** -->
+  <div class="h-[15%] flex flex-col items-center gap-2 py-2 px-4 tracking-widest">
+    <small class="uppercase font-semibold font-sans">Total Portfolio Value</small>
+    <h1 class="text-3xl flex">
+      <small class="text-sm p-1 font-sans">$</small>
+      <%= format_currency(@total_portfolio_value) %>
+    </h1>
+  </div>
 
-    <tbody>
-      <% @stocks.each do |stock| %>
-        <tr class="border-b bg-stone-900/35 border-gray-700 hover:bg-gray-600">
-          <td scope="row" class="px-6 py-3 font-medium whitespace-nowrap text-white">
-            <img src="<%= stock.logo_url %>" alt="<%= stock.stock_symbol %>" class="h-6">
-          </td>
-          <td class="px-6 py-2.5 font-sans font-bold text-violet-100">
-            <%= stock.stock_symbol %>
-          </td>
-          <td class="px-6 py-2.5 font-sans text-emerald-50">
-            <%= stock.company_name %>
-          </td>
-          <td class="px-6 py-2.5">
-            <%= format_currency(@stock_quotes[stock.stock_symbol].latest_price) %>
-          </td>
-          <td class="px-6 py-2.5 <%= @stock_quotes[stock.stock_symbol].change < 0 ? 'text-red-500' : 'text-green-500' %>">
-            <%= @stock_quotes[stock.stock_symbol].change %>
-          </td>
-          <td class="px-6 py-2.5 <%= @stock_quotes[stock.stock_symbol].change < 0 ? 'text-red-500' : 'text-green-500' %>">
-            <%= @stock_quotes[stock.stock_symbol].change_percent_s %>
-          </td>          
-          <td class="px-6 py-2.5">
-            <%= stock.shares %>
-          </td>
+  <!-- ** Portfolio Table ** -->
+  <div class="relative h-[85%] w-full shadow-md sm:rounded-lg text-sm">
+    <table class="w-full text-sm text-left rtl:text-right text-gray-400">
+      <thead class="text-xs font-sans uppercase bg-gray-700/55 text-gray-400">
+        <tr>
+          <th scope="col" class="px-6 py-3">
+            <span class="sr-only">Stock Logo</span>
+          </th>
+          <th scope="col" class="px-6 py-3">
+            Symbol
+          </th>
+          <th scope="col" class="px-6 py-3">
+            Company Name
+          </th>
+          <th scope="col" class="px-6 py-3">
+            PRICE
+          </th>
+          <th scope="col" class="px-6 py-3">
+            CHG
+          </th>
+          <th scope="col" class="px-6 py-3">
+            CHG %
+          </th>
+          <th scope="col" class="px-6 py-3">
+            SHARES
+          </th>
           <!--
-          <td class="px-6 py-2.5">
-            <%= format_currency(@stock_quotes[stock.stock_symbol].latest_price * stock.shares) %>
-          </td>
+          <th scope="col" class="px-6 py-3">
+            SHARES * PRICE
+          </th>
           -->
-          <td class="px-6 py-2.5 shared_links">
-            BUY/SELL
-          </td>
+          <th scope="col" class="px-6 py-3">
+            <span class="sr-only">Actions</span>
+          </th>
         </tr>
-      <% end %>
-    </tbody>
+      </thead>
 
-  </table>  
+      <tbody>
+        <% @stocks.each do |stock| %>
+          <tr class="border-b bg-stone-900/35 border-gray-700 hover:bg-gray-600">
+            <td scope="row" class="px-6 py-3 font-medium whitespace-nowrap text-white">
+              <img src="<%= stock.logo_url %>" alt="<%= stock.stock_symbol %>" class="h-6">
+            </td>
+            <td class="px-6 py-2.5 font-sans font-bold text-violet-100">
+              <%= stock.stock_symbol %>
+            </td>
+            <td class="px-6 py-2.5 font-sans text-emerald-50">
+              <%= stock.company_name %>
+            </td>
+            <td class="px-6 py-2.5">
+              <%= format_currency(@stock_quotes[stock.stock_symbol].latest_price) %>
+            </td>
+            <td class="px-6 py-2.5 <%= @stock_quotes[stock.stock_symbol].change < 0 ? 'text-red-500' : 'text-green-500' %>">
+              <%= @stock_quotes[stock.stock_symbol].change %>
+            </td>
+            <td class="px-6 py-2.5 <%= @stock_quotes[stock.stock_symbol].change < 0 ? 'text-red-500' : 'text-green-500' %>">
+              <%= @stock_quotes[stock.stock_symbol].change_percent_s %>
+            </td>          
+            <td class="px-6 py-2.5">
+              <%= stock.shares %>
+            </td>
+            <!--
+            <td class="px-6 py-2.5">
+              <% total_price = @stock_quotes[stock.stock_symbol].latest_price * stock.shares %>
+              <%= number_to_currency(total_price) %>
+            </td>
+            -->
+            <td class="px-6 py-2.5 shared_links">
+              BUY/SELL
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>  
+  </div>
+  
 </div>
