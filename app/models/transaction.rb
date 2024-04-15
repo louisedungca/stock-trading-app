@@ -24,6 +24,13 @@
 class Transaction < ApplicationRecord
   belongs_to :user
 
+  enum :transaction_type, {
+    buy: 'buy',
+    sell: 'sell',
+    cash_in: 'cash_in',
+    withdraw: 'withdraw'
+  }
+
   scope :filter_by_type, lambda { |filter|
     case filter
     when 'buy'
@@ -32,6 +39,8 @@ class Transaction < ApplicationRecord
       where(transaction_type: 'sell')
     when 'cash_in'
       where(transaction_type: 'cash_in')
+    when 'withdraw'
+      where(transaction_type: 'withdraw')
     else
       all
     end

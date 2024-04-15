@@ -22,12 +22,14 @@
         Deposit
       </button>
 
-      <%= turbo_frame_tag "withdraw_modal" do %>
-        <%= link_to "Withdraw", nil, class: "button--secondary" %> 
-      <% end %>
+      
       -->
       <%= turbo_frame_tag "cash_in_modal" do %>
         <%= link_to "Cash-in", trader_cash_in_path, class: "button--secondary" %> 
+      <% end %>
+
+      <%= turbo_frame_tag "withdraw_modal" do %>
+        <%= link_to "Withdraw", trader_withdraw_path, class: "button--secondary" %> 
       <% end %>
     </div>
 
