@@ -28,7 +28,7 @@
           <%= form_with url: trader_cash_in_path, method: :patch, data: { turbo: false } do |form| %>
             <div class="form__wrapper w-full">
               <div class="flex justify-center items-center gap-2">
-                <%= form.label :amount, "Cash-in Amount", class: "uppercase font-semibold font-sans text-xs text-gray-500" %>
+                <%= form.label :amount, "Cash-in Amount", class: "uppercase font-semibold font-sans text-xs text-gray-300" %>
                 <%= form.number_field :amount, min: 0, step: 0.1, class: "modal__textfield" %>
               </div>
               <div class="modal__button">
