@@ -32,8 +32,10 @@ class Stock < ApplicationRecord
   end
 
   def total_shares(user)
-    buy = transactions.where(transaction_type: 'buy', user_id: user.id).sum(:shares).to_f
-    sell = transactions.where(transaction_type: 'sell', user_id: user.id).sum(:shares).to_f
-    buy - sell
+    transactions
+      .where(user_id: user.id)
+      .group_by(&:transaction_type)
+      .transform_values { |transactions| transactions.sum(&:shares).to_f }
+      .yield_self { |shares| (shares['buy'] || 0) - (shares['sell'] || 0) }
   end
 end
