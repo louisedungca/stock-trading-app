@@ -56,7 +56,7 @@ class Transaction < ApplicationRecord
     stock = IEX::Api::Client.new.quote(stock_symbol)
     total_cost = stock.latest_price * shares
     logo = IEX::Api::Client.new.logo(stock_symbol)
-    target_stock = user.stocks.where(stock_symbol: stock_symbol).first_or_initialize
+    target_stock = Stock.where(stock_symbol: stock_symbol).first_or_initialize
     target_stock.update!(
       stock_symbol: stock_symbol,
       logo_url: logo.url,
@@ -64,10 +64,6 @@ class Transaction < ApplicationRecord
     )
 
     ActiveRecord::Base.transaction do
-      if user.balance < total_cost
-        raise ActiveRecord::Rollback
-      end
-
       user.transactions.create!(
         transaction_type: 'buy',
         shares:,
@@ -75,9 +71,8 @@ class Transaction < ApplicationRecord
         user_id: user.id,
         stock_id: target_stock.id
       )
-      user.update(balance: user.balance - total_cost)
+      user.update!(balance: user.balance - total_cost)
     end
-
   rescue ActiveRecord::RecordInvalid
     Rails.logger.error "Error buying #{stock_symbol} shares"
     false
@@ -101,7 +96,7 @@ class Transaction < ApplicationRecord
         user_id: user.id,
         stock_id: target_stock.id
       )
-      user.update(balance: user.balance + total_cost)
+      user.update!(balance: user.balance + total_cost)
     end
 
   rescue ActiveRecord::RecordInvalid
