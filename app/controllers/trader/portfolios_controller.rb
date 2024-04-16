@@ -11,7 +11,7 @@ class Trader::PortfoliosController < TradersController
     @stock_quotes = {}
     @stocks.each do |stock|
       @stock_quotes[stock.stock_symbol] = IEX::Api::Client.new.quote(stock.stock_symbol)
-      total_price = @stock_quotes[stock.stock_symbol].latest_price * stock.total_shares
+      total_price = @stock_quotes[stock.stock_symbol].latest_price * stock.total_shares(current_user)
       @total_portfolio_value += total_price
     end
   end
