@@ -73,7 +73,7 @@
               <img src="<%= stock[:logo_url] %>" alt="<%= stock[:stock_symbol] %>" class="h-6">
             </td>
             <td class="px-6 py-2.5 font-sans font-bold text-violet-100">
-              <%= stock[:stock_symbol] %>
+              <%= stock[:stock_symbol].upcase %>
             </td>
             <td class="px-6 py-2.5 font-sans text-emerald-50">
               <%= stock[:company_name] %>
