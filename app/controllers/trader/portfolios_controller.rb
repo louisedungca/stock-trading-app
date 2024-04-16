@@ -2,12 +2,7 @@ class Trader::PortfoliosController < TradersController
   layout 'dashboard_layout'
 
   def index
-    @stocks = case params[:filter]
-              when 'asc'
-                current_user.stocks.order(:shares)
-              else
-                current_user.stocks.order(shares: :desc)
-              end
+    @stocks = current_user.stocks
 
     @pagy, @stocks = pagy_array(@stocks) || pagy(@stocks) ## pagy stuff
     @total_portfolio_value = 0.0
