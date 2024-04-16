@@ -13,89 +13,20 @@ class Trader::TradesController < TradersController
   end
 
   def buy
-    shares_to_buy = params[:shares].to_f
+    stock_symbol = transaction_params[:symbol].upcase
+    shares = transaction_params[:shares].to_f
 
-    if shares_to_buy <= 0
-      flash[:alert] = 'Number of shares must be greater than 0'
+    if Transaction.buy_shares(current_user, stock_symbol, shares)
+      flash[:notice] = "#{stock_symbol} stock purchased successfully"
     else
-      @data = IEX::Api::Client.new.quote(@stock_symbol)
-      price_per_share = @data.latest_price
-      total_cost = price_per_share * shares_to_buy
-
-      if current_user.balance >= total_cost
-        # Update user's balance
-        current_user.update(balance: current_user.balance - total_cost)
-
-        # Record the transaction
-        Transaction.create!(
-          user: current_user,
-          transaction_type: 'buy',
-          stock_symbol: @data.symbol,
-          company_name: @data.company_name,
-          shares: shares_to_buy,
-          price_per_share:
-        )
-
-        # Update stock inventory
-        update_stock_inventory(@data, shares_to_buy)
-
-        flash[:notice] = "#{@data.symbol} stock purchased successfully"
-      else
-        flash[:alert] = 'Insufficient balance'
-      end
-    end
-
-    redirect_back(fallback_location: trader_trade_path)
-  end
-
-  def sell
-    stock = current_user.stocks.find_by(stock_symbol: @stock_symbol)
-    shares_to_sell = params[:shares].to_f
-
-    if shares_to_sell <= 0
-      flash[:alert] = 'Number of shares must be greater than 0'
-    elsif stock.present? && stock.shares >= shares_to_sell
-      @data = IEX::Api::Client.new.quote(@stock_symbol)
-      price_per_share = @data.latest_price
-      total_sale = price_per_share * shares_to_sell
-
-      # Update user's balance
-      current_user.update(balance: current_user.balance + total_sale)
-
-      # Update user's stock inventory
-      stock.update(shares: stock.shares - shares_to_sell)
-
-      # Record the transaction
-      Transaction.create!(
-        user: current_user,
-        transaction_type: 'sell',
-        stock_symbol: @data.symbol,
-        company_name: @data.company_name,
-        shares: shares_to_sell,
-        price_per_share:
-      )
-      flash[:notice] = "#{@data.symbol} stock sold successfully"
-    else
-      flash[:alert] = 'Insufficient shares'
+      flash[:alert] = 'Error'
     end
     redirect_back(fallback_location: trader_trade_path)
   end
 
   private
 
-  def update_stock_inventory(data, shares)
-    stock = current_user.stocks.find_by(stock_symbol: data.symbol)
-    if stock.present?
-      stock.update(shares: stock.shares + shares)
-    else
-      logo = IEX::Api::Client.new.logo(data.symbol)
-      Stock.create!(
-        user: current_user,
-        shares:,
-        stock_symbol: data.symbol,
-        company_name: data.company_name,
-        logo_url: logo.url
-      )
-    end
+  def transaction_params
+    params.require(:transaction).permit(:shares, :symbol)
   end
 end
