@@ -58,7 +58,7 @@ class Transaction < ApplicationRecord
     logo = IEX::Api::Client.new.logo(stock_symbol)
     target_stock = Stock.where(stock_symbol: stock_symbol).first_or_initialize
     target_stock.update!(
-      stock_symbol: stock_symbol,
+      stock_symbol: stock_symbol.upcase,
       logo_url: logo.url,
       company_name: stock.company_name
     )
