@@ -13,10 +13,9 @@ class Trader::TradesController < TradersController
   end
 
   def buy
-    stock_symbol = transaction_params[:symbol].upcase
-    shares = transaction_params[:shares].to_f
+    stock_symbol = params[:symbol]
 
-    if Transaction.buy_shares(current_user, stock_symbol, shares)
+    if Transaction.buy_shares(current_user, stock_symbol, transaction_params[:shares].to_f)
       flash[:notice] = "#{stock_symbol} stock purchased successfully"
     else
       flash[:alert] = 'Error'
@@ -27,6 +26,6 @@ class Trader::TradesController < TradersController
   private
 
   def transaction_params
-    params.require(:transaction).permit(:shares, :symbol)
+    params.require(:transaction).permit(:shares, :amount)
   end
 end
