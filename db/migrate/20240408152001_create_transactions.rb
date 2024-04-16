@@ -1,6 +1,6 @@
 class CreateTransactions < ActiveRecord::Migration[7.1]
   def change
-    create_enum :transaction_type, %w[buy sell cash_in]
+    create_enum :transaction_type, %w[buy sell cash_in withdraw]
     create_table :transactions do |t|
       t.enum :transaction_type, enum_type: 'transaction_type'
       t.decimal :shares
