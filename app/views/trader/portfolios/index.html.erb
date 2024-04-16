@@ -88,11 +88,11 @@
               <%= @stock_quotes[stock.stock_symbol].change_percent_s %>
             </td>          
             <td class="px-6 py-2.5">
-              <%= stock.shares %>
+              <%= stock.total_shares %>
             </td>
             <!--
             <td class="px-6 py-2.5">
-              <% total_price = @stock_quotes[stock.stock_symbol].latest_price * stock.shares %>
+              <% total_price = @stock_quotes[stock.stock_symbol].latest_price * stock.total_shares %>
               <%= number_to_currency(total_price) %>
             </td>
             -->
