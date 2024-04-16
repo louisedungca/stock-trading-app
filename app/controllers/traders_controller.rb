@@ -15,6 +15,6 @@ class TradersController < ApplicationController
   end
 
   def set_stock_symbol
-    @stock_symbol = params[:symbol].to_s.upcase
+    @stock_symbol = params[:stock_symbol].to_s.upcase
   end
 end

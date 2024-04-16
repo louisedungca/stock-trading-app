@@ -2,7 +2,7 @@ class Trader::TradesController < TradersController
   layout 'dashboard_layout'
 
   def index
-    return unless params[:symbol].present?
+    return unless params[:stock_symbol].present?
 
     begin
       @data = IEX::Api::Client.new.quote(@stock_symbol)
@@ -13,9 +13,10 @@ class Trader::TradesController < TradersController
   end
 
   def buy
-    stock_symbol = params[:symbol]
+    stock_symbol = params[:stock_symbol]
+    shares = params[:shares].to_f
 
-    if Transaction.buy_shares(current_user, stock_symbol, transaction_params[:shares].to_f)
+    if Transaction.buy_shares(current_user, stock_symbol, shares)
       flash[:notice] = "#{stock_symbol} stock purchased successfully"
     else
       flash[:alert] = 'Error'
@@ -23,9 +24,4 @@ class Trader::TradesController < TradersController
     redirect_back(fallback_location: trader_trade_path)
   end
 
-  private
-
-  def transaction_params
-    params.require(:transaction).permit(:shares, :amount)
-  end
 end
