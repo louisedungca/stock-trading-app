@@ -34,7 +34,7 @@ class Trader::TradesController < TradersController
   private
 
   def set_params
-    @stock_symbol = params[:stock_symbol]
+    @stock_symbol = params[:stock_symbol].upcase
     @shares = params[:shares].to_f
   end
 end
