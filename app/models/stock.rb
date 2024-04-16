@@ -17,9 +17,9 @@ class Stock < ApplicationRecord
   validates :company_name, presence: true
   validates :logo_url, presence: true
 
-  def total_shares
-    buy = transactions.where(transaction_type: 'buy').sum(:shares).to_f
-    sell = transactions.where(transaction_type: 'sell').sum(:shares).to_f
+  def total_shares(user)
+    buy = transactions.where(transaction_type: 'buy', user_id: user.id).sum(:shares).to_f
+    sell = transactions.where(transaction_type: 'sell', user_id: user.id).sum(:shares).to_f
     buy - sell
   end
 end
