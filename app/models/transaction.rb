@@ -56,7 +56,7 @@ class Transaction < ApplicationRecord
     stock = IEX::Api::Client.new.quote(stock_symbol)
     logo = IEX::Api::Client.new.logo(stock_symbol)
     total_cost = stock.latest_price * shares
-    target_stock = user.stocks.where(symbol: stock_symbol).first_or_initialize
+    target_stock = user.stocks.where(stock_symbol:).first_or_initialize
     target_stock.update!(
       stock_symbol:,
       logo_url: logo.url,
@@ -73,7 +73,8 @@ class Transaction < ApplicationRecord
         transaction_type: 'buy',
         shares:,
         price_per_share: stock.latest_price,
-        stock_id: existing_stock.id
+        user_id: user.id,
+        stock_id: target_stock.id
       )
       user.update(balance: user.balance - total_cost)
     end
