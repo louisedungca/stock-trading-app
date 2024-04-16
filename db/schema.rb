@@ -30,25 +30,22 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_15_065420) do
 
   create_table "stocks", force: :cascade do |t|
     t.string "stock_symbol"
-    t.decimal "shares"
     t.string "logo_url"
     t.string "company_name"
-    t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_stocks_on_user_id"
   end
 
   create_table "transactions", force: :cascade do |t|
     t.enum "transaction_type", enum_type: "transaction_type"
     t.decimal "shares"
-    t.string "stock_symbol"
-    t.string "company_name"
     t.decimal "price_per_share"
     t.bigint "user_id", null: false
+    t.bigint "stock_id"
     t.decimal "amount"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["stock_id"], name: "index_transactions_on_stock_id"
     t.index ["user_id"], name: "index_transactions_on_user_id"
   end
 
@@ -87,6 +84,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_15_065420) do
   end
 
   add_foreign_key "statuses", "users"
-  add_foreign_key "stocks", "users"
+  add_foreign_key "transactions", "stocks"
   add_foreign_key "transactions", "users"
 end
