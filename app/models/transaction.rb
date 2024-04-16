@@ -64,6 +64,9 @@ class Transaction < ApplicationRecord
     )
 
     ActiveRecord::Base.transaction do
+      if total_cost > user.balance
+        raise ActiveRecord::Rollback
+      end
       user.transactions.create!(
         transaction_type: 'buy',
         shares:,
@@ -98,7 +101,6 @@ class Transaction < ApplicationRecord
       )
       user.update!(balance: user.balance + total_cost)
     end
-
   rescue ActiveRecord::RecordInvalid
     Rails.logger.error "Error selling #{stock_symbol} shares"
     false
