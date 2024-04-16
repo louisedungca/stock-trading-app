@@ -8,7 +8,7 @@
   <div class="w-full grid--autofill">
     <% @stocks.each do |stock| %>
       <div class="bg--frosted pt-6 pb-0 grid place-items-center">
-        <%= render 'pages/widgets/solo_ticker', symbol: stock.stock_symbol %>
+        <%= render 'pages/widgets/solo_ticker', symbol: stock[:stock_symbol] %>
       </div>      
     <% end %>
   </div>  

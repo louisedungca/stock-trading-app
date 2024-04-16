@@ -1,5 +1,5 @@
 class TradersController < ApplicationController
-  before_action :check_status, :set_trader_status, :set_stock_symbol
+  before_action :check_status, :set_trader_status, :set_stock_symbol, :set_stocks_per_trader
 
   private
 
@@ -15,6 +15,10 @@ class TradersController < ApplicationController
   end
 
   def set_stock_symbol
-    @stock_symbol = params[:symbol].to_s.upcase
+    @stock_symbol = params[:stock_symbol].to_s.upcase
+  end
+
+  def set_stocks_per_trader
+    @stocks = Stock.group_similar_stocks(current_user)
   end
 end

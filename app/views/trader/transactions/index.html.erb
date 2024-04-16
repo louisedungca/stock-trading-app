@@ -51,10 +51,10 @@
               <%= transaction.transaction_type.upcase %>
           </th>
           <td class="px-6 py-2.5">
-              <%= transaction.stock_symbol %>
+              <%= transaction.stock ? transaction.stock.stock_symbol : 'N/A' %>
           </td>
           <td class="px-6 py-2.5">
-              <%= transaction.company_name %>
+              <%= transaction.stock ? transaction.stock.company_name : 'N/A' %>
           </td>
           <td class="px-6 py-2.5">
               <%= transaction.shares %>
