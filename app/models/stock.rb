@@ -5,20 +5,19 @@
 #  id           :bigint           not null, primary key
 #  company_name :string
 #  logo_url     :string
-#  shares       :decimal(, )
 #  stock_symbol :string
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
-#  user_id      :bigint           not null
-#
-# Indexes
-#
-#  index_stocks_on_user_id  (user_id)
-#
-# Foreign Keys
-#
-#  fk_rails_...  (user_id => users.id)
 #
 class Stock < ApplicationRecord
-  belongs_to :user
+  has_many :transactions
+  has_many :users, through: :transactions
+
+  validates :stock_symbol, presence: true
+  validates :company_name, presence: true
+  validates :logo_url, presence: true
+
+  def total_shares
+    transactions.sum(:shares)
+  end
 end
