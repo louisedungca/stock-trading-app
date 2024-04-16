@@ -57,6 +57,7 @@ class User < ApplicationRecord
   }, default: 'trader'
 
   validates :email, presence: true, uniqueness: true
+  validates :balance, numericality: { greater_than_or_equal: 0, message: "Insufficient Balance." }
   validates :username, presence: true, uniqueness: true
   validates :password, presence: true, on: :create
   before_create :initialize_status_for_trader
