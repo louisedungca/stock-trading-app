@@ -49,7 +49,7 @@ class User < ApplicationRecord
   has_one :status, dependent: :destroy
   accepts_nested_attributes_for :status
   has_many :transactions
-  has_many :stocks
+  has_many :stocks, through: :transactions
 
   enum :role, {
     admin: 'admin',
