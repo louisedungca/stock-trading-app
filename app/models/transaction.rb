@@ -54,8 +54,8 @@ class Transaction < ApplicationRecord
 
   def self.buy_shares(user, stock_symbol, shares)
     stock = IEX::Api::Client.new.quote(stock_symbol)
-    logo = IEX::Api::Client.new.logo(stock_symbol)
     total_cost = stock.latest_price * shares
+    logo = IEX::Api::Client.new.logo(stock_symbol)
     target_stock = user.stocks.where(stock_symbol: stock_symbol).first_or_initialize
     target_stock.update!(
       stock_symbol: stock_symbol,
@@ -63,9 +63,8 @@ class Transaction < ApplicationRecord
       company_name: stock.company_name
     )
 
-    transaction do
+    ActiveRecord::Base.transaction do
       if user.balance < total_cost
-        errors.add('Insufficient account balance.')
         raise ActiveRecord::Rollback
       end
 
@@ -78,22 +77,71 @@ class Transaction < ApplicationRecord
       )
       user.update(balance: user.balance - total_cost)
     end
+
   rescue ActiveRecord::RecordInvalid
-    errors.add(:base, "Failed to buy #{stock.symbol} shares.")
+    Rails.logger.error "Error buying #{stock_symbol} shares"
     false
   end
 
-  # def self.cash_in(user, amount)
-  #   return unless amount.positive?
+  def self.sell_shares(user, stock_symbol, shares)
+    stock = IEX::Api::Client.new.quote(stock_symbol)
+    total_cost = stock.latest_price * shares
+    target_stock = Stock.find_by(stock_symbol: stock_symbol)
+    total_shares = target_stock.total_shares(user)
 
-  #   transaction do
-  #     user.balance += amount
-  #     save!
+    transaction do
+      if total_shares < shares
+        raise ActiveRecord::Rollback
+      end
 
-  #     transactions.create!(transaction_type: 'cash_in', amount:)
-  #   end
-  # rescue ActiveRecord::RecordInvalid
-  #   errors.add(:base, 'Failed to cash-in money.')
-  #   false
-  # end
+      user.transactions.create!(
+        transaction_type: 'sell',
+        shares:,
+        price_per_share: stock.latest_price,
+        user_id: user.id,
+        stock_id: target_stock.id
+      )
+      user.update(balance: user.balance + total_cost)
+    end
+
+  rescue ActiveRecord::RecordInvalid
+    Rails.logger.error "Error selling #{stock_symbol} shares"
+    false
+  end
+
+  def self.cash_in(user, amount)
+    return unless amount.positive?
+
+    transaction do
+      user.update(balance: user.balance + amount)
+
+      user.transactions.create!(
+        transaction_type: 'cash_in',
+        amount: amount
+        )
+    end
+  rescue ActiveRecord::RecordInvalid
+    errors.add(:base, 'Failed to cash-in money.')
+    false
+  end
+
+  def self.withdraw(user, amount)
+    return unless amount.positive?
+
+    transaction do
+      if user.balance < amount
+        raise ActiveRecord::Rollback
+      end
+
+      user.update(balance: user.balance - amount)
+
+      user.transactions.create!(
+        transaction_type: 'withdraw',
+        amount: amount
+        )
+    end
+  rescue ActiveRecord::RecordInvalid
+    errors.add(:base, 'Failed to cash-in money.')
+    false
+  end
 end
