@@ -70,37 +70,38 @@
         <% @stocks.each do |stock| %>
           <tr class="border-b bg-stone-900/35 border-gray-700 hover:bg-gray-600">
             <td scope="row" class="px-6 py-3 font-medium whitespace-nowrap text-white">
-              <img src="<%= stock.logo_url %>" alt="<%= stock.stock_symbol %>" class="h-6">
+              <img src="<%= stock[:logo_url] %>" alt="<%= stock[:stock_symbol] %>" class="h-6">
             </td>
             <td class="px-6 py-2.5 font-sans font-bold text-violet-100">
-              <%= stock.stock_symbol %>
+              <%= stock[:stock_symbol] %>
             </td>
             <td class="px-6 py-2.5 font-sans text-emerald-50">
-              <%= stock.company_name %>
+              <%= stock[:company_name] %>
             </td>
             <td class="px-6 py-2.5">
-              <%= format_currency(@stock_quotes[stock.stock_symbol].latest_price) %>
+              <%= format_currency(@stock_quotes[stock[:stock_symbol]].latest_price) %>
             </td>
-            <td class="px-6 py-2.5 <%= @stock_quotes[stock.stock_symbol].change < 0 ? 'text-red-500' : 'text-green-500' %>">
-              <%= @stock_quotes[stock.stock_symbol].change %>
+            <td class="px-6 py-2.5 <%= @stock_quotes[stock[:stock_symbol]].change < 0 ? 'text-red-500' : 'text-green-500' %>">
+              <%= @stock_quotes[stock[:stock_symbol]].change %>
             </td>
-            <td class="px-6 py-2.5 <%= @stock_quotes[stock.stock_symbol].change < 0 ? 'text-red-500' : 'text-green-500' %>">
-              <%= @stock_quotes[stock.stock_symbol].change_percent_s %>
+            <td class="px-6 py-2.5 <%= @stock_quotes[stock[:stock_symbol]].change < 0 ? 'text-red-500' : 'text-green-500' %>">
+              <%= @stock_quotes[stock[:stock_symbol]].change_percent_s %>
             </td>          
             <td class="px-6 py-2.5">
-              <%= stock.total_shares(current_user) %>
+              <%= stock[:total_shares] %>
             </td>
             <!--
             <td class="px-6 py-2.5">
-              <% total_price = @stock_quotes[stock.stock_symbol].latest_price * stock.total_shares(current_user) %>
+              <% total_price = @stock_quotes[stock[:stock_symbol]].latest_price * stock[:total_shares] %>
               <%= number_to_currency(total_price) %>
             </td>
             -->
             <td class="px-6 py-2.5 shared_links">
-              <%= link_to "BUY/SELL", trader_trade_path(symbol: stock.stock_symbol) %>
+              <%= link_to "BUY/SELL", trader_trade_path(symbol: stock[:stock_symbol]) %>
             </td>
           </tr>
         <% end %>
+
       </tbody>
     </table>  
   </div>
