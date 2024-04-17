@@ -60,7 +60,7 @@ class Transaction < ApplicationRecord
 
     return unless user.balance.positive?
 
-    ActiveRecord::Base.transaction do
+    transaction do
       if user.balance < total_cost
         user.errors.add(:base, "Insufficient balance to proceed with this transaction.")
         raise ActiveRecord::Rollback
