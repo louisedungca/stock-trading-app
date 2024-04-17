@@ -27,35 +27,17 @@
 <div class="h-full flex flex-col gap-4">  
   <%= render 'pages/widgets/ticker' %>
 
-  <div class="flex gap-1 w-full h-full">
-    <aside class="h-full <%= @data.present? ? "w-1/4" : "w-1/2" %>">
-      <%= render 'pages/widgets/stock_market' %>
-    </aside>
+  <div class="flex flex-col gap-1 w-full h-full">
+    <div class="flex w-full h-full flex-col gap-1">
+      <%= render 'pages/widgets/fixed_chart', locals: { stock_symbol: @stock_symbol } %>
 
-    <div class="flex flex-col gap-1">
-      <% if @data %> 
-        <%= render 'pages/widgets/fixed_chart', locals: { stock_symbol: @stock_symbol } %>
-
+      <% if @data %>
         <div class="flex gap-1 h-1/4 w-full">  
           <div class="bg--frosted py-2 px-4 flex flex-col gap-2 items-center justify-around w-full">
-            <!-- ** STOCK DETAILS ** -->
-            <div class="w-full flex flex-col gap-1 border-b-2 border-gray-400 py-2">
-              <div class="font-sans tracking-widest font-bold text-xl flex gap-2 divide-x-2 divide-gray-600">
-                <h1 class="text-violet-100"><%= @stock_symbol %></h1> 
-                <h1 class="font-medium pl-2"><%= @data.company_name %></h1> 
-              </div>
-
-              <small class="flex gap-2 items-center font-bold text-violet-200">
-                <span class="font-sans text-xs font-light ">Latest Price:</span>         
-                <%= format_currency(@data.latest_price, unit: "$") %>  
-              </small>
-            </div>
-
             <!-- ** FORMS ** -->
             <div class="h-fit w-auto flex gap-2 py-2 divide-x-2 divide-gray-600 text-sm">
               <!-- ** BUY FORM ** -->
               <div class="px-8 py-2">
-                <h1 class="p-3.5 text-base font-sans font-bold tracking-widest uppercase">Buy Stocks</h1>
                 <%= form_with(url: trader_trade_buy_path, method: :post1) do |form| %>
                   <div class="form__wrapper gap-2 items-center">
                     <div class="field gap-2 flex-row items-center w-full">
@@ -63,14 +45,12 @@
                       <%= form.label :shares, "Share Qty:", class: "w-1/2" %>
                       <%= form.number_field :shares, min: 0, step: 0.01, class: "w-full" %>
                     </div>
-                      <%= form.button 'Buy', class:"button--main w-full mt-3" %>
+                      <%= form.button 'Buy', class:"modal__primarybutton" %>
                   </div>
                 <% end %>
               </div>
-
               <!-- ** SELL FORM ** -->
               <div class="px-8 py-2">
-                <h1 class="p-3.5 text-base font-sans font-bold tracking-widest uppercase">Sell Stocks</h1>
                 <%= form_with(url: trader_trade_sell_path, method: :post) do |form| %>
                   <div class="form__wrapper gap-2 items-center">
                     <div class="field gap-2 flex-row items-center w-full">
@@ -78,30 +58,20 @@
                       <%= form.label :shares, "Share Qty:", class: "w-1/2" %>
                       <%= form.number_field :shares, min: 0, step: 0.01, class: "w-full" %>
                     </div>
-                      <%= form.button 'Sell', class:"button--main w-full mt-3" %>
+                      <%= form.button 'Sell', class:"modal__secondarybutton" %>
                   </div>
                 <% end %>
               </div>
-            </div>     
-
+            </div>  
           </div>   
         </div>   
-      <% end %> 
+      <% end %>
+    
     </div>
-
-    <aside class="h-full <%= @data.present? ? "w-1/4" : "w-1/2" %>">
-    <% if @data %>
-      
-      <div class="h-full flex flex-col">
-        <%= render 'pages/widgets/symbol_info', symbol: @stock_symbol %>
-        <%= render 'pages/widgets/tech_analysis', symbol: @stock_symbol %>
-      </div>
-      
-    <% else %>
+    <% if @data.nil? %>
       <%= render 'pages/widgets/top_news' %>
     <% end %>
       
-    </aside>
   </div>
   
 </div>
