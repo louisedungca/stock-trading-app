@@ -20,8 +20,6 @@
         <%= f.password_field :password_confirmation %>
       </div>
     <% end %>
-    <div class="actions">
-      <%= f.button t("devise.invitations.edit.submit_button") %>
-    </div>
+    <%= f.button t("devise.invitations.edit.submit_button"), class: "actions"  %>
   </div>
 <% end %>

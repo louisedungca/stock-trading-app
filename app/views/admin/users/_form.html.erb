@@ -19,8 +19,6 @@
       <%= builder.hidden_field :id, id: "user_status_attributes_id_#{trader.id}" %>
     <% end %>
 
-    <div class="modal__primarybutton">
-      <%= f.button "Save Changes" %>
-    </div>
+    <%= f.button "Save Changes", class: "modal__primarybutton" %>
   </div>
 <% end %>
