@@ -2,7 +2,6 @@ class Trader::DashboardController < TradersController
   layout 'dashboard_layout'
 
   def index
-    # @stocks = current_user.stocks.order(updated_at: :desc)
     @total_portfolio_value = 0.0
 
     # Fetch quote for each stock
