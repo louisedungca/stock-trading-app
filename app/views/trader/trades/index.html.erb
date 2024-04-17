@@ -26,10 +26,10 @@
 
 <div class="h-full flex flex-col gap-4">  
   <%= render 'pages/widgets/ticker' %>
-  <%= render 'pages/widgets/fixed_chart', locals: { stock_symbol: @stock_symbol } %>
+  <% if @data %> 
+    <%= render 'pages/widgets/fixed_chart', locals: { stock_symbol: @stock_symbol } %>
 
-  <div class="flex gap-1 h-1/4 w-full">    
-    <% if @data %>     
+    <div class="flex gap-1 h-1/4 w-full">  
       <div class="bg--frosted py-2 px-4 flex gap-2 items-center justify-around w-full">
         <!-- ** STOCK DETAILS ** -->
         <div class="flex flex-col gap-1 w-1/4 border-r-2 border-gray-400 py-2">
@@ -78,7 +78,7 @@
         </div>     
 
       </div>   
-    <% end %>
-  </div>    
+    </div>   
+  <% end %> 
 </div>
 
