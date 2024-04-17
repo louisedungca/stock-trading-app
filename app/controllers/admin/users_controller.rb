@@ -14,6 +14,7 @@ class Admin::UsersController < AdminsController
   end
 
   def show
+    @stocks = Stock.group_similar_stocks(@trader)
   end
 
   def edit
