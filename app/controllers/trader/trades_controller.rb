@@ -5,30 +5,31 @@ class Trader::TradesController < TradersController
   def index
     return unless params[:stock_symbol].present?
 
-    begin
-      @data = IEX::Api::Client.new.quote(@stock_symbol)
-    rescue IEX::Errors::SymbolNotFoundError => e
-      flash[:alert] = "Stock symbol not found: #{@stock_symbol}"
-      redirect_to trader_trade_path
-    end
+    @data = IEX::Api::Client.new.quote(@stock_symbol)
+
+  rescue IEX::Errors::SymbolNotFoundError => e
+    flash[:alert] = "Stock symbol not found: #{@stock_symbol}"
+    redirect_to trader_trade_path
   end
 
   def buy
     if Transaction.buy_shares(current_user, @stock_symbol, @shares)
       flash[:notice] = "#{@stock_symbol} stock purchased successfully"
+      redirect_to trader_portfolio_path
     else
-      flash[:alert] = 'Error buying shares'
+      flash[:alert] = current_user.errors.full_messages.join(". ") || "Oops. There was a problem in buying stock shares."
+      redirect_back(fallback_location: trader_trade_path)
     end
-    redirect_back(fallback_location: trader_trade_path)
   end
 
   def sell
     if Transaction.sell_shares(current_user, @stock_symbol, @shares)
       flash[:notice] = "#{@stock_symbol} stock sold successfully"
+      redirect_to trader_portfolio_path
     else
-      flash[:alert] = 'Error selling shares'
+      flash[:alert] = current_user.errors.full_messages.join(". ") || "Oops. There was a problem in selling stock shares."
+      redirect_back(fallback_location: trader_trade_path)
     end
-    redirect_back(fallback_location: trader_trade_path)
   end
 
   private

@@ -13,22 +13,25 @@
     <thead class="text-xsuppercase bg-gray-700/55 text-gray-400">
       <tr>
         <th scope="col" class="px-6 py-3">
-            Transaction Type
+          Transaction Type
         </th>
         <th scope="col" class="px-6 py-3">
-            Stock Symbol
+          Stock Symbol
         </th>
         <th scope="col" class="px-6 py-3">
-            Company Name
+          Company Name
         </th>
         <th scope="col" class="px-6 py-3">
-            Shares
+          Shares
         </th>
         <th scope="col" class="px-6 py-3">
-            Amount
+          Price
         </th>
         <th scope="col" class="px-6 py-3">
-            Timestamp
+          Amount
+        </th>
+        <th scope="col" class="px-6 py-3">
+          Timestamp
         </th>
       </tr>
     </thead>
@@ -49,7 +52,11 @@
             <%= transaction.stock ? transaction.shares : 'N/A' %>
           </td>
           <td class="px-6 py-2.5">
-            <%= format_currency(transaction.price_per_share || transaction.amount) %>  
+            <%= transaction.stock ? format_currency(transaction.price_per_share) : 'N/A' %>  
+          </td>
+          <td class="px-6 py-2.5">
+            <% total_amount = transaction.price_per_share * transaction.shares if transaction.shares.present? %>
+            <%= format_currency(total_amount || transaction.amount) %>  
           </td>
           <td class="px-6 py-2.5">
             <%= transaction.created_at.localtime.strftime('%a, %d %b %Y %H:%M:%S') %>
