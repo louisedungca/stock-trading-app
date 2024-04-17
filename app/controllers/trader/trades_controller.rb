@@ -6,9 +6,10 @@ class Trader::TradesController < TradersController
     return unless params[:stock_symbol].present?
 
     @data = IEX::Api::Client.new.quote(@stock_symbol)
-    rescue IEX::Errors::SymbolNotFoundError => e
-      flash[:alert] = "Stock symbol not found: #{@stock_symbol}"
-      redirect_to trader_trade_path
+
+  rescue IEX::Errors::SymbolNotFoundError => e
+    flash[:alert] = "Stock symbol not found: #{@stock_symbol}"
+    redirect_to trader_trade_path
   end
 
   def buy
