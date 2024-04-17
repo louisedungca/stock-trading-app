@@ -37,16 +37,11 @@ class Transaction < ApplicationRecord
     withdraw: 'withdraw'
   }
 
-  scope :filter_by_type, lambda { |filter|
-    case filter
-    when 'buy'
-      where(transaction_type: 'buy')
-    when 'sell'
-      where(transaction_type: 'sell')
-    when 'cash_in'
-      where(transaction_type: 'cash_in')
-    when 'withdraw'
-      where(transaction_type: 'withdraw')
+  TRANSACTION_TYPES = Transaction.transaction_types.keys # => ["buy", "sell", "cash_in", "withdraw"]
+
+  scope :filter_by_type, ->(filter) {
+    if TRANSACTION_TYPES.include?(filter)
+      where(transaction_type: filter)
     else
       all
     end

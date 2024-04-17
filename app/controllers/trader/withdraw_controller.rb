@@ -1,4 +1,4 @@
-class Trader::WithdrawController < ApplicationController
+class Trader::WithdrawController < TradersController
   include CurrencyHelper
   layout "dashboard_layout"
 

@@ -3,6 +3,7 @@
     All Traders
 
     <div class="text-xs w-1/4">
+      <!--
       <%= form_tag admin_users_path, method: :get, class: "flex justify-end max-w-sm" do %>
         <div class="relative">
           <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
@@ -15,6 +16,8 @@
 
         <%= submit_tag "Filter", class: "py-1.5 px-3 ms-2 text-xstext-white bg-secondary rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-secondary dark:focus:ring-blue-800 cursor-pointer" %>    
       <% end %>
+      -->
+      <%= render 'shared/filter_transactions', { resource: "Traders", path: admin_users_path, filter_array: @status_types } %>
     </div>
   </div>
 <% end %>
