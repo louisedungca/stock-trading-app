@@ -24,4 +24,5 @@ class Status < ApplicationRecord
     approved: "approved",
     confirmed_email: "confirmed_email",
   }, default: "pending"
+
 end

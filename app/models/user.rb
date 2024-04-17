@@ -51,11 +51,6 @@ class User < ApplicationRecord
   has_many :transactions
   has_many :stocks, through: :transactions
 
-  enum :role, {
-    admin: 'admin',
-    trader: 'trader'
-  }, default: 'trader'
-
   validates :email, presence: true, uniqueness: true
   validates :balance, numericality: { greater_than_or_equal: 0, message: "Insufficient Balance." }
   validates :username, presence: true, uniqueness: true
@@ -63,11 +58,26 @@ class User < ApplicationRecord
   before_create :initialize_status_for_trader
   after_invitation_accepted :update_status_of_invited_user
 
+  enum :role, {
+    admin: 'admin',
+    trader: 'trader'
+  }, default: 'trader'
+
   scope :approved_traders, -> { includes(:status).where(role: :trader, statuses: { status_type: "approved" }) }
   scope :pending_traders, -> { includes(:status).where(role: :trader, statuses: { status_type: "pending" }).order(:created_at) }
   scope :confirmed_email_traders, -> { includes(:status).where(role: :trader, statuses: { status_type: "confirmed_email" }).order(:updated_at) }
 
-  # sort traders to pending first, then confirmed_email, and approved last
+  STATUS_TYPES = Status.status_types.keys # => ["pending", "approved", "confirmed_email"]
+
+  scope :filter_by_status, ->(filter) {
+    if STATUS_TYPES.include?(filter)
+      where(status_type: filter)
+    else
+      sorted_traders
+    end
+  }
+
+  # sort traders to pending first, then confirmed_email, and approved last (array)
   def self.sorted_traders
     pending_traders + confirmed_email_traders + approved_traders
   end
@@ -89,7 +99,6 @@ class User < ApplicationRecord
 
   def after_confirmation
     super
-    # update the user's status to confirmed_email
     status.update(status_type: 'confirmed_email') if status.present?
   end
 
