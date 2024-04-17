@@ -17,6 +17,14 @@ class Stock < ApplicationRecord
   validates :company_name, presence: true
   validates :logo_url, presence: true
 
+  def self.ransackable_attributes(auth_object = nil)
+    authorizable_ransackable_attributes
+  end
+
+  def self.ransackable_associations(auth_object = nil)
+    authorizable_ransackable_associations
+  end
+
   def self.group_similar_stocks(user)
     user.stocks
         .group_by(&:stock_symbol)

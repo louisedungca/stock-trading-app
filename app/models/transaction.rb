@@ -23,6 +23,7 @@
 #  fk_rails_...  (user_id => users.id)
 #
 class Transaction < ApplicationRecord
+
   belongs_to :user
   belongs_to :stock, optional: true
 
@@ -46,6 +47,14 @@ class Transaction < ApplicationRecord
       all
     end
   }
+
+  def self.ransackable_attributes(auth_object = nil)
+    authorizable_ransackable_attributes
+  end
+
+  def self.ransackable_associations(auth_object = nil)
+    authorizable_ransackable_associations
+  end
 
   def self.buy_shares(user, stock_symbol, shares)
     stock = IEX::Api::Client.new.quote(stock_symbol)
