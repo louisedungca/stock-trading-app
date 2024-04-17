@@ -32,10 +32,11 @@ class Stock < ApplicationRecord
   end
 
   def total_shares(user)
-    transactions
-      .where(user_id: user.id)
-      .group_by(&:transaction_type)
-      .transform_values { |transactions| transactions.sum(&:shares).to_f }
-      .yield_self { |shares| (shares['buy'] || 0) - (shares['sell'] || 0) }
+    transactions.includes(:user) # eager loading to preload associated user data
+                .where(user_id: user.id)
+                .group_by(&:transaction_type)
+                .transform_values { |transactions| transactions.sum(&:shares).to_f }
+                .yield_self { |shares| (shares['buy'] || 0) - (shares['sell'] || 0) }
   end
+
 end
