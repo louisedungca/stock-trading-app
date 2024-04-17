@@ -58,21 +58,28 @@ class Transaction < ApplicationRecord
       company_name: stock.company_name
     )
 
+    return unless user.balance.positive?
+
     ActiveRecord::Base.transaction do
-      if total_cost > user.balance
+      if user.balance < total_cost
+        user.errors.add(:base, "Insufficient balance to proceed with this transaction.")
         raise ActiveRecord::Rollback
       end
+
+      user.update!(balance: user.balance - total_cost)
+
       user.transactions.create!(
         transaction_type: 'buy',
         shares:,
         price_per_share: stock.latest_price,
+        amount: total_cost,
         user_id: user.id,
         stock_id: target_stock.id
       )
-      user.update!(balance: user.balance - total_cost)
     end
+
   rescue ActiveRecord::RecordInvalid
-    Rails.logger.error "Error buying #{stock_symbol} shares"
+    user.errors.add(:base, "Error in buying #{stock_symbol} shares")
     false
   end
 
@@ -84,8 +91,11 @@ class Transaction < ApplicationRecord
 
     transaction do
       if total_shares < shares
+        user.errors.add(:base, "Not enough shares to proceed with this transaction.")
         raise ActiveRecord::Rollback
       end
+
+      user.update!(balance: user.balance + total_cost)
 
       user.transactions.create!(
         transaction_type: 'sell',
@@ -94,10 +104,10 @@ class Transaction < ApplicationRecord
         user_id: user.id,
         stock_id: target_stock.id
       )
-      user.update!(balance: user.balance + total_cost)
     end
+
   rescue ActiveRecord::RecordInvalid
-    Rails.logger.error "Error selling #{stock_symbol} shares"
+    user.errors.add(:base, "Error in selling #{stock_symbol} shares")
     false
   end
 
@@ -112,8 +122,9 @@ class Transaction < ApplicationRecord
         amount: amount
         )
     end
+
   rescue ActiveRecord::RecordInvalid
-    errors.add(:base, 'Failed to cash-in money.')
+    user.errors.add(:base, "Failed to cash in money.")
     false
   end
 
@@ -132,8 +143,9 @@ class Transaction < ApplicationRecord
         amount: amount
         )
     end
+
   rescue ActiveRecord::RecordInvalid
-    errors.add(:base, 'Failed to cash-in money.')
+    user.errors.add(:base, "Failed to cash out money.")
     false
   end
 end
