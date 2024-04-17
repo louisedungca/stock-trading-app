@@ -90,7 +90,17 @@
     </div>
 
     <aside class="h-full <%= @data.present? ? "w-1/4" : "w-1/2" %>">
+    <% if @data %>
+      
+      <div class="h-full flex flex-col">
+        <%= render 'pages/widgets/symbol_info', symbol: @stock_symbol %>
+        <%= render 'pages/widgets/tech_analysis', symbol: @stock_symbol %>
+      </div>
+      
+    <% else %>
       <%= render 'pages/widgets/top_news' %>
+    <% end %>
+      
     </aside>
   </div>
   
