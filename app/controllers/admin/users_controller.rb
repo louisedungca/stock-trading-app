@@ -1,5 +1,4 @@
-class Admin::UsersController < ApplicationController
-  before_action :authenticate_admin!
+class Admin::UsersController < AdminsController
   before_action :set_trader, except: [:index]
   layout "admin_layout"
 
@@ -40,10 +39,6 @@ class Admin::UsersController < ApplicationController
   end
 
   private
-
-  def authenticate_admin!
-    redirect_to root_path, alert: "You are not authorized to perform this action." unless current_user.admin?
-  end
 
   def set_trader
     @trader = User.includes(:status).find(params[:id])

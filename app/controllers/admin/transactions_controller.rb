@@ -1,4 +1,4 @@
-class Admin::TransactionsController < ApplicationController
+class Admin::TransactionsController < AdminsController
   layout 'dashboard_layout'
 
   def index
@@ -9,6 +9,7 @@ class Admin::TransactionsController < ApplicationController
                     else
                       Transaction.order(updated_at: :desc)
                     end
+
 
     @transactions = @transactions.filter_by_type(params[:filter])
     @transaction_types = Transaction::TRANSACTION_TYPES

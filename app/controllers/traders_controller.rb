@@ -1,7 +1,11 @@
 class TradersController < ApplicationController
-  before_action :check_status, :set_trader_status, :set_stock_symbol, :set_stocks_per_trader
+  before_action :authorize_trader, :check_status, :set_trader_status, :set_stock_symbol, :set_stocks_per_trader
 
   private
+
+  def authorize_trader
+    redirect_to root_path, alert: "Access denied. You are not a trader." unless current_user.trader?
+  end
 
   def check_status
     return unless current_user.trader? && @trader_status == 'pending' && !current_user.confirmed?
