@@ -1,6 +1,5 @@
 <%= turbo_frame_tag "show_modal" do %>
   <%= tag.div data: { controller: "modals" } do %>
-
     <div aria-labelledby="modal-title" aria-modal="true" class="fixed inset-0 z-30 overflow bg-black/80" role="dialog">
       <div class="h-screen w-full relative flex items-center justify-center">
         <div class="relative rounded-lg shadow bg-gray-700 w-1/3 px-4 py-2">
@@ -17,7 +16,8 @@
           </div>
           <!-- Modal body -->
           <div class="p-4 md:p-5 flex flex-col gap-3">
-            <span>User balance: <span class="font-bold text-white"><%= format_currency(@trader.balance, unit: "$") %></span></span>
+            <span>Email: <span class="font-bold text-white"><%= @trader.email %></span></span>
+            <span>Balance: <span class="font-bold text-white"><%= format_currency(@trader.balance, unit: "$") %></span></span>
             <% if @trader.stocks.present? %>
               <table class="w-full text-sm text-left rtl:text-right text-gray-400">
                 <thead class="text-xs font-sans uppercase bg-gray-700/55 text-gray-400">
@@ -54,6 +54,5 @@
         </div>
       </div>
     </div>
-
   <% end %>
 <% end %>
