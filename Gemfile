@@ -80,3 +80,4 @@ gem 'devise_uid', '~> 0.1.1'
 gem 'iex-ruby-client', '~> 2.1'
 gem 'pagy'
 gem "ransack", "~> 4.1"
+gem 'letter_opener'
