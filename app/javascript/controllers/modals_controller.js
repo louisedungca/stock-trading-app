@@ -6,9 +6,9 @@ export default class extends Controller {
   }
   
   close(e) {
-    e.prenventDefault();
+    e.preventDefault();
 
-    const modal = document.getElementById("cash_in_modal");
+    const modal = document.getElementById("modal");
     modal.innerHTML = "";
     modal.removeAttribute("src");
     modal.removeAttribute("complete");
