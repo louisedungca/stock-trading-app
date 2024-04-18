@@ -7,7 +7,6 @@ RSpec.describe 'List all traders', type: :feature do
     trader1 = create(:user, :trader)
     trader2 = create(:user, :trader)
     trader3 = create(:user, :trader)
-    # trader2 = create(:user, :trader) # create admin (using FactoryBot methods)
     sign_in admin # sign in as admin (using Devise Test Integration helper)
 
     visit root_path

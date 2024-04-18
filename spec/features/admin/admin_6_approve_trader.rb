@@ -11,12 +11,13 @@ RSpec.describe 'Approve traders', type: :feature do
     email = ActionMailer::Base.deliveries.last
     expect(email.to).to eq([trader1.email])
     expect(email.subject).to eq('Confirmation instructions')
+
     # Click the verification link
     user = User.find_by(email: trader1.email)
     visit user_confirmation_path(confirmation_token: user.confirmation_token)
 
+    # Sign in Admin
     sign_in admin
-
     visit root_path
     visit admin_root_path
 
