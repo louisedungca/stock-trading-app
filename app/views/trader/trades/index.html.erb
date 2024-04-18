@@ -45,7 +45,7 @@
                       <%= form.label :shares, "Share Qty:", class: "w-1/2" %>
                       <%= form.number_field :shares, min: 0, step: 0.01, class: "w-full" %>
                     </div>
-                      <%= form.button 'Buy', class:"modal__primarybutton" %>
+                      <%= form.button 'Buy', class:"modal__button button--green" %>
                   </div>
                 <% end %>
               </div>
@@ -58,7 +58,7 @@
                       <%= form.label :shares, "Share Qty:", class: "w-1/2" %>
                       <%= form.number_field :shares, min: 0, step: 0.01, class: "w-full" %>
                     </div>
-                      <%= form.button 'Sell', class:"modal__secondarybutton" %>
+                      <%= form.button 'Sell', class:"modal__button button--purple" %>
                   </div>
                 <% end %>
               </div>
