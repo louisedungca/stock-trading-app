@@ -21,16 +21,10 @@
       <button class="button--secondary">
         Deposit
       </button>
-
-      
       -->
-      <%= turbo_frame_tag "cash_in_modal" do %>
-        <%= link_to "Cash-in", trader_cash_in_path, class: "button--secondary" %> 
-      <% end %>
 
-      <%= turbo_frame_tag "withdraw_modal" do %>
-        <%= link_to "Withdraw", trader_withdraw_path, class: "button--secondary" %> 
-      <% end %>
+      <%= link_to "Cash-in", trader_cash_in_path, data: { turbo_frame: 'cash_in_modal' }, class: "button--secondary" %> 
+      <%= link_to "Withdraw", trader_withdraw_path, data: { turbo_frame: 'withdraw_modal' }, class: "button--secondary" %> 
     </div>
 
     <div class="border h-full">
@@ -39,4 +33,5 @@
       </small>
     </div>
   </div>
+  
 </div>
