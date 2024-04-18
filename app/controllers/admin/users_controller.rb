@@ -4,7 +4,13 @@ class Admin::UsersController < AdminsController
   layout "admin_layout"
 
   def index
-    @traders = User.sorted_traders
+    @q = User.includes(:status).where(role: :trader).ransack(params[:q])
+    @traders = @q.result.includes(:status)
+
+    if params[:q].present? && @traders.empty?
+      flash[:alert] = "Hmm. Please try searching for something else."
+      redirect_to admin_users_path
+    end
 
     if params[:filter].present? && User::STATUS_TYPES.include?(params[:filter])
       @traders = User.includes(:status).where(role: :trader, statuses: { status_type: params[:filter] })

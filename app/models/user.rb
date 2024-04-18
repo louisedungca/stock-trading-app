@@ -77,19 +77,12 @@ class User < ApplicationRecord
     end
   }
 
-  def self.ransackable_attributes(auth_object = nil)
-    authorizable_ransackable_attributes
-  end
-
-  def self.ransackable_associations(auth_object = nil)
-    authorizable_ransackable_associations
-  end
-
   # sort traders to pending first, then confirmed_email, and approved last (array)
   def self.sorted_traders
     pending_traders + confirmed_email_traders + approved_traders
   end
 
+  # DEVISE STUFF
   def login
     @login || username || email
   end
@@ -108,6 +101,15 @@ class User < ApplicationRecord
   def after_confirmation
     super
     status.update(status_type: 'confirmed_email') if status.present?
+  end
+
+  # RANSACK STUFF
+  def self.ransackable_attributes(auth_object = nil)
+    authorizable_ransackable_attributes
+  end
+
+  def self.ransackable_associations(auth_object = nil)
+    authorizable_ransackable_associations
   end
 
   private
