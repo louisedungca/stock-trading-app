@@ -6,7 +6,7 @@
     </div>
   </div>
 <% end %>
-<div class="relative shadow-md sm:rounded-lg text-sm flex flex-col gap-2 w-full">
+<div class="relative shadow-md sm:rounded-lg text-sm flex flex-col gap-4 w-full">
   <!-- SEARCH BAR -->
   <div class="relative mb-2">
     <%= search_form_for(@q, url: admin_transactions_path, class: "w-1/4") do |f| %>
@@ -18,6 +18,7 @@
       <%= f.search_field :user_uid_or_stock_stock_symbol_or_stock_company_name_eq, placeholder: "Search", class:"bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" %>
     <% end %>
   </div>
+  
   <table class="w-full text-sm text-left rtl:text-right text-gray-400">
     <thead class="text-xsuppercase bg-gray-700/55 text-gray-400">
       <tr>
