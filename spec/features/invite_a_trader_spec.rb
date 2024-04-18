@@ -1,23 +1,18 @@
+# $ bundle exec rspec spec/features/invite_a_trader_spec.rb
 require "rails_helper"
 
 RSpec.describe 'Inviting a trader', type: :feature do
   scenario 'Admin invites a new trader' do
-    admin = User.create!(
-      email: "admin@email.com",
-      username: "admin00",
-      password: "111111",
-      password_confirmation: "111111",
-      role: "admin",
-      confirmed_at: Time.current
-    )
-
-    sign_in admin
+    admin = create(:user, :admin) # create admin (using FactoryBot methods)
+    sign_in admin # sign in as admin (using Devise Test Integration helper)
 
     visit root_path
-    fill_in "Email", with: "trader_1@test.com"
+
+    trader_email = "trader_1@test.com"
+    fill_in "Email", with: trader_email
     click_on "Send an invitation"
 
     visit admin_users_path
-    expect(page).to have_content("trader_1@test.com")
+    expect(page).to have_content(trader_email)
   end
 end
