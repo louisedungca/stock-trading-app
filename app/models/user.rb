@@ -77,9 +77,19 @@ class User < ApplicationRecord
     end
   }
 
-  # sort traders to pending first, then confirmed_email, and approved last (array)
-  def self.sorted_traders
-    pending_traders + confirmed_email_traders + approved_traders
+  def self.sorted_traders(traders)
+    traders.to_a.sort_by do |trader|
+      case trader.status.status_type
+      when "pending"
+        1
+      when "confirmed_email"
+        2
+      when "approved"
+        3
+      else
+        4
+      end
+    end
   end
 
   # DEVISE STUFF

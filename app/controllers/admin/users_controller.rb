@@ -6,6 +6,7 @@ class Admin::UsersController < AdminsController
   def index
     @q = User.includes(:status).where(role: :trader).ransack(params[:q])
     @traders = @q.result.includes(:status)
+    @traders = User.sorted_traders(@traders)
 
     if params[:q].present? && @traders.empty?
       flash[:alert] = "Hmm. Please try searching for something else."
@@ -56,4 +57,5 @@ class Admin::UsersController < AdminsController
     return unless Rails.env.development?
     redirect_to admin_users_path unless turbo_frame_request?
   end
+
 end
