@@ -6,7 +6,6 @@ class Admin::DashboardController < AdminsController
     @confirmed_email_traders = User.confirmed_email_traders
     @approved_traders = User.approved_traders
 
-    @traders = User.sorted_traders
     @pagy, @confirmed_email_traders = pagy(@confirmed_email_traders, items: 8)
   end
 end
