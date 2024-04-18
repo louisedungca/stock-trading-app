@@ -1,5 +1,6 @@
 class Trader::WithdrawController < TradersController
   include CurrencyHelper
+  before_action :ensure_frame_response
   layout "dashboard_layout"
 
   def index
@@ -16,5 +17,12 @@ class Trader::WithdrawController < TradersController
       flash[:alert] = "Failed to withdraw. Please try again."
       redirect_to trader_cash_in_path
     end
+  end
+
+  private
+
+  def ensure_frame_response
+    return unless Rails.env.development?
+    redirect_to trader_dashboard_path unless turbo_frame_request?
   end
 end

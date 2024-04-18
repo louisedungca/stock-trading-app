@@ -1,5 +1,6 @@
 class Admin::UsersController < AdminsController
   before_action :set_trader, except: [:index]
+  before_action :ensure_frame_response, only: [:show, :edit]
   layout "admin_layout"
 
   def index
@@ -43,5 +44,10 @@ class Admin::UsersController < AdminsController
 
   def trader_params
     params.require(:user).permit(:username, :email, status_attributes: [:status_type, :id])
+  end
+
+  def ensure_frame_response
+    return unless Rails.env.development?
+    redirect_to admin_users_path unless turbo_frame_request?
   end
 end
