@@ -12,7 +12,7 @@ RSpec.describe 'Editing a trader', type: :feature do
 
     visit admin_users_path
     edit_button = find("a[data-turbo-frame='edit_modal']")
-    edit.click
+    edit_button.click
     expect(page).to have_content('Edit User Details')
 
     new_trader_username = 'change_to'
