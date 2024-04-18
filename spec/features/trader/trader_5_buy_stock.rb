@@ -53,9 +53,9 @@ RSpec.describe 'Buy Stock', type: :feature do
     expect(email.subject).to eq("You're Approved! Let's Start Trading with Stocker!")
 
     # Admin Logout
+    sign_out admin
 
     # Login approved user
-    visit trader_root_path
     visit new_user_session_path
     expect(page).to have_content('Sign in')
     fill_in 'user[login]', with: trader[:email]
@@ -66,6 +66,15 @@ RSpec.describe 'Buy Stock', type: :feature do
     click_on 'Cash-in'
     fill_in 'amount', with: '10000'
     click_on 'Cash-in'
-    ### cash_in not working
+    expect(page).to have_content('10,000.00')
+
+    # Buy stock
+    click_on 'Trade'
+    expect(page).to have_content('Trade Stocks')
+    fill_in 'stock_symbol', with: 'GOOG'
+    click_on 'Search', wait: 3
+    fill_in 'buy_shares', with: '1'
+    click_on 'Buy'
+    expect(page).to have_content('Alphabet Inc - Class C')
   end
 end
