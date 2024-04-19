@@ -1,20 +1,29 @@
-# $ bundle exec rspec spec/features/invite_a_trader_spec.rb
+# $ bundle exec rspec spec/features/admin/admin_3_show_trader_details.rb
 require 'rails_helper'
 
 RSpec.describe 'Show a trader', type: :feature do
-  scenario 'Admin views the trader details' do
-    admin = create(:user, :admin) # create admin (using FactoryBot methods)
-    trader1 = create(:user, :trader) # create admin (using FactoryBot methods)
+  scenario 'Admin displays trader details' do
+    admin = create(:user, :admin)
+    trader_1 = create(:user, :trader)
 
     sign_in admin
+
     visit admin_root_path
-    expect(page).to have_content('Good morning, Admin' || 'Good evening, Admin')
+    expect(page).to have_content("Good morning, Admin" || "Good evening, Admin" || "Good afternoon, Admin")
 
     visit admin_users_path
-    show_button = find("a[data-turbo-frame='show_modal']")
-    show_button.click
+    expect(page).to have_content("All Traders")
 
-    # Check if user details is present
-    expect(page).to have_content('User Details')
+    within("tbody") do
+      expect(page).to have_content(trader_1.username)
+    end
+
+    within(".modal-btns") do
+      info_button = find(".info-btn")
+      info_button.click
+    end
+
+    expect(page).to have_content("User Details")
+    expect(page).to have_content("Email: #{trader_1.email}")
   end
 end
