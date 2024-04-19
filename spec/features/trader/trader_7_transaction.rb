@@ -1,87 +1,35 @@
-# $ bundle exec rspec spec/features/invite_a_trader_spec.rb
+# $ bundle exec rspec spec/features/trader/trader_7_transaction.rb
 require 'rails_helper'
 
 RSpec.describe 'Check transaction page', type: :feature do
-  scenario 'Trader checks transaction page' do
-    trader = {
-      username: 'testing_account',
-      email: 'testing_account@email.com',
-      password: 'asdfasdf'
-    }
-    admin = create(:user, :admin)
+  scenario 'Trader checks transaction page for transactions history' do
+    trader = create(:user, :trader, :approved, :with_balance)
+    buy_stock = create(:stock)
+    sell_stock = create(:stock, :aapl)
 
-    # Navigate to signup
-    visit root_path
-    click_on 'Get Started'
-    fill_in 'Username', with: trader[:username]
-    fill_in 'Email', with: trader[:email]
-    fill_in 'Password', with: trader[:password]
-    fill_in 'Password confirmation', with: trader[:password]
-    click_on 'Register'
-    expect(page).to have_content('Verify Your Email')
-    expect(page).to have_content('Check your email and click the link to activate your account.')
+    buy_transaction = create(:transaction, :stock_goog, user: trader, stock: buy_stock)
+    buy_transaction = create(:transaction, :stock_aapl, user: trader, stock: buy_stock)
+    cash_in_transaction = create(:transaction, user: trader)
+    sell_transaction = create(:transaction, :stock_aapl, user: trader, stock: sell_stock)
+    withdraw_transaction = create(:transaction, :withdraw, user: trader)
 
-    # Mail Verification
-    expect(ActionMailer::Base.deliveries.count).to eq(1)
-    email = ActionMailer::Base.deliveries.last
-    expect(email.to).to eq([trader[:email]])
-    expect(email.subject).to eq('Confirmation instructions')
-    # Click the verification link
-    user = User.find_by(email: trader[:email])
-    visit user_confirmation_path(confirmation_token: user.confirmation_token)
+    sign_in trader
+    visit trader_dashboard_path
 
-    # Login
-    visit new_user_session_path
-    fill_in 'user[login]', with: trader[:email]
-    fill_in 'user[password]', with: trader[:password]
-    click_on 'Login'
-
-    expect(page).to have_content("We're currently evaluating your account.")
-    expect(page).to have_content('Kindly wait for the confirmation email regarding the status of your account.')
-    expect(page).to have_content('You can browse through the market page in the meantime.')
-    visit destroy_user_registration_path
-
-    # Admin Side Approval
-    sign_in admin
-    visit admin_root_path
-    click_on 'Approve'
-
-    # Check if email is sent/received
-    expect(ActionMailer::Base.deliveries.count).to eq(2)
-    email = ActionMailer::Base.deliveries.last
-    expect(email.to).to eq([trader[:email]])
-    expect(email.subject).to eq("You're Approved! Let's Start Trading with Stocker!")
-
-    # Admin Logout
-    sign_out admin
-
-    # Login approved user
-    visit new_user_session_path
-    expect(page).to have_content('Sign in')
-    fill_in 'user[login]', with: trader[:email]
-    fill_in 'user[password]', with: trader[:password]
-    click_on 'Login'
-
-    # Cash in
-    click_on 'Cash-in'
-    fill_in 'amount', with: '10000'
-    click_on 'Cash-in'
-    expect(page).to have_content('10,000.00')
-
-    # Buy stock
-    click_on 'Trade'
-    expect(page).to have_content('Trade Stocks')
-    fill_in 'stock_symbol', with: 'GOOG'
-    click_on 'Search', wait: 3
-    fill_in 'buy_shares', with: '1'
-    click_on 'Buy'
-    expect(page).to have_content('Alphabet Inc - Class C')
+    # check trader status
+    within(".profile-box") do
+      expect(page).to have_text("All-access")
+    end
 
     # Transaction Page
     visit trader_transactions_path
-    expect(page).to have_content('BUY')
-    expect(page).to have_content('GOOG')
-    expect(page).to have_content('Alphabet Inc - Class C')
-    expect(page).to have_content('1.0')
+    within("tbody") do
+      expect(page).to have_content('CASH_IN')
+      expect(page).to have_content('BUY')
+      expect(page).to have_content('SELL')
+      expect(page).to have_content('WITHDRAW')
+      expect(page).to have_content('GOOG')
+      expect(page).to have_content('AAPL')
+    end
   end
 end

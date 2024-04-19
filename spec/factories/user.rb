@@ -20,15 +20,21 @@ FactoryBot.define do
     end
 
     trait :confirmed_email do
+      confirmed_at { Time.current }
       after(:create) do |user|
         create(:status, :confirmed_email, user: user)
       end
     end
 
     trait :approved do
+      confirmed_at { Time.current }
       after(:create) do |user|
         create(:status, :approved, user: user)
       end
+    end
+
+    trait :with_balance do
+      balance { 5000.00 }
     end
   end
 end

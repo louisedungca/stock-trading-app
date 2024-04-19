@@ -32,7 +32,7 @@
             <!-- ** FORMS ** -->
             <div class="h-fit w-auto flex gap-2 py-2 divide-x-2 divide-gray-600 text-sm">
               <!-- ** BUY FORM ** -->
-              <div class="px-8 py-2">
+              <div class="buy-form px-8 py-2">
                 <%= form_with(url: trader_trade_buy_path, method: :post1) do |form| %>
                   <div class="form__wrapper gap-2 items-center">
                     <div class="field gap-2 flex-row items-center w-full">
@@ -45,7 +45,7 @@
                 <% end %>
               </div>
               <!-- ** SELL FORM ** -->
-              <div class="px-8 py-2">
+              <div class="sell-form px-8 py-2">
                 <%= form_with(url: trader_trade_sell_path, method: :post) do |form| %>
                   <div class="form__wrapper gap-2 items-center">
                     <div class="field gap-2 flex-row items-center w-full">
