@@ -57,6 +57,8 @@ class Transaction < ApplicationRecord
   end
 
   def self.buy_shares(user, stock_symbol, shares)
+    return unless shares.present?
+
     stock = IEX::Api::Client.new.quote(stock_symbol)
     total_cost = stock.latest_price * shares
     logo = IEX::Api::Client.new.logo(stock_symbol)

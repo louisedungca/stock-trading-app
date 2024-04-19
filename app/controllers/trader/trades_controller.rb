@@ -16,8 +16,12 @@ class Trader::TradesController < TradersController
       flash[:notice] = "#{@stock_symbol} stock purchased successfully"
       redirect_to trader_portfolio_path
     else
-      flash[:alert] =
-        current_user.errors.full_messages.join('. ') || 'Oops. There was a problem in buying stock shares.'
+      error_message = if current_user.errors.any?
+                        current_user.errors.full_messages.join('. ')
+                      else
+                        'Oops. There was a problem in buying stock shares.'
+                      end
+      flash[:alert] = error_message
       redirect_back(fallback_location: trader_trade_path)
     end
   end
@@ -27,8 +31,12 @@ class Trader::TradesController < TradersController
       flash[:notice] = "#{@stock_symbol} stock sold successfully"
       redirect_to trader_portfolio_path
     else
-      flash[:alert] =
-        current_user.errors.full_messages.join('. ') || 'Oops. There was a problem in selling stock shares.'
+      error_message = if current_user.errors.any?
+                        current_user.errors.full_messages.join('. ')
+                      else
+                        'Oops. There was a problem in selling stock shares.'
+                      end
+      flash[:alert] = error_message
       redirect_back(fallback_location: trader_trade_path)
     end
   end
