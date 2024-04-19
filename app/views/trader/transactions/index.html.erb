@@ -1,13 +1,11 @@
 <% content_for :header do %>
   <div class="flex justify-between items-center w-full py-2">
     Transactions
-
     <div class="text-xs w-1/4">
-      <%= render 'shared/filter_transactions', { resource: "Transactions", path: admin_transactions_path, filter_array: @transaction_types } %>
+      <%= render 'shared/filter_transactions', { resource: "Transactions", path: trader_transactions_path, filter_array: @transaction_types } %>
     </div>
   </div>
 <% end %>
-
 <div class="relative shadow-md sm:rounded-lg text-sm">
   <table class="w-full text-sm text-left rtl:text-right text-gray-400">
     <thead class="text-xsuppercase bg-gray-700/55 text-gray-400">
@@ -35,12 +33,11 @@
         </th>
       </tr>
     </thead>
-
     <tbody>
       <% @transactions.each do |transaction| %>
         <tr class="border-b bg-stone-900/35 border-gray-700 hover:bg-gray-600">
           <th scope="row" class="px-6 py-3 font-medium whitespace-nowrap text-white">
-              <%= transaction.transaction_type.upcase %>
+            <%= transaction.transaction_type.upcase %>
           </th>
           <td class="px-6 py-2.5">
             <%= transaction.stock ? transaction.stock.stock_symbol.upcase : 'N/A' %>
@@ -52,11 +49,11 @@
             <%= transaction.stock ? transaction.shares : 'N/A' %>
           </td>
           <td class="px-6 py-2.5">
-            <%= transaction.stock ? format_currency(transaction.price_per_share) : 'N/A' %>  
+            <%= transaction.stock ? format_currency(transaction.price_per_share) : 'N/A' %>
           </td>
           <td class="px-6 py-2.5">
             <% total_amount = transaction.price_per_share * transaction.shares if transaction.shares.present? %>
-            <%= format_currency(total_amount || transaction.amount) %>  
+            <%= format_currency(total_amount || transaction.amount) %>
           </td>
           <td class="px-6 py-2.5">
             <%= transaction.created_at.localtime.strftime('%a, %d %b %Y %H:%M:%S') %>
@@ -64,10 +61,9 @@
         </tr>
       <% end %>
     </tbody>
-  </table>  
+  </table>
 </div>
-
 <!-- *** Render a view helper in your views (skipping nav links for empty pages)*** -->
 <div class=" grid place-items-center py-2.5">
-  <%== pagy_nav(@pagy) if @pagy.pages > 1 %> 
+  <%== pagy_nav(@pagy) if @pagy.pages > 1 %>
 </div>
