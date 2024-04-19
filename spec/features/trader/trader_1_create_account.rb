@@ -1,4 +1,4 @@
-# $ bundle exec rspec spec/features/invite_a_trader_spec.rb
+# $ bundle exec rspec spec/features/trader/trader_1_create_account.rb
 require 'rails_helper'
 
 RSpec.describe 'Create account', type: :feature do
@@ -11,6 +11,7 @@ RSpec.describe 'Create account', type: :feature do
     fill_in 'Password', with: 'asdfasdf'
     fill_in 'Password confirmation', with: 'asdfasdf'
     click_on 'Register'
+
     expect(page).to have_content('Verify Your Email')
     expect(page).to have_content('Check your email and click the link to activate your account.')
   end

@@ -1,8 +1,8 @@
-# $ bundle exec rspec spec/features/invite_a_trader_spec.rb
+# $ bundle exec rspec spec/features/trader/trader_2_login.rb
 require 'rails_helper'
 
 RSpec.describe 'Log in account', type: :feature do
-  scenario 'Trader logs in the account' do
+  scenario 'Trader logs into the app' do
     trader = {
       username: 'testing_account',
       email: 'testing_account@email.com',
