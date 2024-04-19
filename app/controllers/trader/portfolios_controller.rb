@@ -3,6 +3,13 @@ class Trader::PortfoliosController < TradersController
 
   def index
     @stocks = Stock.group_similar_stocks(current_user)
+
+    if params[:sort_by] == 'asc'
+      @stocks.sort_by! { |stock| stock[:total_shares] }
+    elsif params[:sort_by] == 'desc'
+      @stocks.sort_by! { |stock| -stock[:total_shares] }
+    end
+
     @pagy, @stocks = pagy_array(@stocks) || pagy(@stocks) # pagy stuff
     @total_portfolio_value = 0.0
 
