@@ -1,37 +1,13 @@
-<div class="border-2 border-gray-600 w-full h-full rounded-2xl flex justify-between p-4">
-  <div class="h-full flex flex-col gap-2">
-    <h2 class="font-bold font-sans tracking-widest">Estimated Balance</h2>
-    <h1 class="text-3xl flex items-end gap-2">
-      <%= format_currency(current_user.balance) %>
+<div class="bg--frosted border-2 border-gray-600 w-full flex items-center justify-between p-4">
+  <div class="flex flex-col gap-2">
+    <h2 class="font-bold font-sans tracking-widest">Account Balance</h2>
+    <h1 class="text-xl sm:text-3xl flex items-end gap-2">
+      <%= format_currency(current_user.balance, unit: "$") %>
       <small class="text-sm p-1 font-sans">USD</small>
     </h1>
-
-    <div class="flex flex-col gap-2 p-2">
-      <small class="capitalize font-semibold font-sans text-xs text-gray-500">Total Portfolio Value</small>
-      <h1 class="text-xl flex items-end gap-1 text-gray-300/55">
-        <%= format_currency(@total_portfolio_value) %>
-        <small class="p-1 font-sans text-xs">USD</small>
-      </h1>
-    </div>
   </div>
-
-  <div class="w-1/3 h-full flex flex-col justify-between gap-2">    
-    <div class="flex justify-end">
-      <!-- commented out, potentially for future use
-      <button class="button--secondary">
-        Deposit
-      </button>
-      -->
-
-      <%= link_to "Cash-in", trader_cash_in_path, data: { turbo_frame: 'cash_in_modal' }, class: "button--secondary" %> 
-      <%= link_to "Withdraw", trader_withdraw_path, data: { turbo_frame: 'withdraw_modal' }, class: "button--secondary" %> 
-    </div>
-
-    <div class="border h-full">
-      <small>
-        chart??
-      </small>
-    </div>
+  <div class="flex items-center justify-between gap-2">
+    <%= link_to "Cash-in", trader_cash_in_path, data: { turbo_frame: 'cash_in_modal' }, class: "button--secondary" %>
+    <%= link_to "Withdraw", trader_withdraw_path, data: { turbo_frame: 'withdraw_modal' }, class: "button--secondary" %>
   </div>
-  
 </div>
