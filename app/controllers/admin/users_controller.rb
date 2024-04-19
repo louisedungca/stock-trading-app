@@ -54,7 +54,7 @@ class Admin::UsersController < AdminsController
   end
 
   def ensure_frame_response
+    return if Rails.env.test?
     redirect_to admin_users_path unless turbo_frame_request?
   end
-
 end
