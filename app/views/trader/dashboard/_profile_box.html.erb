@@ -1,17 +1,16 @@
-<div class="w-full h-full flex items-center gap-4 ps-4 py-4">
-  <div class="h-full w-1/3 flex gap-3 border-r-2 border-gray-600">
+<div class="bg--frosted border-2 border-gray-600 w-full h-1/10 flex flex-col sm:flex-row items-center gap-4 ps-4 py-4">
+  <div class="w-full sm:w-1/3 h-full flex items-center gap-3 sm:border-r-2 border-gray-600">
     <% if current_user.admin? %>
-      <%= image_tag("cat_avatar.png", alt: "user photo", class: "w-8 h-8 rounded-full ring-4 ring-amber-700") %>
+      <%= image_tag("cat_avatar.png", alt: "user photo", class: "size-10 rounded-full ring-4 ring-amber-700") %>
     <% else %>
       <% ring_color_class = @trader_status == "approved" ? "ring-primary/55" : "ring-accent/55" %>
-      <%= image_tag("fox_avatar.png", alt: "user photo", class: "w-8 h-8 rounded-full ring-4 #{ring_color_class}") %>
+      <%= image_tag("fox_avatar.png", alt: "user photo", class: "size-10 rounded-full ring-4 #{ring_color_class}") %>
     <% end %>
-  
     <div class="font-bold flex flex-col gap-3">
-      <h1 class="flex items-center gap-3">     
+      <h1 class="w-full flex items-center gap-3">
         <%= current_user.username.capitalize %>
         <% if @trader_status == "approved" %>
-          <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 21 21">      
+          <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 21 21">
             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m6.072 10.072 2 2 6-4m3.586 4.314.9-.9a2 2 0 0 0 0-2.828l-.9-.9a2 2 0 0 1-.586-1.414V5.072a2 2 0 0 0-2-2H13.8a2 2 0 0 1-1.414-.586l-.9-.9a2 2 0 0 0-2.828 0l-.9.9a2 2 0 0 1-1.414.586H5.072a2 2 0 0 0-2 2v1.272a2 2 0 0 1-.586 1.414l-.9.9a2 2 0 0 0 0 2.828l.9.9a2 2 0 0 1 .586 1.414v1.272a2 2 0 0 0 2 2h1.272a2 2 0 0 1 1.414.586l.9.9a2 2 0 0 0 2.828 0l.9-.9a2 2 0 0 1 1.414-.586h1.272a2 2 0 0 0 2-2V13.8a2 2 0 0 1 .586-1.414Z"/>
           </svg>
         <% end %>
@@ -19,32 +18,26 @@
       <small>
         <%= current_user.email %>
       </small>
-    </div>    
+    </div>
   </div>
-
-  <div class="h-full w-2/3 flex justify-around gap-3 text-sm">
-    <div class="h-full flex flex-col gap-3">
+  <div class="hidden w-2/3 sm:flex flex-col sm:flex-row justify-around gap-3 text-sm">
+    <div class="flex flex-col gap-3">
       <small>User ID:</small>
       <h1 class="font-bold">
         <%= current_user.uid %>
       </h1>
     </div>
-
-    <div class="h-full flex flex-col gap-3">
+    <div class="flex flex-col gap-3">
       <small>Account Status:</small>
       <h1 class="font-bold">
         <%= @trader_status == "approved" ? "All-access" : "Pending Approval"  %>
       </h1>
     </div>
-
-    <div class="h-full flex flex-col gap-3">
+    <div class="flex flex-col gap-3">
       <small>User Type:</small>
       <h1 class="font-bold">
         <%= current_user.role.capitalize %>
       </h1>
     </div>
-
   </div>
-
-  
 </div>

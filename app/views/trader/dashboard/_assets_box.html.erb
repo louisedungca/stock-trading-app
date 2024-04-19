@@ -2,14 +2,13 @@
   <h1 class="font-bold font-sans tracking-widest">
     <%= link_to trader_portfolio_path do %>
       <%= @stocks.size > 1 ? "My Assets" : "My Asset" %>
-    <% end %>    
+    <% end %>
   </h1>
-
-  <div class="w-full grid--autofill">
+  <div class="w-full grid--autofill px-0">
     <% @stocks.each do |stock| %>
       <div class="bg--frosted pt-6 pb-0 grid place-items-center">
         <%= render 'pages/widgets/solo_ticker', symbol: stock[:stock_symbol] %>
-      </div>      
+      </div>
     <% end %>
-  </div>  
+  </div>
 </div>
