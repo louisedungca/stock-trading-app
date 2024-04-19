@@ -13,8 +13,8 @@ en:
         header: "Invite a Trader"
         submit_button: "Send an invitation"
       edit:
-        header: "Set your username and password"
-        submit_button: "Set my username and password"
+        header: "Set your account password"
+        submit_button: "Set my account password"
     mailer:
       invitation_instructions:
         subject: "Invitation instructions"
