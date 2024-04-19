@@ -18,6 +18,18 @@ FactoryBot.define do
       sequence(:username) { |n| "trader_#{n}" }
       role { "trader" }
     end
+
+    trait :confirmed_email do
+      after(:create) do |user|
+        create(:status, :confirmed_email, user: user)
+      end
+    end
+
+    trait :approved do
+      after(:create) do |user|
+        create(:status, :approved, user: user)
+      end
+    end
   end
 end
 
@@ -29,3 +41,7 @@ end
 # # Create two trader users
 # trader_1 = create(:user, :trader)
 # trader_2 = create(:user, :trader)
+
+## Update status
+# confirmed_trader = create(:user, :trader, :confirmed_email)
+# approved_trader = create(:user, :trader, :approved)
