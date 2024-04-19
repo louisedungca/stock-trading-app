@@ -8,8 +8,10 @@ RSpec.describe 'Editing a trader', type: :feature do
 
     sign_in admin
 
-    visit admin_root_path
-    expect(page).to have_content("Good morning, Admin" || "Good evening, Admin" || "Good afternoon, Admin")
+    visit admin_dashboard_path
+    within(".header") do
+      expect(page).to have_text("Admin")
+    end
 
     visit admin_users_path
     expect(page).to have_content("All Traders")

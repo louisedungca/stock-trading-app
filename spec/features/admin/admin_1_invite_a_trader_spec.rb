@@ -1,4 +1,4 @@
-# $ bundle exec rspec spec/features/invite_a_trader_spec.rb
+# $ bundle exec rspec spec/features/admin/admin_1_invite_a_trader_spec.rb
 require 'rails_helper'
 
 RSpec.describe 'Inviting a trader', type: :feature do

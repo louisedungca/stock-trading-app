@@ -8,14 +8,15 @@ RSpec.describe 'See pending traders', type: :feature do
     admin = create(:user, :admin)
 
     sign_in admin
-    visit admin_root_path
+    visit admin_dashboard_path
+    within(".header") do
+      expect(page).to have_text("Admin")
+    end
 
     # Check if trader is pending
     within(".pending-approvals") do
       expect(page).to have_content(confirmed_trader_1.email)
       expect(page).to have_content(confirmed_trader_2.email)
     end
-
-    save_and_open_page
   end
 end

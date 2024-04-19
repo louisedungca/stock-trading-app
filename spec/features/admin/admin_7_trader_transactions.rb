@@ -15,6 +15,10 @@ RSpec.describe 'See trader transactions', type: :feature do
     withdraw_transaction = create(:transaction, :withdraw, user: trader_1)
 
     sign_in admin
+    visit admin_dashboard_path
+    within(".header") do
+      expect(page).to have_text("Admin")
+    end
 
     visit admin_transactions_path
     expect(page).to have_content('Traders Transactions')
@@ -27,6 +31,5 @@ RSpec.describe 'See trader transactions', type: :feature do
       expect(page).to have_content('WITHDRAW')
     end
 
-    save_and_open_page
   end
 end

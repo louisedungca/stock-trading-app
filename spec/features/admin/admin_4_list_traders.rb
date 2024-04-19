@@ -9,6 +9,10 @@ RSpec.describe 'List all traders', type: :feature do
     trader3 = create(:user, :trader)
 
     sign_in admin
+    visit admin_dashboard_path
+    within(".header") do
+      expect(page).to have_text("Admin")
+    end
 
     visit admin_users_path
 

@@ -8,7 +8,10 @@ RSpec.describe 'Approve traders', type: :feature do
     admin = create(:user, :admin)
 
     sign_in admin
-    visit admin_root_path
+    visit admin_dashboard_path
+    within(".header") do
+      expect(page).to have_text("Admin")
+    end
 
     # Check if trader is pending
     within(".pending-approvals") do # using scope to make sure that the trader is under pending box
@@ -29,8 +32,5 @@ RSpec.describe 'Approve traders', type: :feature do
     within(".recent-approvals") do # using scope to make sure that the trader is under approved box
       expect(page).to have_content(confirmed_trader_1.email)
     end
-
-    # save_and_open_page
   end
 end
-
