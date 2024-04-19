@@ -1,27 +1,35 @@
-# $ bundle exec rspec spec/features/invite_a_trader_spec.rb
+# $ bundle exec rspec spec/features/admin/admin_6_approve_trader.rb
 require 'rails_helper'
 
 RSpec.describe 'Approve traders', type: :feature do
   scenario 'Admin approve pending traders' do
-    admin = create(:user, :admin) # create admin (using FactoryBot methods)
-    trader1 = create(:user, :trader)
+    confirmed_trader_1 = create(:user, :trader, :confirmed_email)
+    confirmed_trader_2 = create(:user, :trader, :confirmed_email)
+    admin = create(:user, :admin)
 
-    # Check Verification Email
-    expect(ActionMailer::Base.deliveries.count).to eq(1)
-    email = ActionMailer::Base.deliveries.last
-    expect(email.to).to eq([trader1.email])
-    expect(email.subject).to eq('Confirmation instructions')
-
-    # Click the verification link
-    user = User.find_by(email: trader1.email)
-    visit user_confirmation_path(confirmation_token: user.confirmation_token)
-
-    # Sign in Admin
     sign_in admin
-    visit root_path
     visit admin_root_path
 
-    # Check if trader1 is waiting for approval
-    expect(page).to have_content(trader1.email)
+    # Check if trader is pending
+    within(".pending-approvals") do # using scope to make sure that the trader is under pending box
+      expect(page).to have_content(confirmed_trader_1.email)
+      expect(page).to have_content(confirmed_trader_2.email)
+
+      approve_button = find(".approve-btn", match: :first)
+      approve_button.click
+    end
+
+    visit admin_dashboard_path
+
+    # Check if trader_1 has been approved
+    within(".pending-approvals") do
+      expect(page).not_to have_content(confirmed_trader_1.email)
+    end
+
+    within(".recent-approvals") do # using scope to make sure that the trader is under approved box
+      expect(page).to have_content(confirmed_trader_1.email)
+    end
+
+    # save_and_open_page
   end
 end
