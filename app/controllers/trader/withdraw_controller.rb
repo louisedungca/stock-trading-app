@@ -12,11 +12,10 @@ class Trader::WithdrawController < TradersController
 
     if Transaction.withdraw(current_user, amount)
       flash[:notice] = "Successfully cashed out #{format_currency(amount, unit: '$')}."
-      redirect_to trader_dashboard_path
     else
       flash[:alert] = 'Failed to withdraw. Please try again.'
-      redirect_to trader_cash_in_path
     end
+    redirect_to trader_dashboard_path
   end
 
   private

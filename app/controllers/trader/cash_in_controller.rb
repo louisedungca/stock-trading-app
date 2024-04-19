@@ -12,11 +12,10 @@ class Trader::CashInController < TradersController
 
     if Transaction.cash_in(current_user, amount)
       flash[:notice] = "Successfully cashed in #{format_currency(amount, unit: '$')}."
-      redirect_to trader_dashboard_path
     else
       flash[:alert] = 'Failed to cash in. Please try again.'
-      redirect_to trader_cash_in_path
     end
+    redirect_to trader_dashboard_path
   end
 
   private
