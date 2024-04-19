@@ -33,3 +33,4 @@ RSpec.describe 'Approve traders', type: :feature do
     # save_and_open_page
   end
 end
+
