@@ -26,16 +26,21 @@
   <div class="flex flex-col gap-1 w-full h-full">
     <div class="flex w-full h-full flex-col gap-1">
       <%= render 'pages/widgets/fixed_chart', locals: { stock_symbol: @stock_symbol } %>
-      <% if @data %>
-        <div class="flex gap-1 h-1/4 w-full">
-          <div class="bg--frosted py-2 px-4 flex flex-col gap-2 items-center justify-around w-full">
+      <% if @data.present? %>
+        <div class="flex gap-1 h-fit w-full">
+          <div class="bg--frosted py-2 px-4 flex flex-col gap-2 items-center justify-around h-full w-full">
             <!-- ** FORMS ** -->
-            <div class="h-fit w-auto flex gap-2 py-2 divide-x-2 divide-gray-600 text-sm">
+            <div class="h-full w-auto flex gap-2 py-2 divide-x-2 divide-gray-600 text-sm">
               <!-- ** BUY FORM ** -->
-              <div class="buy-form px-8 py-2">
-                <%= form_with(url: trader_trade_buy_path, method: :post1) do |form| %>
+              <div class="buy-form h-full px-8 py-2">
+                <%= form_with(url: trader_trade_buy_path, method: :post1) do |form| %>                  
                   <div class="form__wrapper gap-2 items-center">
-                    <div class="field gap-2 flex-row items-center w-full">
+                    <div class="field gap-6 flex-row items-center w-full">
+                      <small class="font-light font-sans w-fit">Current balance:</small>
+                      <small><%= format_currency(current_user.balance, unit:"$ ") %></small>
+                    </div> 
+
+                    <div class="field gap-6 flex-row items-center w-full">
                       <%= form.hidden_field :stock_symbol, value: params[:stock_symbol] %>
                       <%= form.label :buy_shares, "Share Qty:", class: "w-1/2" %>
                       <%= form.number_field :buy_shares, min: 0, step: 0.01, class: "w-full" %>
@@ -45,10 +50,15 @@
                 <% end %>
               </div>
               <!-- ** SELL FORM ** -->
-              <div class="sell-form px-8 py-2">
+              <div class="sell-form h-full px-8 py-2">
                 <%= form_with(url: trader_trade_sell_path, method: :post) do |form| %>
-                  <div class="form__wrapper gap-2 items-center">
-                    <div class="field gap-2 flex-row items-center w-full">
+                  <div class="form__wrapper gap-2 items-center">              
+                    <div class="field gap-6 flex-row items-center w-full">
+                      <small class="font-light font-sans w-fit">Current shares:</small>
+                      <small><%= @total_shares %></small>
+                    </div>                  
+
+                    <div class="field gap-4 flex-row items-center w-full">
                       <%= form.hidden_field :stock_symbol, value: params[:stock_symbol] %>
                       <%= form.label :sell_shares, "Share Qty:", class: "w-1/2" %>
                       <%= form.number_field :sell_shares, min: 0, step: 0.01, class: "w-full" %>
@@ -60,10 +70,10 @@
             </div>
           </div>
         </div>
+      <% else %>
+        <%= render 'pages/widgets/top_news' %>
       <% end %>
     </div>
-    <% if @data.nil? %>
-      <%= render 'pages/widgets/top_news' %>
-    <% end %>
+
   </div>
 </div>
