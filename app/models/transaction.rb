@@ -71,15 +71,16 @@ class Transaction < ApplicationRecord
 
     transaction do
       if user.balance <= 0
+        # Rails.logger.info("BUY ERROR: 0 balance.") # for checking logs only
         user.errors.add(:base, "You do not have any balance in your account. Please cash in.")
         raise ActiveRecord::Rollback
       elsif  user.balance < total_cost
+        # Rails.logger.info("BUY ERROR: Insufficient balance.") # for checking logs only
         user.errors.add(:base, "Insufficient balance to proceed with this transaction.")
         raise ActiveRecord::Rollback
       end
 
       user.update!(balance: user.balance - total_cost)
-
       user.transactions.create!(
         transaction_type: 'buy',
         shares:,
@@ -103,12 +104,12 @@ class Transaction < ApplicationRecord
 
     transaction do
       if total_shares < shares
+        # Rails.logger.info("SELL ERROR: Insufficient shares.") # for checking logs only
         user.errors.add(:base, "Not enough shares to proceed with this transaction.")
         raise ActiveRecord::Rollback
       end
 
       user.update!(balance: user.balance + total_cost)
-
       user.transactions.create!(
         transaction_type: 'sell',
         shares:,
@@ -131,7 +132,7 @@ class Transaction < ApplicationRecord
 
       user.transactions.create!(
         transaction_type: 'cash_in',
-        amount: amount
+        amount:
         )
     end
 
@@ -153,7 +154,7 @@ class Transaction < ApplicationRecord
 
       user.transactions.create!(
         transaction_type: 'withdraw',
-        amount: amount
+        amount:
         )
     end
 
