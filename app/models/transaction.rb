@@ -69,10 +69,11 @@ class Transaction < ApplicationRecord
       company_name: stock.company_name
     )
 
-    return unless user.balance.positive?
-
     transaction do
-      if user.balance < total_cost
+      if user.balance <= 0
+        user.errors.add(:base, "You do not have any balance in your account. Please cash in.")
+        raise ActiveRecord::Rollback
+      elsif  user.balance < total_cost
         user.errors.add(:base, "Insufficient balance to proceed with this transaction.")
         raise ActiveRecord::Rollback
       end
@@ -135,7 +136,7 @@ class Transaction < ApplicationRecord
     end
 
   rescue ActiveRecord::RecordInvalid
-    user.errors.add(:base, "Failed to cash in money.")
+    user.errors.add(:base, "Failed to cash in money. Please try again.")
     false
   end
 
@@ -144,6 +145,7 @@ class Transaction < ApplicationRecord
 
     transaction do
       if user.balance < amount
+        user.errors.add(:base, "Insufficient balance for cash out.")
         raise ActiveRecord::Rollback
       end
 
@@ -156,7 +158,7 @@ class Transaction < ApplicationRecord
     end
 
   rescue ActiveRecord::RecordInvalid
-    user.errors.add(:base, "Failed to cash out money.")
+    user.errors.add(:base, "Failed to cash out money. Please try again.")
     false
   end
 end
