@@ -1,0 +1,109 @@
+<% content_for :header do %>
+  <div class="flex justify-between items-center w-full py-2">
+    My Portfolio
+    <div class="text-xs w-1/4">
+      <%= form_tag trader_portfolio_path, method: :get, class: "flex justify-end max-w-sm" do %>
+        <div class="relative">
+          <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+            <svg class="w-4 h-4 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+              <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M18.796 4H5.204a1 1 0 0 0-.753 1.659l5.302 6.058a1 1 0 0 1 .247.659v4.874a.5.5 0 0 0 .2.4l3 2.25a.5.5 0 0 0 .8-.4v-7.124a1 1 0 0 1 .247-.659l5.302-6.059c.566-.646.106-1.658-.753-1.658Z"/>
+            </svg>
+          </div>
+          <%= select_tag :sort_by, options_for_select({ "Most shares first": "desc", "Least share first": "asc"}, params[:sort_by]), class: "font-light bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 py-1.5 px-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" %>
+        </div>
+        <%= submit_tag "Filter", class: "py-1.5 px-3 ms-2 text-xstext-white bg-secondary rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-secondary dark:focus:ring-blue-800 cursor-pointer" %>
+      <% end %>
+    </div>
+  </div>
+<% end %>
+<div class="h-full flex flex-col gap-2 items-center">
+  <% if @stocks.present? %>
+    <!-- ** Total Portfolio Value ** -->
+    <div class="h-[15%] flex flex-col items-center gap-2 py-2 px-4 tracking-widest">
+      <small class="uppercase font-semibold font-sans">Total Portfolio Value</small>
+      <h1 class="text-3xl flex">
+        <small class="text-sm p-1 font-sans">$</small>
+        <%= format_currency(@total_portfolio_value) %>
+      </h1>
+    </div>
+    <!-- ** Portfolio Table ** -->
+    <div class="relative h-[85%] w-full shadow-md sm:rounded-lg text-sm">
+      <table class="w-full text-sm text-left rtl:text-right text-gray-400">
+        <thead class="text-xs font-sans uppercase bg-gray-700/55 text-gray-400">
+          <tr>
+            <th scope="col" class="px-6 py-3">
+              <span class="sr-only">Stock Logo</span>
+            </th>
+            <th scope="col" class="px-6 py-3">
+              Symbol
+            </th>
+            <th scope="col" class="px-6 py-3">
+              Company Name
+            </th>
+            <th scope="col" class="px-6 py-3">
+              PRICE
+            </th>
+            <th scope="col" class="px-6 py-3">
+              CHG
+            </th>
+            <th scope="col" class="px-6 py-3">
+              CHG %
+            </th>
+            <th scope="col" class="px-6 py-3">
+              SHARES
+            </th>
+            <!--
+          <th scope="col" class="px-6 py-3">
+            SHARES * PRICE
+          </th>
+          -->
+            <th scope="col" class="px-6 py-3">
+              <span class="sr-only">Actions</span>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @stocks.each do |stock| %>
+            <tr class="border-b bg-stone-900/35 border-gray-700 hover:bg-gray-600">
+              <td scope="row" class="px-6 py-3 font-medium whitespace-nowrap text-white">
+                <img src="<%= stock[:logo_url] %>" alt="<%= stock[:stock_symbol] %>" class="h-6">
+              </td>
+              <td class="px-6 py-2.5 font-sans font-bold text-violet-100">
+                <%= stock[:stock_symbol].upcase %>
+              </td>
+              <td class="px-6 py-2.5 font-sans text-emerald-50">
+                <%= stock[:company_name] %>
+              </td>
+              <td class="px-6 py-2.5">
+                <%= format_currency(@stock_quotes[stock[:stock_symbol]].latest_price) %>
+              </td>
+              <td class="px-6 py-2.5 <%= @stock_quotes[stock[:stock_symbol]].change < 0 ? 'text-red-500' : 'text-green-500' %>">
+                <%= @stock_quotes[stock[:stock_symbol]].change %>
+              </td>
+              <td class="px-6 py-2.5 <%= @stock_quotes[stock[:stock_symbol]].change < 0 ? 'text-red-500' : 'text-green-500' %>">
+                <%= @stock_quotes[stock[:stock_symbol]].change_percent_s %>
+              </td>
+              <td class="px-6 py-2.5">
+                <%= stock[:total_shares] %>
+              </td>
+              <!--
+            <td class="px-6 py-2.5">
+              <% total_price = @stock_quotes[stock[:stock_symbol]].latest_price * stock[:total_shares] %>
+              <%= number_to_currency(total_price) %>
+            </td>
+            -->
+              <td class="px-6 py-2.5 shared_links">
+                <%= link_to "BUY/SELL", trader_trade_path(stock_symbol: stock[:stock_symbol]) %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% else %>
+    <div class="h-full w-full flex flex-col gap-1 justify-center items-center">
+      <h1>You currently don't own any assets</h1>
+      <%= link_to 'Start your journey here.', trader_trade_path, class: "shared_links" %>
+    </div>
+  <% end %>
+</div>

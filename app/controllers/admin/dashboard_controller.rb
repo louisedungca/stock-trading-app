@@ -1,0 +1,11 @@
+class Admin::DashboardController < AdminsController
+  layout 'admin_layout'
+
+  def index
+    @pending_traders = User.pending_traders
+    @confirmed_email_traders = User.confirmed_email_traders
+    @approved_traders = User.approved_traders
+
+    @pagy, @confirmed_email_traders = pagy(@confirmed_email_traders, items: 8)
+  end
+end

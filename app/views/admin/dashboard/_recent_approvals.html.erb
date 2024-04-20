@@ -1,0 +1,38 @@
+<div class="recent-approvals w-full h-full rounded-2xl flex flex-col justify-between"> 
+  <div class="relative shadow-md sm:rounded-lg text-sm">
+    <table class="w-full text-sm text-left rtl:text-right text-gray-400">
+      <thead class="text-xsuppercase bg-gray-700/55 text-gray-400">
+        <tr>
+          <th scope="col" class="px-6 py-3 font-bold font-sans tracking-widest">
+            Recent Approvals
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <% if @approved_traders.any? %>
+          <% @approved_traders.order(updated_at: :desc).limit(5).each do |trader| %>
+            <tr class="border-b bg-stone-900/35 border-gray-700 hover:bg-gray-600">
+              <th scope="row" class="px-6 py-3 font-medium whitespace-nowrap text-white flex items-center gap-3">
+                <% ring_color_class = trader.status.status_type == "approved" ? "ring-primary/55" : "ring-accent/55" %>
+                <%= image_tag("fox_avatar.png", alt: "user photo", class: "w-8 h-8 rounded-full ring-4 #{ring_color_class}") %>
+
+                <%= trader.username %>
+                <small class="text-white/65 italic">
+                  <%= trader.email %>
+                </small>
+              </th>  
+            </tr>
+          <% end %>
+
+        <% else %>
+          <tr class="border-b bg-stone-900/35 border-gray-700 hover:bg-gray-600">
+            <th scope="row" class="px-6 py-3 text-xs font-light font-sans whitespace-nowrap text-white">
+                No recent approval
+            </th>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>  
+  </div>  
+</div>
+

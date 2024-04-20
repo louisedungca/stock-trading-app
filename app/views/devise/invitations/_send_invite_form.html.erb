@@ -1,0 +1,17 @@
+<h2 class="border-b-2 border-gray-500 p-3.5 text-base font-sans font-bold tracking-widest uppercase">
+  <%= t "devise.invitations.new.header" %>
+</h2>
+
+<%= form_for(User.new, as: :user, url: invitation_path(:user), html: { method: :post }) do |f| %>
+  <%= render "devise/shared/error_messages", resource: User.new %>
+  <div class="form__wrapper px-16">
+    <% User.invite_key_fields.each do |field| -%>
+      <div class="field">
+        <%= f.label field %>
+        <%= f.text_field field %>
+      </div>
+    <% end -%>
+
+    <%= f.button t("devise.invitations.new.submit_button"), class:"uppercase actions" %>
+  </div>
+<% end %>

@@ -1,0 +1,25 @@
+<div class="w-full min-h-fit rounded-2xl flex flex-col p-4">
+  <h1 class="font-bold font-sans tracking-widest">
+    <%= link_to trader_portfolio_path do %>
+      <%= @stocks.count > 1 ? "My Assets" : "My Asset" %>
+    <% end %>
+  </h1>
+  
+  <% if @stocks.present? %>
+    <div class="w-full grid--autofill px-0">
+      <% @stocks.each do |stock| %>
+        <div class="bg--frosted pt-6 pb-0 grid place-items-center">
+          <%= render 'pages/widgets/solo_ticker', symbol: stock[:stock_symbol] %>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    <div class="h-full w-full flex flex-col gap-1 p-4 text-sm">
+      <p>You currently don't own any assets</p>
+      <small>
+        <%= link_to 'Start your journey here.', trader_trade_path, class: "shared_links" %>
+      </small>
+    </div>
+  <% end %>
+    
+</div>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>stocker</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="icon" type="image/x-icon" href="/stocker.png" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" />
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+
+    <%= javascript_importmap_tags %>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.turbo.min.js" defer></script>
+  </head>
+  
+  <body class="relative w-full h-dvh text-emerald-50 bg-gradient-to-b from-stone-950 via-emerald-950 to-violet-950 flex">
+    <%= render partial: "shared/toast_error", locals: {  message_error: flash[:alert] } %>
+    <%= render partial: "shared/toast_success", locals: { message_success: flash[:notice] } %>
+    <%= render 'shared/sidebar' %>
+
+    <main class="flex flex-col px-4 py-2 sm:ml-64 mt-16 h-[calc(100%-4.5rem)] w-full sm:w-[calc(100%-16rem)]">
+      <h1 class="header min-h-[10%] font-bold text-xl flex items-center gap-3 font-sans">
+        <%= yield :header %>
+      </h1>
+      
+      <section class="w-full min-h-[90%] flex flex-col justify-between overflow">
+        <%= yield %>
+        <%= render 'shared/logout' %> 
+      </section>
+    </main>
+  </body>
+</html>

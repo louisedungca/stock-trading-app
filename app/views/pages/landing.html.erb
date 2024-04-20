@@ -1,0 +1,24 @@
+<section class="w-ful h-full flex flex-col justify-center items-center gap-10">
+  <!-- 
+  <div class="w-[160px] aspect-1 border rounded-full mb-4 grid place-items-center">logo here</div>
+  -->
+
+  <h1 class="text-7xl font-light flex flex-col justify-center items-center gap-1 tracking-wider">
+    Trade with
+    <p class="font-bold italic">
+      certainty
+    </p>
+  </h1>
+
+  <span class="w-1/4 text-center">
+    Smart. Simple. Seamless.
+  </span>
+
+  <div class="overflow-hidden w-1/4">
+    <%= render 'logo_banner' %>
+  </div>
+
+  <%= link_to new_user_registration_path, class: "button--main mt-4" do %>
+    <small>Get Started</small>
+  <% end %>
+</section>
