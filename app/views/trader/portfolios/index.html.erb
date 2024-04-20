@@ -101,6 +101,9 @@
       </table>
     </div>
   <% else %>
-    <h1>No stocks yet</h1>
+    <div class="h-full w-full flex flex-col gap-1 justify-center items-center">
+      <h1>You currently don't own any assets</h1>
+      <%= link_to 'Start your journey here', trader_trade_path, class: "shared_links" %>
+    </div>
   <% end %>
 </div>
