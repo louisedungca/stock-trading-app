@@ -8,7 +8,7 @@ Welcome to the Stock Trading App Simulation! This application allows users to si
 - **Transaction History:** View a detailed history of all transactions, including buy/sell actions and their corresponding timestamps.
 - **Search Functionality:** Users can search for stocks by ticker symbol or company name to quickly find the stocks they're interested in.
 
-## Technologies / Gems
+## Dependencies / Gems
 - **Tailwind CSS:** Frontend framework for responsive design and styling.
 - **PostgreSQL:** Database management system for storing user information and transaction history.
 - **Devise:** Flexible authentication solution for Rails.
