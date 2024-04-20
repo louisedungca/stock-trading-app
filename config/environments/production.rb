@@ -7,15 +7,15 @@ Rails.application.configure do
   config.action_mailer.perform_deliveries = true
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    address: 'smtp.gmail.com',
+    address: 'smtp-mail.outlook.com',
     port: 587,
     domain: 'localhost',
-    user_name: Rails.application.credentials.gmail_smtp.email,
-    password: Rails.application.credentials.gmail_smtp.password,
-    authentication: 'plain',
+    user_name: Rails.application.credentials.outlook_smtp.email,
+    password: Rails.application.credentials.outlook_smtp.password,
+    authentication: :login,
     enable_starttls: true,
-    open_timeout: 5,
-    read_timeout: 5
+    open_timeout: 10,
+    read_timeout: 10
   }
 
   # Code is not reloaded between requests.
