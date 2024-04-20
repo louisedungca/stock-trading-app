@@ -5,7 +5,7 @@ class Admin::UsersController < AdminsController
 
   def index
     @q = User.includes(:status).where(role: :trader).ransack(params[:q])
-    @traders = @q.result.includes(:status)
+    @traders = @q.result(distinct: true)
     @traders = User.sorted_traders(@traders)
 
     if params[:q].present? && @traders.empty?
