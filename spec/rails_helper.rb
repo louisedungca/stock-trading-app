@@ -68,4 +68,7 @@ RSpec.configure do |config|
 
   # FACTORYBOT METHODS
   config.include FactoryBot::Syntax::Methods
+
+  # APPLICATION HELPER
+  config.include CurrencyHelper
 end
