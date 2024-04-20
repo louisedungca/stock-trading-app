@@ -1,4 +1,4 @@
-# $ bundle exec rspec spec/features/trader/trader_7_transaction.rb
+# $ bundle exec rspec spec/features/trader/trader_7_transaction_spec.rb
 require 'rails_helper'
 
 RSpec.describe 'Check transaction page', type: :feature do

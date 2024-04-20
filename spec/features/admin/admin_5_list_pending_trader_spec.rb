@@ -1,4 +1,4 @@
-# $ bundle exec rspec spec/features/admin/admin_5_list_pending_trader.rb
+# $ bundle exec rspec spec/features/admin/admin_5_list_pending_trader_spec.rb
 require 'rails_helper'
 
 RSpec.describe 'See pending traders', type: :feature do

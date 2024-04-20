@@ -1,4 +1,4 @@
-# $ bundle exec rspec spec/features/trader/trader_4_receive_confirmation_email.rb
+# $ bundle exec rspec spec/features/trader/trader_4_receive_confirmation_email_spec.rb
 require 'rails_helper'
 
 RSpec.describe 'Receive approval', type: :feature do

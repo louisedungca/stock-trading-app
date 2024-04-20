@@ -1,4 +1,4 @@
-# $ bundle exec rspec spec/features/trader/trader_5_buy_stock.rb
+# $ bundle exec rspec spec/features/trader/trader_5_buy_stock_spec.rb
 require 'rails_helper'
 
 RSpec.describe 'Buy Stock', type: :feature do

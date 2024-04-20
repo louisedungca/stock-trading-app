@@ -1,4 +1,4 @@
-# $ bundle exec rspec spec/features/admin/admin_4_list_traders.rb
+# $ bundle exec rspec spec/features/admin/admin_4_list_traders_spec.rb
 require 'rails_helper'
 
 RSpec.describe 'List all traders', type: :feature do

@@ -1,4 +1,4 @@
-# $ bundle exec rspec spec/features/trader/trader_1_create_account.rb
+# $ bundle exec rspec spec/features/trader/trader_1_create_account_spec.rb
 require 'rails_helper'
 
 RSpec.describe 'Create account', type: :feature do

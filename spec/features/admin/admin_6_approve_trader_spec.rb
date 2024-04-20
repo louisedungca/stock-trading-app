@@ -1,4 +1,4 @@
-# $ bundle exec rspec spec/features/admin/admin_6_approve_trader.rb
+# $ bundle exec rspec spec/features/admin/admin_6_approve_trader_spec.rb
 require 'rails_helper'
 
 RSpec.describe 'Approve traders', type: :feature do

@@ -1,4 +1,4 @@
-# $ bundle exec rspec spec/features/admin/admin_7_trader_transactions.rb
+# $ bundle exec rspec spec/features/admin/admin_7_trader_transactions_spec.rb
 require 'rails_helper'
 
 RSpec.describe 'See trader transactions', type: :feature do

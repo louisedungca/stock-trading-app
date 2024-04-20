@@ -1,4 +1,4 @@
-# $ bundle exec rspec spec/features/trader/trader_6_portfolio.rb
+# $ bundle exec rspec spec/features/trader/trader_6_portfolio_spec.rb
 require 'rails_helper'
 
 RSpec.describe 'Check portfolio page', type: :feature do

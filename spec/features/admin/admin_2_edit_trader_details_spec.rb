@@ -1,4 +1,4 @@
-# $ bundle exec rspec spec/features/admin/admin_2_edit_trader_details.rb
+# $ bundle exec rspec spec/features/admin/admin_2_edit_trader_details_spec.rb
 require 'rails_helper'
 
 RSpec.describe 'Editing a trader', type: :feature do
