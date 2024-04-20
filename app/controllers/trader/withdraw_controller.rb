@@ -22,7 +22,6 @@ class Trader::WithdrawController < TradersController
 
   def ensure_frame_response
     return if Rails.env.test?
-
     redirect_to trader_dashboard_path unless turbo_frame_request?
   end
 end
