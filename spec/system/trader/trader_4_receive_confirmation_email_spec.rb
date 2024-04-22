@@ -1,7 +1,7 @@
 # $ bundle exec rspec spec/features/trader/trader_4_receive_confirmation_email_spec.rb
 require 'rails_helper'
 
-RSpec.describe 'Receive approval', type: :feature do
+RSpec.describe 'Receive approval', type: :system do
   scenario 'Trader receives app approval' do
     admin = create(:user, :admin)
     trader = {
@@ -40,9 +40,9 @@ RSpec.describe 'Receive approval', type: :feature do
     fill_in 'user[password]', with: trader[:password]
     click_on 'Login'
 
-    within(".profile-box") do
+    within('.profile-box') do
       expect(page).to have_content(trader[:username])
-      expect(page).to have_content("Pending Approval")
+      expect(page).to have_content('Pending Approval')
     end
 
     expect(page).to have_content("We're currently evaluating your account.")
@@ -54,14 +54,14 @@ RSpec.describe 'Receive approval', type: :feature do
     # Admin Side Approval
     sign_in admin
     visit admin_dashboard_path
-    within(".header") do
-      expect(page).to have_text("Admin")
+    within('.header') do
+      expect(page).to have_text('Admin')
     end
 
-    within(".pending-approvals") do # using scope to make sure that the trader is under pending box
+    within('.pending-approvals') do # using scope to make sure that the trader is under pending box
       expect(page).to have_content(trader[:email])
 
-      approve_button = find(".approve-btn", match: :first)
+      approve_button = find('.approve-btn', match: :first)
       approve_button.click
     end
 
@@ -78,10 +78,9 @@ RSpec.describe 'Receive approval', type: :feature do
     fill_in 'user[password]', with: trader[:password]
     click_on 'Login'
 
-    within(".profile-box") do
+    within('.profile-box') do
       expect(page).to have_content(trader[:username])
-      expect(page).to have_content("All-access")
+      expect(page).to have_content('All-access')
     end
-
   end
 end
