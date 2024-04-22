@@ -1,7 +1,7 @@
 # $ bundle exec rspec spec/features/admin/admin_1_invite_a_trader_spec.rb
 require 'rails_helper'
 
-RSpec.describe 'Inviting a trader', type: :feature do
+RSpec.describe 'Inviting a trader', type: :system do
   scenario 'Admin invites a new trader' do
     admin = create(:user, :admin) # create admin (using FactoryBot methods)
     sign_in admin # sign in as admin (using Devise Test Integration helper)
