@@ -1,7 +1,7 @@
 # $ bundle exec rspec spec/features/trader/trader_7_transaction_spec.rb
 require 'rails_helper'
 
-RSpec.describe 'Check transaction page', type: :feature do
+RSpec.describe 'Check transaction page', type: :system do
   scenario 'Trader checks transaction page for transactions history' do
     trader = create(:user, :trader, :approved, :with_balance)
     buy_stock = create(:stock)
@@ -17,13 +17,13 @@ RSpec.describe 'Check transaction page', type: :feature do
     visit trader_dashboard_path
 
     # check trader status
-    within(".profile-box") do
-      expect(page).to have_text("All-access")
+    within('.profile-box') do
+      expect(page).to have_text('All-access')
     end
 
     # Transaction Page
     visit trader_transactions_path
-    within("tbody") do
+    within('tbody') do
       expect(page).to have_content('CASH_IN')
       expect(page).to have_content('BUY')
       expect(page).to have_content('SELL')

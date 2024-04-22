@@ -1,7 +1,7 @@
 # $ bundle exec rspec spec/features/trader/trader_1_create_account_spec.rb
 require 'rails_helper'
 
-RSpec.describe 'Create account', type: :feature do
+RSpec.describe 'Create account', type: :system do
   scenario 'Trader creates an account' do
     # Navigate to signup
     visit root_path
