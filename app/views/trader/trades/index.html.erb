@@ -13,7 +13,7 @@
             <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
               <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="m21 21-3.5-3.5M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z"/>
             </svg>
-            <%= text_field_tag :stock_symbol, params[:stock_symbol], placeholder: "Enter Stock Symbol", class:"w-full text-xs" %>
+            <%= text_field_tag :stock_symbol, params[:stock_symbol], placeholder: "Enter NASDAQ Stock Symbol", class:"w-full text-xs" %>
           </div>
           <%= submit_tag "Search", class:"text-xs button--main cursor-pointer" %>
         </div>
@@ -33,13 +33,12 @@
             <div class="h-full w-auto flex gap-2 py-2 divide-x-2 divide-gray-600 text-sm">
               <!-- ** BUY FORM ** -->
               <div class="buy-form h-full px-8 py-2">
-                <%= form_with(url: trader_trade_buy_path, method: :post1) do |form| %>                  
+                <%= form_with(url: trader_trade_buy_path, method: :post1) do |form| %>
                   <div class="form__wrapper gap-2 items-center">
                     <div class="field gap-6 flex-row items-center w-full">
                       <small class="font-light font-sans w-fit">Current balance:</small>
                       <small><%= format_currency(current_user.balance, unit:"$ ") %></small>
-                    </div> 
-
+                    </div>
                     <div class="field gap-6 flex-row items-center w-full">
                       <%= form.hidden_field :stock_symbol, value: params[:stock_symbol] %>
                       <%= form.label :buy_shares, "Share Qty:", class: "w-1/2" %>
@@ -52,12 +51,11 @@
               <!-- ** SELL FORM ** -->
               <div class="sell-form h-full px-8 py-2">
                 <%= form_with(url: trader_trade_sell_path, method: :post) do |form| %>
-                  <div class="form__wrapper gap-2 items-center">              
+                  <div class="form__wrapper gap-2 items-center">
                     <div class="field gap-6 flex-row items-center w-full">
                       <small class="font-light font-sans w-fit">Current shares:</small>
                       <small><%= @total_shares %></small>
-                    </div>                  
-
+                    </div>
                     <div class="field gap-4 flex-row items-center w-full">
                       <%= form.hidden_field :stock_symbol, value: params[:stock_symbol] %>
                       <%= form.label :sell_shares, "Share Qty:", class: "w-1/2" %>
@@ -74,6 +72,5 @@
         <%= render 'pages/widgets/top_news' %>
       <% end %>
     </div>
-
   </div>
 </div>
