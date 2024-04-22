@@ -42,7 +42,6 @@ Welcome to the Stocker, a stock trading app simulation! This application allows 
 - [x] User Story #8: As a Trader, I want to sell my stocks to gain money.
 
 ## Contributing
-Contributions are welcome! Please fork this repository and submit a pull request with your changes. Make sure to follow the existing code style and write tests for any new functionality.
+Contributions are welcome! Please fork this repository and submit a pull request with your changes. Make sure to follow the existing code style and write tests for any new functionality. 
 
-## License
-This project is licensed under the [MIT License](LICENSE).
+
