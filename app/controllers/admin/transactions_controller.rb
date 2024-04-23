@@ -1,5 +1,4 @@
 class Admin::TransactionsController < AdminsController
-  # before_action :transaction_params
   layout 'admin_layout'
 
   def index
