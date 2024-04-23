@@ -1,7 +1,8 @@
 class Trader::CashInController < TradersController
-  include CurrencyHelper
-  # before_action :ensure_frame_response
+  before_action :ensure_frame_response, except: [:update]
   layout 'dashboard_layout'
+
+  include CurrencyHelper
 
   def index
     @balance = current_user.balance
