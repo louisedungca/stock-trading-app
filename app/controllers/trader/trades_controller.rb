@@ -1,5 +1,5 @@
 class Trader::TradesController < TradersController
-  before_action :set_params, except: :index
+  before_action :set_params
   layout 'dashboard_layout'
 
   def index
@@ -9,7 +9,7 @@ class Trader::TradesController < TradersController
     @total_shares = @stock ? @stock.total_shares(current_user) : 0.0
 
   rescue IEX::Errors::SymbolNotFoundError => e
-    flash[:alert] = "Stock symbol not found: #{@stock_symbol}"
+    flash[:alert] = "NASDAQ symbol '#{@stock_symbol}' not found."
     redirect_to trader_trade_path
   end
 
@@ -46,7 +46,7 @@ class Trader::TradesController < TradersController
   private
 
   def set_params
-    @stock_symbol = params[:stock_symbol].upcase
+    @stock_symbol = params[:stock_symbol].gsub(/[^a-zA-Z0-9\-.]/, '').upcase if params[:stock_symbol].present?
     @shares = params[:buy_shares].to_f if params[:buy_shares].present?
     @shares = params[:sell_shares].to_f if params[:sell_shares].present?
   end
