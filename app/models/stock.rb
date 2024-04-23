@@ -13,7 +13,7 @@ class Stock < ApplicationRecord
   has_many :transactions
   has_many :users, through: :transactions
 
-  validates :stock_symbol, presence: true, uniqueness: { case_sensitive: false }
+  validates :stock_symbol, format: { with: /\A[a-zA-Z0-9\.-]{1,10}\z/, message: "enter valid NASDAQ symbol format" }, uniqueness: { case_sensitive: false }
   validates :company_name, presence: true
   validates :logo_url, presence: true
 
