@@ -16,7 +16,6 @@
   </head>
 
   <body class="bg--secondary flex flex-col gap-2">   
-    <%= turbo_frame_tag "modal" %>
     <%= render partial: "shared/toast_error", locals: {  message_error: flash[:alert] } %>
     <%= render partial: "shared/toast_success", locals: { message_success: flash[:notice] } %>
 
