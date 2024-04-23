@@ -10,7 +10,7 @@
 #  updated_at   :datetime         not null
 #
 class Stock < ApplicationRecord
-  has_many :transactions
+  has_many :transactions, dependent: :destroy
   has_many :users, through: :transactions
 
   validates :stock_symbol, format: { with: /\A[a-zA-Z0-9\.-]{1,10}\z/, message: "enter valid NASDAQ symbol format" }, uniqueness: { case_sensitive: false }
