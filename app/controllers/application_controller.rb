@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::Base
   before_action :authenticate_user!
   before_action :configure_permitted_parameters, if: :devise_controller?
+  rescue_from ActiveRecord::RecordNotFound, with: :record_not_found_error
 
   include Pagy::Backend
 
@@ -30,6 +31,11 @@ class ApplicationController < ActionController::Base
 
   def after_sign_out_path_for(resource_or_scope)
     root_path
+  end
+
+  def record_not_found_error
+    flash[:alert] = "Hmm. It seems like what you are looking for does not exist."
+    redirect_to root_path
   end
 
 end

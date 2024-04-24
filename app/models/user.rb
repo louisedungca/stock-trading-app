@@ -39,8 +39,6 @@
 #  index_users_on_username              (username) UNIQUE
 #
 class User < ApplicationRecord
-  attr_accessor :login
-
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :invitable, :database_authenticatable, :registerable, :recoverable, :rememberable,
@@ -48,27 +46,29 @@ class User < ApplicationRecord
 
   has_one :status, dependent: :destroy
   accepts_nested_attributes_for :status
-  has_many :transactions
-  has_many :stocks, through: :transactions
 
-  validates :email, presence: true, uniqueness: true
-  validates :balance, numericality: { greater_than_or_equal: 0, message: "Insufficient balance." }
-  validates :username, length: {in: 5..20}, uniqueness: true
-  validates :password, presence: true, on: :create
-  before_create :initialize_status_for_trader
-  after_invitation_accepted :update_status_of_invited_user
+  has_many :transactions, dependent: :destroy
+  has_many :stocks, through: :transactions
 
   enum :role, {
     admin: 'admin',
     trader: 'trader'
   }, default: 'trader'
 
+  attr_accessor :login
+  STATUS_TYPES = Status.status_types.keys # => ["pending", "approved", "confirmed_email"]
+
+  validates :email, presence: true, uniqueness: true
+  validates :balance, numericality: { greater_than_or_equal: 0, message: "Insufficient balance." }
+  validates :username, length: {in: 5..20}, uniqueness: true
+  validates :password, presence: true, on: :create
+
+  before_create :initialize_status_for_trader
+  after_invitation_accepted :update_status_of_invited_user
+
   scope :approved_traders, -> { includes(:status).where(role: :trader, statuses: { status_type: "approved" }) }
   scope :pending_traders, -> { includes(:status).where(role: :trader, statuses: { status_type: "pending" }).order(:created_at) }
   scope :confirmed_email_traders, -> { includes(:status).where(role: :trader, statuses: { status_type: "confirmed_email" }).order(:updated_at) }
-
-  STATUS_TYPES = Status.status_types.keys # => ["pending", "approved", "confirmed_email"]
-
   scope :filter_by_status, ->(filter) {
     if STATUS_TYPES.include?(filter)
       where(status_type: filter)
@@ -92,7 +92,8 @@ class User < ApplicationRecord
     end
   end
 
-  # DEVISE STUFF
+  ## DEVISE STUFF
+  # for adding username on login
   def login
     @login || username || email
   end
@@ -108,12 +109,14 @@ class User < ApplicationRecord
     end
   end
 
+  # updating status of confirmed email (devise confirmable)
   def after_confirmation
     super
     status.update(status_type: 'confirmed_email') if status.present?
   end
 
-  # RANSACK STUFF
+  ## RANSACK STUFF
+  # whitelisting params for search
   def self.ransackable_attributes(auth_object = nil)
     authorizable_ransackable_attributes
   end
@@ -126,7 +129,6 @@ class User < ApplicationRecord
 
   def initialize_status_for_trader
     return unless trader?
-
     build_status(status_type: 'pending')
   end
 
