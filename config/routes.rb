@@ -60,5 +60,6 @@ Rails.application.routes.draw do
   get 'landing', to: 'pages#landing', as: :landing_page
   get 'pending-verification', to: 'pages#pending_verification', as: :pending_verification_page
 
+  # for route error
   match "*path", to: "application#no_path_found", via: :all
 end
