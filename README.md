@@ -1,6 +1,6 @@
 # [Stocker](https://stocker-twbl.onrender.com/)
 
-Welcome to the Stocker, a stock trading app simulation! This application allows users to simulate buying and selling stocks using the IEX API for real-time stock data.
+Welcome to the Stocker, a stock trading app simulation for NASDAQ-100 listed stocks! This application allows users to simulate buying and selling stocks using the IEX API for real-time stock data.
 
 ## Features
 - **User Authentication:** Users can sign up, log in, and log out securely to access their personalized accounts.
@@ -40,6 +40,44 @@ Welcome to the Stocker, a stock trading app simulation! This application allows 
 - [x] User Story #6: As a Trader, I want to have a My Portfolio page to see all my stocks
 - [x] User Story #7: As a Trader, I want to have a Transaction page to see and monitor all the transactions made by buying and selling stocks
 - [x] User Story #8: As a Trader, I want to sell my stocks to gain money.
+
+
+## Setup
+1. Create an account on [IEX Cloud](https://iexcloud.io/) and get a publishable token from the IEX cloud console.
+
+2. Fork and clone this repository.
+```bash
+$ git clone git@github.com:louisedungca/stock-trading-app.git
+$ bundle install
+$ bin/rails db:prepare
+```
+Note: If NoMethodError is encountered and looking for IEX_API_PUBLISHABLE_TOKEN, generate a new master.key and add your credentials:
+```bash
+$ rails credentials:edit
+```
+```bash
+# tmp/some_timestamp_and_id-credentials.yml
+
+iex:
+  IEX_API_PUBLISHABLE_TOKEN: enter_your_publishable_token
+  IEX_API_SECRET_TOKEN: enter_your_secret_token
+
+outlook_smtp:
+  email: enter_valid_email_for_mailers
+  password: enter_valid_email_password
+
+# aws:
+#   access_key_id: some_generated_id
+#   secret_access_key: some_generated_key
+
+# Used as the base secret for all MessageVerifiers in Rails, including the one protecting cookies.
+secret_key_base: generated_secret_key
+```
+
+3. Start the application:
+```bash
+$ ./bin/dev
+```
 
 ## Contributing
 Contributions are welcome! Please fork and clone this repository, create a new branch for your awesome feature/contribution, and submit a pull request with your changes. Make sure to follow the existing code style and write tests for any new functionality.
