@@ -11,67 +11,75 @@
   <div class="flex items-center gap-2 pr-6">
     <%= render 'shared/ransack_search_bar', { path: admin_transactions_path, params: :user_uid_or_stock_stock_symbol_or_stock_company_name_cont, placeholder: "Search" } %>
   </div>
-  <table class="w-full shadow-md text-sm text-left rtl:text-right text-gray-400">
-    <thead class="text-xsuppercase bg-gray-700/55 text-gray-400">
-      <tr>
-        <th scope="col" class="px-6 py-3">
-          UID
-        </th>
-        <th scope="col" class="px-6 py-3">
-          Transaction Type
-        </th>
-        <th scope="col" class="px-6 py-3">
-          Stock Symbol
-        </th>
-        <th scope="col" class="px-6 py-3">
-          Company Name
-        </th>
-        <th scope="col" class="px-6 py-3">
-          Shares
-        </th>
-        <th scope="col" class="px-6 py-3">
-          Price
-        </th>
-        <th scope="col" class="px-6 py-3">
-          Amount
-        </th>
-        <th scope="col" class="px-6 py-3">
-          Timestamp
-        </th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @transactions.each do |transaction| %>
-        <tr class="border-b bg-stone-900/35 border-gray-700 hover:bg-gray-600">
-          <th scope="row" class="px-6 py-3 font-medium whitespace-nowrap text-white">
-            <%= transaction.user.uid %>
+
+  <% if @transactions.present? %>
+    <table class="w-full shadow-md text-sm text-left rtl:text-right text-gray-400">
+      <thead class="text-xsuppercase bg-gray-700/55 text-gray-400">
+        <tr>
+          <th scope="col" class="px-6 py-3">
+            UID
           </th>
-          <th scope="row" class="px-6 py-3 font-medium whitespace-nowrap text-white">
-            <%= transaction.transaction_type.upcase %>
+          <th scope="col" class="px-6 py-3">
+            Transaction Type
           </th>
-          <td class="px-6 py-2.5">
-            <%= transaction.stock ? transaction.stock.stock_symbol.upcase : 'N/A' %>
-          </td>
-          <td class="px-6 py-2.5">
-            <%= transaction.stock ? transaction.stock.company_name : 'N/A' %>
-          </td>
-          <td class="px-6 py-2.5">
-            <%= transaction.stock ? transaction.shares : 'N/A' %>
-          </td>
-          <td class="px-6 py-2.5">
-            <%= transaction.stock ? format_currency(transaction.price_per_share) : 'N/A' %>
-          </td>
-          <td class="px-6 py-2.5">
-            <% total_amount = transaction.price_per_share * transaction.shares if transaction.shares.present? %>
-            <%= format_currency(total_amount || transaction.amount) %>
-          </td>
-          <td class="px-6 py-2.5">
-            <%= transaction.created_at.localtime.strftime('%a, %d %b %Y %H:%M:%S') %>
-          </td>
+          <th scope="col" class="px-6 py-3">
+            Stock Symbol
+          </th>
+          <th scope="col" class="px-6 py-3">
+            Company Name
+          </th>
+          <th scope="col" class="px-6 py-3">
+            Shares
+          </th>
+          <th scope="col" class="px-6 py-3">
+            Price
+          </th>
+          <th scope="col" class="px-6 py-3">
+            Amount
+          </th>
+          <th scope="col" class="px-6 py-3">
+            Timestamp
+          </th>
         </tr>
-      <% end %>
-    </tbody>
-  </table>
+      </thead>
+      <tbody>
+        <% @transactions.each do |transaction| %>
+          <tr class="border-b bg-stone-900/35 border-gray-700 hover:bg-gray-600">
+            <th scope="row" class="px-6 py-3 font-medium whitespace-nowrap text-white">
+              <%= transaction.user.uid %>
+            </th>
+            <th scope="row" class="px-6 py-3 font-medium whitespace-nowrap text-white">
+              <%= transaction.transaction_type.upcase %>
+            </th>
+            <td class="px-6 py-2.5">
+              <%= transaction.stock ? transaction.stock.stock_symbol.upcase : 'N/A' %>
+            </td>
+            <td class="px-6 py-2.5">
+              <%= transaction.stock ? transaction.stock.company_name : 'N/A' %>
+            </td>
+            <td class="px-6 py-2.5">
+              <%= transaction.stock ? transaction.shares : 'N/A' %>
+            </td>
+            <td class="px-6 py-2.5">
+              <%= transaction.stock ? format_currency(transaction.price_per_share) : 'N/A' %>
+            </td>
+            <td class="px-6 py-2.5">
+              <% total_amount = transaction.price_per_share * transaction.shares if transaction.shares.present? %>
+              <%= format_currency(total_amount || transaction.amount) %>
+            </td>
+            <td class="px-6 py-2.5">
+              <%= transaction.created_at.localtime.strftime('%a, %d %b %Y %H:%M:%S') %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+
+  <% else %>
+    <div class="h-full w-full flex flex-col gap-1 justify-center items-center mt-4">
+      <h1>No recent transaction</h1>
+    </div>
+  <% end %>
 </div>
 <!-- *** Render a view helper in your views (skipping nav links for empty pages)*** -->
 <div class=" grid place-items-center py-2.5">
