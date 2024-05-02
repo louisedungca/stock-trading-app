@@ -1,6 +1,6 @@
 # [Stocker](https://stocker-twbl.onrender.com/)
 
-Welcome to the Stocker, a stock trading app simulation for NASDAQ stocks exchange! This application allows users to simulate buying and selling stocks using the IEX API for real-time stock data.
+Welcome to the Stocker, a stock trading app simulation for NASDAQ stock exchange! This application allows users to simulate buying and selling stocks using the IEX API for real-time stock data.
 
 ## Features
 - **User Authentication:** Users can sign up, log in, and log out securely to access their personalized accounts.
