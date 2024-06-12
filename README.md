@@ -1,4 +1,4 @@
-# [Stocker](https://stocker-twbl.onrender.com/)
+# [Stocker](https://stocker-7zag.onrender.com/)
 
 Welcome to the Stocker, a stock trading app simulation for NASDAQ stock exchange! This application allows users to simulate buying and selling stocks using the IEX API for real-time stock data.
 
